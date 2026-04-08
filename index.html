@@ -66,15 +66,19 @@
   .floral-band-alt { background: linear-gradient(to bottom, var(--section-bg), var(--ivory)); }
   .floral-band::before { content: '✿  ✦  ✿  ✦  ✿  ✦  ✿'; font-size: 0.85rem; letter-spacing: 1.2rem; color: rgba(74,101,128,0.22); }
 
-  /* PHOTO */
-  #photo { padding: 4rem 2rem; display: flex; justify-content: center; background: var(--section-bg); }
-  .photo-frame { position: relative; width: min(380px,86vw); }
-  .photo-placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(145deg, var(--blue-pale), #bdd4e4); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; color: var(--blue); font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; border: 1px solid var(--border); }
+  /* PHOTO GALLERY */
+  #photo { padding: 4rem 2rem; background: var(--section-bg); }
+  .photo-gallery { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+  .photo-main { width: 100%; }
+  .photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .photo-slot { position: relative; border: 1px solid var(--border); overflow: hidden; }
+  .photo-main .photo-slot { aspect-ratio: 3/2; }
+  .photo-row .photo-slot { aspect-ratio: 3/4; }
+  .photo-placeholder { width: 100%; height: 100%; min-height: 140px; background: linear-gradient(145deg, var(--blue-pale), #bdd4e4); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; color: var(--blue); font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; }
   .photo-placeholder:hover { background: linear-gradient(145deg, #bdd4e4, #aac8d8); }
-  .pf-b1 { position: absolute; inset: -8px; border: 1px solid rgba(74,101,128,0.28); pointer-events: none; }
-  .pf-b2 { position: absolute; inset: -16px; border: 1px solid rgba(74,101,128,0.12); pointer-events: none; }
-  #photo-upload { display: none; }
-  .photo-actual { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; border: 1px solid var(--border); }
+  .photo-placeholder svg { opacity: 0.6; }
+  .photo-actual { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-slot input[type="file"] { display: none; }
 
   /* SECTIONS */
   section { padding: 5rem 2rem; }
@@ -248,23 +252,58 @@
   <p class="hero-location">Saturday, the Eighth of August, 2026<br/>Cebu City, Philippines</p>
 </section>
 
-<!-- PHOTO -->
+<!-- PHOTO GALLERY -->
 <div class="floral-band floral-band-reg"></div>
 <section id="photo">
-  <div class="photo-frame">
-    <div class="pf-b2"></div>
-    <div class="pf-b1"></div>
-    <div class="photo-placeholder" id="photo-drop" onclick="document.getElementById('photo-upload').click()">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-        <rect x="3" y="3" width="18" height="18" rx="1"/>
-        <circle cx="8.5" cy="8.5" r="1.5"/>
-        <polyline points="21,15 16,10 5,21"/>
-      </svg>
-      <span>Upload your photo</span>
-      <span style="font-size:0.58rem;opacity:0.6">Click to browse</span>
+  <div class="photo-gallery">
+
+    <!-- Main large photo -->
+    <div class="photo-main">
+      <div class="photo-slot" onclick="triggerUpload('photo-upload-1')">
+        <div class="photo-placeholder" id="photo-drop-1">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="1"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21,15 16,10 5,21"/>
+          </svg>
+          <span>Featured Photo</span>
+          <span style="font-size:0.55rem;opacity:0.6">Click to upload</span>
+        </div>
+        <img id="photo-actual-1" class="photo-actual" style="display:none;" alt="Yul & Elyza" />
+        <input type="file" id="photo-upload-1" accept="image/*" onchange="handlePhotoUpload(event,'1')" />
+      </div>
     </div>
-    <img id="photo-actual" class="photo-actual" style="display:none;" alt="Yul & Elyza" />
-    <input type="file" id="photo-upload" accept="image/*" onchange="handlePhotoUpload(event)" />
+
+    <!-- Two smaller photos -->
+    <div class="photo-row">
+      <div class="photo-slot" onclick="triggerUpload('photo-upload-2')">
+        <div class="photo-placeholder" id="photo-drop-2">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="1"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21,15 16,10 5,21"/>
+          </svg>
+          <span>Photo 2</span>
+          <span style="font-size:0.52rem;opacity:0.6">Click to upload</span>
+        </div>
+        <img id="photo-actual-2" class="photo-actual" style="display:none;" alt="Yul & Elyza" />
+        <input type="file" id="photo-upload-2" accept="image/*" onchange="handlePhotoUpload(event,'2')" />
+      </div>
+      <div class="photo-slot" onclick="triggerUpload('photo-upload-3')">
+        <div class="photo-placeholder" id="photo-drop-3">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="1"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21,15 16,10 5,21"/>
+          </svg>
+          <span>Photo 3</span>
+          <span style="font-size:0.52rem;opacity:0.6">Click to upload</span>
+        </div>
+        <img id="photo-actual-3" class="photo-actual" style="display:none;" alt="Yul & Elyza" />
+        <input type="file" id="photo-upload-3" accept="image/*" onchange="handlePhotoUpload(event,'3')" />
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -434,24 +473,29 @@
   }, { threshold: 0.1 });
   reveals.forEach(r => obs.observe(r));
 
-  function handlePhotoUpload(e) {
+  function triggerUpload(id) {
+    document.getElementById(id).click();
+  }
+  function handlePhotoUpload(e, num) {
     const file = e.target.files[0]; if (!file) return;
     const reader = new FileReader();
     reader.onload = ev => {
-      const img = document.getElementById('photo-actual');
+      const img = document.getElementById('photo-actual-' + num);
       img.src = ev.target.result; img.style.display = 'block';
-      document.getElementById('photo-drop').style.display = 'none';
-      try { localStorage.setItem('ye_photo', ev.target.result); } catch(err) {}
+      document.getElementById('photo-drop-' + num).style.display = 'none';
+      try { localStorage.setItem('ye_photo_' + num, ev.target.result); } catch(err) {}
     };
     reader.readAsDataURL(file);
   }
   try {
-    const p = localStorage.getItem('ye_photo');
-    if (p) {
-      document.getElementById('photo-actual').src = p;
-      document.getElementById('photo-actual').style.display = 'block';
-      document.getElementById('photo-drop').style.display = 'none';
-    }
+    [1,2,3].forEach(num => {
+      const p = localStorage.getItem('ye_photo_' + num);
+      if (p) {
+        document.getElementById('photo-actual-' + num).src = p;
+        document.getElementById('photo-actual-' + num).style.display = 'block';
+        document.getElementById('photo-drop-' + num).style.display = 'none';
+      }
+    });
   } catch(e) {}
 </script>
 </body>
