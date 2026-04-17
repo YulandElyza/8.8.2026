@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wedding Gallery</title>
+  <title>Wedding Gallery · Yul & Elyza</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="page_layout.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -16,7 +16,6 @@
     --blue-dark:  #304d65;
     --blue-light: #7a9ab5;
     --blue-pale:  #d6e4ef;
-    --sage:       #8aaa8a;
     --blush:      #e8c4b8;
     --text:       #304050;
     --mid:        #6a7f8a;
@@ -38,184 +37,435 @@
   nav a { text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue); transition: color 0.3s; }
   nav a:hover { color: var(--blue-dark); }
 
-  /* HERO */
-  #hero {
-    min-height: 100vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center; padding: 5rem 2rem 3rem;
-    position: relative; overflow: hidden; background: var(--ivory);
-  }
-  .floral-corner { position: absolute; width: 230px; height: 230px; pointer-events: none; }
-  .floral-corner.tl { top: 55px; left: -10px; }
-  .floral-corner.tr { top: 55px; right: -10px; transform: scaleX(-1); }
-  .floral-corner.bl { bottom: -10px; left: -10px; transform: scaleY(-1); }
-  .floral-corner.br { bottom: -10px; right: -10px; transform: scale(-1,-1); }
-
-  .monogram { font-family: 'Cinzel', serif; font-size: clamp(1.6rem,4vw,2.4rem); color: var(--blue-dark); letter-spacing: 0.1em; margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 1s 0.2s forwards; }
-  .hero-date-big { font-family: 'Cinzel', serif; font-size: clamp(1.8rem,5vw,3rem); font-weight: 500; color: var(--blue-dark); letter-spacing: 0.2em; margin-bottom: 0.6rem; opacity: 0; animation: fadeUp 1s 0.35s forwards; }
-  .save-label { font-family: 'Cinzel', serif; font-size: clamp(0.65rem,1.5vw,0.82rem); letter-spacing: 0.35em; text-transform: uppercase; color: var(--blue); margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 1s 0.5s forwards; }
-  h1 { font-family: 'Great Vibes', cursive; font-size: clamp(4.5rem,15vw,9.5rem); line-height: 1.0; color: var(--blue-dark); opacity: 0; animation: fadeUp 1.2s 0.65s forwards; margin-bottom: 0.5rem; }
-  .hero-divider { display: flex; align-items: center; gap: 0.8rem; margin: 1.5rem auto; width: min(260px,70vw); opacity: 0; animation: fadeUp 1s 0.9s forwards; }
-  .hero-divider::before, .hero-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--blue-light)); }
-  .hero-divider::after { background: linear-gradient(to left, transparent, var(--blue-light)); }
-  .hero-divider-gem { width: 7px; height: 7px; background: var(--blue-light); transform: rotate(45deg); }
-  .hero-location { font-family: 'Cinzel', serif; font-size: clamp(0.6rem,1.4vw,0.74rem); letter-spacing: 0.22em; text-transform: uppercase; color: var(--mid); line-height: 2.2; opacity: 0; animation: fadeUp 1s 1.1s forwards; }
-
-  /* FLORAL BAND */
-  .floral-band { height: 70px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-  .floral-band-reg { background: linear-gradient(to bottom, var(--ivory), var(--section-bg)); }
-  .floral-band-alt { background: linear-gradient(to bottom, var(--section-bg), var(--ivory)); }
-  .floral-band::before { content: '✿  ✦  ✿  ✦  ✿  ✦  ✿'; font-size: 0.85rem; letter-spacing: 1.2rem; color: rgba(74,101,128,0.22); }
-
-  /* PHOTO GALLERY */
-  #photo { padding: 4rem 2rem; background: var(--section-bg); }
-  .photo-gallery { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
-  .photo-main { width: 100%; }
-  .photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .photo-slot { position: relative; border: 1px solid var(--border); overflow: hidden; }
-  .photo-main .photo-slot { aspect-ratio: 3/2; }
-  .photo-row .photo-slot { aspect-ratio: 3/4; }
-  .photo-placeholder { width: 100%; height: 100%; min-height: 140px; background: linear-gradient(145deg, var(--blue-pale), #bdd4e4); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; color: var(--blue); font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; }
-  .photo-placeholder:hover { background: linear-gradient(145deg, #bdd4e4, #aac8d8); }
-  .photo-placeholder svg { opacity: 0.6; }
-  .photo-actual { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .photo-slot input[type="file"] { display: none; }
-
-  /* SECTIONS */
-  section { padding: 5rem 2rem; }
-  .section-inner { max-width: 700px; margin: 0 auto; }
+  /* MAIN SECTION */
+  #gallery { padding: 6rem 2rem 4rem; min-height: 100vh; background: var(--section-bg); }
+  .section-inner { max-width: 780px; margin: 0 auto; }
   .section-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 0.7rem; }
   .section-title { font-family: 'Great Vibes', cursive; font-size: clamp(2.4rem,5.5vw,3.4rem); color: var(--blue-dark); line-height: 1.1; }
-  .thin-rule { display: flex; align-items: center; gap: 0.7rem; margin: 1.2rem 0 1.8rem; }
+  .thin-rule { display: flex; align-items: center; gap: 0.7rem; margin: 1.2rem 0 2rem; }
   .thin-rule::before, .thin-rule::after { content: ''; flex: 0 0 28px; height: 1px; background: var(--blue-light); }
   .thin-rule-dot { width: 5px; height: 5px; border: 1px solid var(--blue-light); transform: rotate(45deg); }
-  .section-body { font-size: 0.9rem; line-height: 2; color: var(--mid); }
 
-  /* DETAILS */
-  #details { background: var(--ivory); }
-  .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 1.8rem; margin-top: 2.5rem; }
-  .detail-item { text-align: center; padding: 1.8rem 1rem; border: 1px solid var(--border); background: rgba(214,228,239,0.13); }
-  .detail-icon { width: 30px; height: 30px; margin: 0 auto 0.8rem; opacity: 0.5; }
-  .detail-label { font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem; }
-  .detail-value { font-family: 'Great Vibes', cursive; font-size: 1.65rem; line-height: 1.3; color: var(--blue-dark); }
-  .detail-sub { font-size: 0.7rem; color: var(--light); margin-top: 0.3rem; font-family: 'Cinzel', serif; letter-spacing: 0.05em; }
-
-  /* SCHEDULE */
-  #schedule { background: var(--section-bg); }
-  .timeline { margin-top: 2.5rem; }
-  .timeline-item { display: flex; gap: 1.5rem; padding: 1.3rem 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
-  .timeline-item:last-child { border-bottom: none; }
-  .timeline-time { font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.08em; color: var(--blue); min-width: 68px; padding-top: 0.15rem; }
-  .tl-dot { width: 7px; height: 7px; flex-shrink: 0; border: 1px solid var(--blue-light); transform: rotate(45deg); margin-top: 0.25rem; }
-  .event-name { font-family: 'Cinzel', serif; font-size: 0.74rem; font-weight: 500; color: var(--blue-dark); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
-  .event-desc { font-size: 0.8rem; color: var(--mid); line-height: 1.7; }
-
-  /* DRESS CODE */
-  #dresscode { background: var(--ivory); }
-  .dresscode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1.5rem; margin-top: 2.5rem; }
-  .dresscode-card { border: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; background: rgba(214,228,239,0.12); transition: border-color 0.3s, transform 0.3s; }
-  .dresscode-card:hover { border-color: var(--blue-light); transform: translateY(-3px); }
-  .dresscode-card-icon { font-size: 2rem; margin-bottom: 0.8rem; }
-  .dresscode-card-title { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem; }
-  .dresscode-card-detail { font-family: 'Great Vibes', cursive; font-size: 1.8rem; color: var(--blue-dark); line-height: 1.2; margin-bottom: 0.4rem; }
-  .dresscode-card-sub { font-size: 0.78rem; color: var(--mid); line-height: 1.7; }
-  .dresscode-note { margin-top: 2rem; padding: 1.2rem 1.5rem; border-left: 2px solid var(--blue-light); background: rgba(214,228,239,0.18); font-size: 0.82rem; color: var(--mid); line-height: 1.9; }
-  .dresscode-note strong { color: var(--blue); font-weight: 400; }
-
-  /* GIFTS */
-  #gifts { background: var(--section-bg); }
-  .gift-note { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: var(--blue); line-height: 1.7; margin: 1.5rem 0; }
-  .gift-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap: 1.5rem; margin-top: 2rem; }
-  .gift-card { border: 1px solid var(--border); padding: 1.8rem 1.2rem; text-align: center; background: var(--ivory); transition: border-color 0.3s, transform 0.3s; }
-  .gift-card:hover { border-color: var(--blue-light); transform: translateY(-2px); }
-  .gift-card-title { font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.8rem; }
-  .gift-card-detail { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--blue-dark); line-height: 1.9; }
-  .gift-card-sub { font-size: 0.7rem; color: var(--light); margin-top: 0.4rem; }
-
-  /* RSVP */
-  #rsvp { background: var(--ivory); }
-  .rsvp-google-btn {
-    display: inline-block;
-    padding: 1.1rem 2.5rem;
-    background: var(--blue-dark);
-    color: var(--ivory);
-    text-decoration: none;
+  /* ── PLACEHOLDER (before 10am) ── */
+  #placeholder {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    gap: 1.4rem;
+  }
+  .placeholder-gem {
+    width: 32px; height: 32px;
+    border: 1px solid var(--blue-light);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+  .placeholder-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: var(--blue-dark);
+    line-height: 1.3;
+  }
+  .placeholder-sub {
     font-family: 'Cinzel', serif;
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    transition: background 0.3s, transform 0.2s;
-    border: 1px solid transparent;
+    color: var(--light);
+    line-height: 2.2;
   }
-  .rsvp-google-btn:hover { background: var(--blue); transform: translateY(-2px); }
+  .countdown-wrap {
+    display: flex;
+    gap: 1.8rem;
+    margin-top: 0.5rem;
+  }
+  .countdown-unit { text-align: center; }
+  .countdown-num {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 500;
+    color: var(--blue-dark);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .countdown-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+  .countdown-sep {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--blue-light);
+    align-self: flex-start;
+    padding-top: 0.1rem;
+    opacity: 0.5;
+  }
+
+  /* ── CAROUSEL ── */
+  #carouselWrap { display: none; }
+
+  .swiper {
+    width: 100%;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+  }
+
+  .slide-photo-frame {
+    width: 100%;
+    max-height: 520px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--ivory-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide-photo-frame img {
+    width: 100%;
+    height: 100%;
+    max-height: 520px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .slide-caption {
+    width: 100%;
+    padding: 1.4rem 0.5rem 0;
+    text-align: center;
+    min-height: 2rem;
+  }
+
+  .slide-caption-text {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.9;
+    font-style: italic;
+  }
+
+  .slide-caption-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.6rem auto 0.8rem;
+    width: fit-content;
+  }
+  .slide-caption-divider::before,
+  .slide-caption-divider::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: var(--blue-light);
+    opacity: 0.5;
+  }
+  .slide-caption-gem {
+    width: 4px; height: 4px;
+    border: 1px solid var(--blue-light);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+
+  /* Swiper overrides */
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: var(--blue-light) !important;
+    top: 42% !important;
+  }
+  .swiper-button-next::after,
+  .swiper-button-prev::after { font-size: 1.2rem !important; }
+
+  .swiper-pagination-bullet { background: var(--blue-light) !important; opacity: 0.4; }
+  .swiper-pagination-bullet-active { opacity: 1 !important; }
+
+  /* Photo count badge */
+  .photo-count {
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Empty state (live but no photos yet) */
+  #emptyState {
+    display: none;
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+  .empty-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2rem;
+    color: var(--blue-dark);
+    margin-bottom: 0.5rem;
+  }
+  .empty-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+
+  /* Live indicator */
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    margin-bottom: 1.2rem;
+  }
+  .live-dot {
+    width: 6px; height: 6px;
+    background: #7aaa8a;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
 
   /* FOOTER */
   footer { padding: 3rem 2rem; text-align: center; background: var(--blue-dark); }
   .footer-names { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--blue-pale); margin-bottom: 0.5rem; }
   footer p { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--blue-pale); opacity: 0.65; }
 
-  /* ANIMATIONS */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .reveal.visible { opacity: 1; transform: none; }
 
-  @media (max-width: 600px) { nav { gap: 1rem; flex-wrap: wrap; padding: 0.8rem 1rem; } nav a { font-size: 0.52rem; } }
-</style>
-
+  @media (max-width: 600px) {
+    nav { gap: 1rem; flex-wrap: wrap; padding: 0.8rem 1rem; }
+    nav a { font-size: 0.52rem; }
+    .countdown-wrap { gap: 1rem; }
+    .swiper-button-next, .swiper-button-prev { display: none !important; }
+  }
+  </style>
 </head>
 <body>
 
 <nav>
-  <a href="#">Home</a>
-  <a href="#">Upload</a>
-  <a href="#">Gallery</a>
+  <a href="index.html">Home</a>
+  <a href="upload.html">Upload</a>
+  <a href="carousel.html">Gallery</a>
 </nav>
 
-<section id="photo">
+<section id="gallery">
   <div class="section-inner">
     <div class="section-label">Wedding Memories</div>
-    <h2 class="section-title">Photo Carousel</h2>
+    <h2 class="section-title">Your memories, live</h2>
     <div class="thin-rule"><div class="thin-rule-dot"></div></div>
-    <p class="section-body">Swipe through the latest photos uploaded by our guests.</p>
 
-    <div class="swiper">
-      <div class="swiper-wrapper" id="carousel">
-        <!-- Images injected here -->
+    <!-- PLACEHOLDER: shown before 10am Aug 8 2026 PHT -->
+    <div id="placeholder">
+      <div class="placeholder-gem"></div>
+      <div class="placeholder-title">Live memories will appear here<br>during the celebration</div>
+      <div class="placeholder-sub">The gallery goes live at 10:00 AM · August 8, 2026</div>
+      <div class="countdown-wrap">
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cdDays">--</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <span class="countdown-sep">·</span>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cdHours">--</span>
+          <span class="countdown-label">Hours</span>
+        </div>
+        <span class="countdown-sep">·</span>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cdMins">--</span>
+          <span class="countdown-label">Mins</span>
+        </div>
+        <span class="countdown-sep">·</span>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cdSecs">--</span>
+          <span class="countdown-label">Secs</span>
+        </div>
       </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
     </div>
+
+    <!-- LIVE CAROUSEL: shown from 10am onwards -->
+    <div id="carouselWrap">
+      <div class="live-badge"><span class="live-dot"></span> Live gallery</div>
+      <div class="photo-count" id="photoCount"></div>
+
+      <!-- Empty state -->
+      <div id="emptyState">
+        <div class="empty-title">Be the first to share a memory</div>
+        <div class="empty-sub">Scan the upload QR to add your photos</div>
+      </div>
+
+      <!-- Swiper -->
+      <div class="swiper" id="swiperEl" style="display:none;">
+        <div class="swiper-wrapper" id="swiperWrapper"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+
   </div>
 </section>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-async function loadImages() {
-  const res = await fetch("/images"); // API returns latest images
-  const images = await res.json();
-  const carousel = document.getElementById("carousel");
-  carousel.innerHTML = "";
-  images.forEach(img => {
-    carousel.innerHTML += `
-      <div class="swiper-slide">
-        <img src="${img.url}" class="photo-actual" alt="Wedding photo">
-      </div>`;
-  });
-
-  new Swiper('.swiper', {
-    loop: true,
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-  });
-}
-loadImages();
-</script>
 
 <footer>
   <div class="footer-names">Yul & Elyza</div>
   <p>8.8.26 · Wedding Memories</p>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  // ── Time gate ──────────────────────────────────────────────
+  // August 8, 2026, 10:00 AM Philippine Time (UTC+8)
+  const UNLOCK_TIME = new Date('2026-08-08T10:00:00+08:00');
+
+  const placeholder   = document.getElementById('placeholder');
+  const carouselWrap  = document.getElementById('carouselWrap');
+
+  function isLive() {
+    return new Date() >= UNLOCK_TIME;
+  }
+
+  // ── Countdown timer ────────────────────────────────────────
+  function updateCountdown() {
+    const diff = UNLOCK_TIME - new Date();
+    if (diff <= 0) {
+      activateLive();
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cdDays').textContent  = String(d).padStart(2, '0');
+    document.getElementById('cdHours').textContent = String(h).padStart(2, '0');
+    document.getElementById('cdMins').textContent  = String(m).padStart(2, '0');
+    document.getElementById('cdSecs').textContent  = String(s).padStart(2, '0');
+  }
+
+  // ── Swiper instance ────────────────────────────────────────
+  let swiperInstance = null;
+  let lastPhotoCount = 0;
+
+  function buildSlides(images) {
+    const wrapper = document.getElementById('swiperWrapper');
+    wrapper.innerHTML = '';
+    images.forEach(img => {
+      const slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      slide.innerHTML = `
+        <div class="slide-photo-frame">
+          <img src="${img.url}" alt="Wedding photo" loading="lazy" />
+        </div>
+        ${img.message ? `
+        <div class="slide-caption">
+          <div class="slide-caption-divider"><span class="slide-caption-gem"></span></div>
+          <p class="slide-caption-text">${escapeHtml(img.message)}</p>
+        </div>` : '<div class="slide-caption"></div>'}
+      `;
+      wrapper.appendChild(slide);
+    });
+  }
+
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function renderCarousel(images) {
+    const swiperEl   = document.getElementById('swiperEl');
+    const emptyState = document.getElementById('emptyState');
+    const photoCount = document.getElementById('photoCount');
+
+    const n = images.length;
+    photoCount.textContent = n > 0 ? `${n} photo${n !== 1 ? 's' : ''} shared` : '';
+
+    if (n === 0) {
+      emptyState.style.display = 'block';
+      swiperEl.style.display   = 'none';
+      if (swiperInstance) { swiperInstance.destroy(true, true); swiperInstance = null; }
+      lastPhotoCount = 0;
+      return;
+    }
+
+    emptyState.style.display = 'none';
+    swiperEl.style.display   = 'block';
+
+    if (n !== lastPhotoCount) {
+      buildSlides(images);
+      if (swiperInstance) { swiperInstance.destroy(true, true); swiperInstance = null; }
+      swiperInstance = new Swiper('#swiperEl', {
+        loop: n > 1,
+        autoplay: n > 1 ? { delay: 6000, disableOnInteraction: false } : false,
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        keyboard: { enabled: true },
+      });
+      lastPhotoCount = n;
+    }
+  }
+
+  // ── Fetch images from Cloudinary/backend ──────────────────
+  // TODO: replace /images with your actual Cloudinary fetch endpoint
+  async function fetchImages() {
+    try {
+      const res = await fetch('/images');
+      if (!res.ok) throw new Error('fetch failed');
+      const images = await res.json();
+      // Expected format: [{ url: "https://...", message: "..." }, ...]
+      renderCarousel(images);
+    } catch (err) {
+      // Silently fail — will retry on next poll
+      console.warn('Gallery fetch failed, retrying…', err);
+    }
+  }
+
+  // ── Activate live mode ─────────────────────────────────────
+  function activateLive() {
+    placeholder.style.display  = 'none';
+    carouselWrap.style.display = 'block';
+    fetchImages();
+    // Poll every 30 seconds for new uploads
+    setInterval(fetchImages, 30000);
+  }
+
+  // ── Init ───────────────────────────────────────────────────
+  if (isLive()) {
+    activateLive();
+  } else {
+    placeholder.style.display = 'flex';
+    updateCountdown();
+    const countdownTimer = setInterval(() => {
+      if (isLive()) {
+        clearInterval(countdownTimer);
+        activateLive();
+      } else {
+        updateCountdown();
+      }
+    }, 1000);
+  }
+</script>
 
 </body>
 </html>
