@@ -79,7 +79,8 @@
 
 
   /* ── CAROUSEL ── */
-  #carouselWrap { display: none; }
+  #carouselWrap { display: none; animation: carouselReveal 1.2s ease forwards; }
+  @keyframes carouselReveal { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
   .swiper {
     width: 100%;
@@ -110,6 +111,8 @@
     max-height: 520px;
     object-fit: contain;
     display: block;
+    will-change: transform, opacity;
+    transform-origin: center center;
   }
 
   .slide-caption {
@@ -350,10 +353,65 @@
       if (swiperInstance) { swiperInstance.destroy(true, true); swiperInstance = null; }
       swiperInstance = new Swiper('#swiperEl', {
         loop: n > 1,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        speed: 1200,
         autoplay: n > 1 ? { delay: 6000, disableOnInteraction: false } : false,
         pagination: { el: '.swiper-pagination', clickable: true },
         navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
         keyboard: { enabled: true },
+        on: {
+          slideChangeTransitionStart() {
+            const active = this.slides[this.activeIndex];
+            if (!active) return;
+            const img = active.querySelector('img');
+            const cap = active.querySelector('.slide-caption-text');
+            if (img) {
+              img.style.transition = 'none';
+              img.style.transform = 'scale(1.06)';
+              img.style.opacity = '0';
+              requestAnimationFrame(() => {
+                img.style.transition = 'transform 1.4s ease, opacity 0.8s ease';
+                img.style.transform = 'scale(1)';
+                img.style.opacity = '1';
+              });
+            }
+            if (cap) {
+              cap.style.transition = 'none';
+              cap.style.opacity = '0';
+              cap.style.transform = 'translateY(12px)';
+              requestAnimationFrame(() => {
+                cap.style.transition = 'opacity 0.9s ease 0.5s, transform 0.9s ease 0.5s';
+                cap.style.opacity = '1';
+                cap.style.transform = 'translateY(0)';
+              });
+            }
+          },
+          afterInit() {
+            const active = this.slides[this.activeIndex];
+            if (!active) return;
+            const img = active.querySelector('img');
+            const cap = active.querySelector('.slide-caption-text');
+            if (img) {
+              img.style.transition = 'transform 1.4s ease, opacity 0.8s ease';
+              img.style.transform = 'scale(1.06)';
+              img.style.opacity = '0';
+              requestAnimationFrame(() => {
+                img.style.transform = 'scale(1)';
+                img.style.opacity = '1';
+              });
+            }
+            if (cap) {
+              cap.style.opacity = '0';
+              cap.style.transform = 'translateY(12px)';
+              cap.style.transition = 'opacity 0.9s ease 0.8s, transform 0.9s ease 0.8s';
+              requestAnimationFrame(() => {
+                cap.style.opacity = '1';
+                cap.style.transform = 'translateY(0)';
+              });
+            }
+          }
+        }
       });
       lastPhotoCount = n;
     }
