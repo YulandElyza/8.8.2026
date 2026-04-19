@@ -1,58 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Yul & Elyza | Save the Date</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yul & Elyza | Save the Date</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;600&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+  <!-- ✅ FIXED: Proper Google Fonts link -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;600&family=Libre+Baskerville:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
 
-<style>
-/* FINAL VERSION — OPTION B (Semi‑Real Botanical Peonies) */
+  <style>
+    /* ====================================================
+       FINAL VERSION — OPTION B (Semi‑Real Botanical Peonies)
+       Uses ONE image: assets/flowers_b.png
+       ==================================================== */
 
-:root {
-  --ivory: #f7f5ef;
-  --ink: #1f2a38;
-}
+    :root {
+      --ivory: #f7f5ef;
+      --ink: #1f2a38;
+    }
 
-body {
-  margin: 0;
-  font-family: 'Libre Baskerville', serif;
-  background: var(--ivory);
-  color: var(--ink);
-  overflow-x: hidden;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-/* ─── FLORAL CORNERS ─── */
+    body {
+      margin: 0;
+      font-family: 'Libre Baskerville', serif;
+      background: var(--ivory);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
 
-.floral-corner {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  pointer-events: none;
-  background-image: url('assets/flowers_b.png');
-  background-repeat: no-repeat;
-  background-size: 300%;
-}
+    /* ───────────────── FLORAL CORNERS ───────────────── */
 
-.floral-corner.tl { top: 0; left: 0; background-position: left top; }
-.floral-corner.tr { top: 0; right: 0; background-position: right top; }
-.floral-corner.bl { bottom: 0; left: 0; background-position: left bottom; }
-.floral-corner.br { bottom: 0; right: 0; background-position: right bottom; }
+    .floral-corner {
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      pointer-events: none;
+      background-image: url('assets/flowers_b.png');
+      background-repeat: no-repeat;
+      background-size: 300%;
+    }
 
-/* ─── HERO ─── */
+    .floral-corner.tl {
+      top: 0;
+      left: 0;
+      background-position: left top;
+    }
 
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  text-align: center;
-  padding: 120px 20px;
-  box-sizing: border-box;
-}
+    .floral-corner.tr {
+      top: 0;
+      right: 0;
+      background-position: right top;
+    }
 
-.hero h1 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 4rem;
+    .floral-corner.bl {
+      bottom: 0;
+      left: 0;
+      background-position: left bottom;
+    }
+
+    .floral-corner.br {
+      bottom: 0;
+      right: 0;
+      background-position: right bottom;
+    }
+
+    /* ───────────────── HERO ───────────────── */
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 4rem;
+      margin: 0.3em 0;
+    }
+
+    .hero .date {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.2em;
+      font-size: 0.9rem;
+    }
+
+    /* ───────────────── DIVIDER ───────────────── */
+
+    .sprig-divider {
+      position: relative;
+      height: 70px;
+      margin: 70px auto;
+    }
+
+    .sprig-divider::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 260px;
+      height: 60px;
+      background: url('assets/flowers_b.png') center / 220% no-repeat;
+      background-position: center center;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* ───────────────── MOBILE ───────────────── */
+
+    @media (max-width: 600px) {
+      .floral-corner {
+        width: 180px;
+        height: 180px;
+      }
+
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+
+      .sprig-divider::after {
+        width: 200px;
+        opacity: 0.4;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Corner Flowers -->
+  <div class="floral-corner tl"></div>
+  <div class="floral-corner tr"></div>
+  <div class="floral-corner bl"></div>
+  <div class="floral-corner br"></div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <div class="date">SAVE THE DATE</div>
+
+      <h1>Yul &amp; Elyza</h1>
+
+      <div class="date">8 • 8 • 26</div>
+
+      <div class="sprig-divider"></div>
+
+      <p>Cebu City, Philippines</p>
+      <p>More details to follow soon.</p>
+    </div>
+  </section>
+
+</body>
+</html>
