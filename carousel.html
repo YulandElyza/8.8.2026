@@ -359,17 +359,28 @@
     }
   }
 
-  // ── Fetch images from Cloudinary/backend ──────────────────
-  // TODO: replace /images with your actual Cloudinary fetch endpoint
+  // Cloudinary config
+  const CLOUD_NAME = 'dlizcifl7';
+  const FOLDER     = 'Wedding2026';
+  // Cloudinary search API — fetches all images in the folder, newest first
+  const SEARCH_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/resources/search`;
+
+  // ── Fetch images from Cloudinary ──────────────────────────
   async function fetchImages() {
     try {
-      const res = await fetch('/images');
+      const res = await fetch(
+        `https://res.cloudinary.com/${CLOUD_NAME}/image/list/${FOLDER}.json`,
+        { cache: 'no-store' }
+      );
       if (!res.ok) throw new Error('fetch failed');
-      const images = await res.json();
-      // Expected format: [{ url: "https://...", message: "..." }, ...]
+      const data = await res.json();
+      // Map resources to { url, message }
+      const images = (data.resources || []).map(r => ({
+        url: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/q_auto,f_auto/${r.public_id}`,
+        message: r.context?.custom?.caption || ''
+      }));
       renderCarousel(images);
     } catch (err) {
-      // Silently fail — will retry on next poll
       console.warn('Gallery fetch failed, retrying…', err);
     }
   }
@@ -384,13 +395,18 @@
   }
 
   // ── Init ───────────────────────────────────────────────────
+  // TESTING MODE: time gate bypassed — always show carousel
+  // TODO: restore the if/else block before the wedding day
+  activateLive();
+
+  /* RESTORE BEFORE WEDDING DAY:
   if (isLive()) {
     activateLive();
   } else {
     placeholder.style.display = 'flex';
-    // Check every minute if unlock time has passed
     setInterval(() => { if (isLive()) activateLive(); }, 60000);
   }
+  */
 </script>
 
 </body>
