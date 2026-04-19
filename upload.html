@@ -331,8 +331,7 @@
         await uploadOne(selectedFiles[i], message);
       }
 
-      statusMsg.textContent = 'Upload successful!';
-      statusMsg.className = 'status-msg success show';
+      alert('Upload successful!');
       selectedFiles = [];
       renderPreviews();
       messageField.value = '';
