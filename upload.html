@@ -301,6 +301,7 @@
     fd.append('file', file);
     fd.append('upload_preset', UPLOAD_PRESET);
     fd.append('folder', FOLDER);
+    fd.append('tags', FOLDER); // tag matches folder name for carousel list endpoint
     if (message) {
       // Cloudinary context format: key=value|key2=value2
       // Pipe and equals signs in the message are escaped
@@ -330,7 +331,7 @@
         await uploadOne(selectedFiles[i], message);
       }
 
-      statusMsg.textContent = 'Your photos have been shared — thank you!';
+      statusMsg.textContent = 'Upload successful!';
       statusMsg.className = 'status-msg success show';
       selectedFiles = [];
       renderPreviews();
