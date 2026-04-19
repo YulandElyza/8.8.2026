@@ -237,6 +237,60 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
   .floral-corner.tl, .floral-corner.tr { width:200px; height:200px; }
   .floral-corner.bl, .floral-corner.br { width:160px; height:160px; }
 }
+
+/* ── GLOBAL LAYOUT + DESIGN SYSTEM ───────────────────────────── */
+.page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) 1.6rem;
+}
+
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--blue-light);
+  margin-bottom: 0.6rem;
+}
+
+.section-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2.4rem, 5.5vw, 3.4rem);
+  color: var(--blue-dark);
+  line-height: 1.1;
+}
+
+.thin-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 1.3rem 0 2.4rem;
+}
+
+.thin-rule::before,
+.thin-rule::after {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--blue-light);
+}
+
+.thin-rule-dot {
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--blue-light);
+  transform: rotate(45deg);
+}
+
+.card {
+  background: rgba(245,240,232,0.85);
+  border: 1px solid rgba(74,101,128,0.18);
+  border-radius: 16px;
+  padding: 2.2rem 2rem;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.08);
+}
+
 </style>
 </head>
 <body>
@@ -258,8 +312,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 
 <!-- HERO -->
 <section id="hero">
-
-  <!-- TOP LEFT botanical corner: rose + eucalyptus -->
+  <div class="page"><!-- TOP LEFT botanical corner: rose + eucalyptus -->
   <div class="floral-corner tl">
     <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" fill="none">
       <!-- Background foliage mass -->
@@ -611,6 +664,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
   </div>
   <div class="hero-divider"><div class="hero-divider-gem"></div></div>
   <p class="hero-location">Saturday, the Eighth of August, 2026<br/>Cebu City, Philippines</p>
+  </div>
 </section>
 
 <!-- BOTANICAL SPRIG DIVIDER -->
@@ -650,7 +704,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 
 <!-- PHOTO GALLERY -->
 <section id="photo">
-  <div class="photo-gallery">
+  <div class="page">
     <div class="photo-main">
       <div class="photo-slot" onclick="triggerUpload('photo-upload-1')">
         <div class="photo-placeholder" id="photo-drop-1">
@@ -688,6 +742,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
         <input type="file" id="photo-upload-3" accept="image/*" onchange="handlePhotoUpload(event,'3')" />
       </div>
     </div>
+  </div>
   </div>
 </section>
 
@@ -753,6 +808,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- SCHEDULE -->
@@ -788,6 +844,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
       <div class="timeline-item"><span class="timeline-time">6:00 PM</span><div class="tl-dot"></div><div><p class="event-name">Reception & Dinner</p><p class="event-desc">Dinner, speeches, and celebrations begin.</p></div></div>
       <div class="timeline-item"><span class="timeline-time">7:30 PM</span><div class="tl-dot"></div><div><p class="event-name">First Dance & Party</p><p class="event-desc">Dancing and merriment continue well into the evening.</p></div></div>
     </div>
+  </div>
   </div>
 </section>
 
@@ -833,6 +890,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
       <strong>Please note:</strong> Out of respect for the bride, we kindly ask that guests avoid wearing white or ivory. Comfortable yet elegant footwear is recommended for both the church and hotel venues.
     </div>
   </div>
+  </div>
 </section>
 
 <!-- GIFTS -->
@@ -872,6 +930,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- RSVP -->
@@ -901,6 +960,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
     <p class="section-body" style="margin-bottom:2.5rem;">Click the button below to confirm your attendance. It only takes a minute!</p>
     <a href="https://forms.gle/W1Qg2eXXCyioakDb6" target="_blank" class="rsvp-google-btn">✦ &nbsp; Confirm Your Attendance &nbsp; ✦</a>
     <p style="margin-top:1.8rem;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.18em;color:var(--light);">Opens in Google Forms · Responses go directly to the couple</p>
+  </div>
   </div>
 </section>
 
