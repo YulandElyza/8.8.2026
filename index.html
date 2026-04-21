@@ -85,7 +85,7 @@ nav a:hover { color: var(--blue-dark); }
   width: 100%; height: 100%;
   opacity: 0;
   transform-origin: bottom left;
-  filter: drop-shadow(0 3px 10px rgba(100,60,40,0.12));
+  filter: drop-shadow(0 2px 8px rgba(120,60,60,0.10));
 }
 .floral-corner.tl svg { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 2.1s forwards; }
 .floral-corner.tr svg { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 2.25s forwards; }
@@ -263,191 +263,281 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
   <!-- TOP LEFT botanical corner: hyperrealistic rose + peony + anemone -->
   <div class="floral-corner tl">
     <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <!-- Cel-shade gradients (2-tone, hard) -->
-    <linearGradient id="tl-cel-rose" x1="20%" y1="0%" x2="80%" y2="100%">
-      <stop offset="0%" stop-color="#fde8e0"/>
-      <stop offset="48%" stop-color="#fde8e0"/>
-      <stop offset="49%" stop-color="#e8b4a8"/>
-      <stop offset="100%" stop-color="#e8b4a8"/>
-    </linearGradient>
-    <linearGradient id="tl-cel-rose2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f9d4ca"/>
-      <stop offset="45%" stop-color="#f9d4ca"/>
-      <stop offset="46%" stop-color="#dda090"/>
-      <stop offset="100%" stop-color="#dda090"/>
-    </linearGradient>
-    <linearGradient id="tl-cel-peony" x1="15%" y1="0%" x2="85%" y2="100%">
-      <stop offset="0%" stop-color="#fef0e8"/>
-      <stop offset="44%" stop-color="#fef0e8"/>
-      <stop offset="45%" stop-color="#f0c4b0"/>
-      <stop offset="100%" stop-color="#f0c4b0"/>
-    </linearGradient>
-    <linearGradient id="tl-cel-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-      <stop offset="0%" stop-color="#c8ddb0"/>
-      <stop offset="46%" stop-color="#c8ddb0"/>
-      <stop offset="47%" stop-color="#8ab878"/>
-      <stop offset="100%" stop-color="#8ab878"/>
-    </linearGradient>
-    <linearGradient id="tl-cel-leaf2" x1="0%" y1="0%" x2="60%" y2="100%">
-      <stop offset="0%" stop-color="#b8d8a0"/>
-      <stop offset="44%" stop-color="#b8d8a0"/>
-      <stop offset="45%" stop-color="#78a860"/>
-      <stop offset="100%" stop-color="#78a860"/>
-    </linearGradient>
-    <linearGradient id="tl-cel-blue" x1="10%" y1="0%" x2="90%" y2="100%">
-      <stop offset="0%" stop-color="#e0eef8"/>
-      <stop offset="44%" stop-color="#e0eef8"/>
-      <stop offset="45%" stop-color="#a8c8e8"/>
-      <stop offset="100%" stop-color="#a8c8e8"/>
-    </linearGradient>
-    <filter id="tl-glow" x="-25%" y="-25%" width="150%" height="150%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-  </defs>
+      <defs>
+        <!-- Rose petal gradients -->
+        <radialGradient id="tl-rp1" cx="40%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#f5cfc8"/>
+          <stop offset="45%" stop-color="#d4827a"/>
+          <stop offset="100%" stop-color="#a85850"/>
+        </radialGradient>
+        <radialGradient id="tl-rp2" cx="55%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#f0c0ba"/>
+          <stop offset="50%" stop-color="#c87870"/>
+          <stop offset="100%" stop-color="#9a5048"/>
+        </radialGradient>
+        <radialGradient id="tl-rp3" cx="50%" cy="40%" r="55%">
+          <stop offset="0%" stop-color="#fad8d4"/>
+          <stop offset="40%" stop-color="#e8a89e"/>
+          <stop offset="100%" stop-color="#c07068"/>
+        </radialGradient>
+        <!-- Peony petal gradients -->
+        <radialGradient id="tl-pp1" cx="45%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#fde8e4"/>
+          <stop offset="40%" stop-color="#f0c0b8"/>
+          <stop offset="100%" stop-color="#d89088"/>
+        </radialGradient>
+        <radialGradient id="tl-pp2" cx="50%" cy="25%" r="65%">
+          <stop offset="0%" stop-color="#fff0ee"/>
+          <stop offset="45%" stop-color="#f4cac4"/>
+          <stop offset="100%" stop-color="#e0a09a"/>
+        </radialGradient>
+        <!-- Anemone petal -->
+        <radialGradient id="tl-ap1" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#eef4fa"/>
+          <stop offset="55%" stop-color="#c8ddf0"/>
+          <stop offset="100%" stop-color="#9ab8d8"/>
+        </radialGradient>
+        <!-- Leaf gradient -->
+        <linearGradient id="tl-lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#a8c8a8"/>
+          <stop offset="50%" stop-color="#6a9a6a"/>
+          <stop offset="100%" stop-color="#4a7a4a"/>
+        </linearGradient>
+        <linearGradient id="tl-lg2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#b8d0b8"/>
+          <stop offset="60%" stop-color="#78aa78"/>
+          <stop offset="100%" stop-color="#558055"/>
+        </linearGradient>
 
-  <!-- ── STEMS  — wobbly, hand-drawn feel ── -->
-  <path d="M2 278 C10 250 30 215 55 180 C75 152 100 128 130 102" stroke="#5a7a50" stroke-width="2.8" stroke-linecap="round" fill="none"/>
-  <path d="M0 260 C15 238 35 210 55 185 C72 163 92 145 115 125" stroke="#6a8a5a" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.6"/>
-  <path d="M18 278 C35 255 58 228 82 200 C104 175 128 155 152 132" stroke="#5a7a50" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+        <!-- Enhanced rose gradients with more depth -->
+        <radialGradient id="tl-rp4" cx="35%" cy="28%" r="70%" gradientUnits="objectBoundingBox">
+          <stop offset="0%" stop-color="#ffeae8"/>
+          <stop offset="25%" stop-color="#f0b8b0"/>
+          <stop offset="60%" stop-color="#cc7068"/>
+          <stop offset="100%" stop-color="#8a3830"/>
+        </radialGradient>
+        <radialGradient id="tl-rp5" cx="60%" cy="45%" r="58%">
+          <stop offset="0%" stop-color="#fff0ee"/>
+          <stop offset="35%" stop-color="#f8d0ca"/>
+          <stop offset="75%" stop-color="#dc9088"/>
+          <stop offset="100%" stop-color="#b06058"/>
+        </radialGradient>
+        <!-- Leaf with veins -->
+        <linearGradient id="tl-lg3" x1="0%" y1="0%" x2="80%" y2="100%">
+          <stop offset="0%" stop-color="#c0d8b8"/>
+          <stop offset="40%" stop-color="#88b878"/>
+          <stop offset="100%" stop-color="#4a6a40"/>
+        </linearGradient>
+        <!-- Peony deep gradient -->
+        <radialGradient id="tl-pp3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff8f6"/>
+          <stop offset="30%" stop-color="#fce4e0"/>
+          <stop offset="65%" stop-color="#f0b8b2"/>
+          <stop offset="100%" stop-color="#d88880"/>
+        </radialGradient>
+        <!-- Drop shadow filter for flowers -->
+        <filter id="tl-fshadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="1.5" dy="2.5" stdDeviation="2.5" flood-color="#6a3030" flood-opacity="0.22"/>
+        </filter>
+        <filter id="tl-lshadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="1" dy="1.5" stdDeviation="1.5" flood-color="#204020" flood-opacity="0.18"/>
+        </filter>
+        <!-- Stem -->
+        <filter id="tl-blur" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.2"/>
+        </filter>
+      </defs>
 
-  <!-- ── GHIBLI LEAVES — round, plump, cel-shaded ── -->
-  <!-- Leaf 1 lower left -->
-  <path d="M18 252 C4 238 0 218 12 208 C24 198 44 204 50 218 C44 230 32 244 18 252Z" fill="url(#tl-cel-leaf)" stroke="#3a6030" stroke-width="1.6" stroke-linejoin="round"/>
-  <path d="M18 252 C28 236 40 222 50 218" stroke="#3a6030" stroke-width="1.1" fill="none"/>
-  <!-- Leaf shadow chunk -->
-  <path d="M22 246 C16 236 14 224 20 216 C28 212 38 216 42 224" fill="#8ab878" opacity="0.45"/>
+      <!-- ── STEMS (layered for depth) ── -->
+      <path d="M0 280 Q48 215 82 165 Q116 118 152 80" stroke="#4a7a4a" stroke-width="2.8" stroke-linecap="round" fill="none" opacity="0.35" filter="url(#tl-blur)"/>
+      <path d="M0 280 Q48 215 82 165 Q116 118 152 80" stroke="#6a9a6a" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M0 280 Q22 238 45 198 Q70 158 98 125 Q125 95 155 70" stroke="#578a57" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+      <path d="M18 280 Q58 228 95 185 Q128 148 158 115" stroke="#7aaa7a" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.55"/>
+      <path d="M0 252 Q32 215 60 180 Q84 150 108 125" stroke="#6a9a6a" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
 
-  <!-- Leaf 2 -->
-  <path d="M8 265 C-4 250 -5 230 8 222 C20 214 38 220 42 235 C30 245 20 257 8 265Z" fill="url(#tl-cel-leaf2)" stroke="#3a6030" stroke-width="1.6" stroke-linejoin="round"/>
-  <path d="M8 265 C18 250 30 238 42 235" stroke="#3a6030" stroke-width="1.1" fill="none"/>
+      <!-- ── LEAVES (realistic, with midrib + shadow) ── -->
+      <!-- Lower cluster -->
+      <path d="M22 248 C8 235 5 218 18 210 C28 204 42 208 50 220 C38 228 30 240 22 248Z" fill="url(#tl-lg2)" opacity="0.85"/>
+      <path d="M22 248 C32 235 42 222 50 220" stroke="#4a7a4a" stroke-width="0.7" fill="none" opacity="0.5"/>
 
-  <!-- Leaf 3 mid -->
-  <path d="M42 228 C28 212 28 192 44 184 C58 177 76 186 76 202 C64 212 54 222 42 228Z" fill="url(#tl-cel-leaf)" stroke="#3a6030" stroke-width="1.5" stroke-linejoin="round"/>
-  <path d="M42 228 C54 212 66 202 76 202" stroke="#3a6030" stroke-width="1" fill="none"/>
-  <path d="M46 222 C40 212 40 200 48 196" fill="#8ab878" opacity="0.4"/>
+      <path d="M10 262 C-2 248 -4 230 10 222 C22 215 38 220 44 234 C30 242 20 254 10 262Z" fill="url(#tl-lg1)" opacity="0.8"/>
+      <path d="M10 262 C20 248 32 236 44 234" stroke="#4a7a4a" stroke-width="0.7" fill="none" opacity="0.5"/>
 
-  <!-- Leaf 4 -->
-  <path d="M60 208 C48 190 50 170 65 164 C79 158 96 168 94 186 C82 194 70 204 60 208Z" fill="url(#tl-cel-leaf2)" stroke="#3a6030" stroke-width="1.5" stroke-linejoin="round"/>
-  <path d="M60 208 C72 192 84 184 94 186" stroke="#3a6030" stroke-width="1" fill="none"/>
+      <path d="M44 228 C32 212 32 194 46 188 C58 183 74 190 78 205 C64 212 54 222 44 228Z" fill="url(#tl-lg2)" opacity="0.82"/>
+      <path d="M44 228 C54 214 66 204 78 205" stroke="#3a6a3a" stroke-width="0.7" fill="none" opacity="0.45"/>
 
-  <!-- Leaf 5 -->
-  <path d="M80 186 C68 168 70 148 86 142 C100 136 116 148 114 166 C102 174 90 183 80 186Z" fill="url(#tl-cel-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-  <path d="M80 186 C92 170 105 163 114 166" stroke="#3a6030" stroke-width="0.9" fill="none"/>
+      <path d="M60 210 C50 194 52 176 66 170 C78 165 94 174 96 190 C82 196 70 205 60 210Z" fill="url(#tl-lg1)" opacity="0.8"/>
+      <path d="M60 210 C70 196 82 188 96 190" stroke="#4a7a4a" stroke-width="0.7" fill="none" opacity="0.4"/>
 
-  <!-- Leaf 6 small upper -->
-  <path d="M100 162 C90 148 92 132 104 128 C116 124 130 134 126 150 C116 156 108 161 100 162Z" fill="url(#tl-cel-leaf2)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-  <path d="M100 162 C110 148 122 142 126 150" stroke="#3a6030" stroke-width="0.9" fill="none"/>
+      <!-- Mid cluster -->
+      <path d="M80 188 C68 170 70 150 86 144 C100 138 116 148 116 166 C102 172 90 182 80 188Z" fill="url(#tl-lg2)" opacity="0.78"/>
+      <path d="M80 188 C92 172 104 164 116 166" stroke="#4a7a4a" stroke-width="0.7" fill="none" opacity="0.4"/>
 
-  <!-- Tiny round leaf tips upper -->
-  <path d="M126 128 C120 112 126 96 138 94 C150 92 160 104 156 120" fill="url(#tl-cel-leaf)" stroke="#3a6030" stroke-width="1.2" stroke-linejoin="round"/>
-  <path d="M142 106 C138 92 146 78 156 78 C164 78 170 88 166 102" fill="url(#tl-cel-leaf2)" stroke="#3a6030" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M96 168 C86 150 90 132 106 128 C120 124 135 136 133 154 C120 158 108 165 96 168Z" fill="url(#tl-lg1)" opacity="0.75"/>
+      <path d="M96 168 C106 152 120 145 133 154" stroke="#3a6a3a" stroke-width="0.6" fill="none" opacity="0.4"/>
 
-  <!-- ── BIG GHIBLI ROSE (lower focal, ~r32) ── -->
-  <g transform="translate(52,160)">
-    <!-- Soft glow behind -->
-    <circle cx="0" cy="2" r="34" fill="#fce8e0" opacity="0.3" filter="url(#tl-glow)"/>
-    <!-- Outermost petals – wide, rounded, slightly uneven (hand-drawn) -->
-    <path d="M2-32 C12-30 28-18 30-4 C32 10 24 26 8 32 C-4 36-20 30-28 18 C-34 8-32-10-24-22 C-16-34-2-34 2-32Z" fill="url(#tl-cel-rose)" stroke="#c07068" stroke-width="1.8" stroke-linejoin="round"/>
-    <path d="M-2-32 C-14-28-30-14-30 2 C-30 16-20 28-6 32 C8 36 24 28 28 16 C34 4 30-12 20-24 C12-34 4-34-2-32Z" fill="url(#tl-cel-rose2)" stroke="#c07068" stroke-width="1.8" stroke-linejoin="round"/>
-    <!-- Cel shadow on outermost petals -->
-    <path d="M-24-22 C-30-10-32 6-24 18" stroke="#c07068" stroke-width="1.2" fill="none" opacity="0.5"/>
-    <path d="M24-22 C30-10 32 6 24 18" stroke="#c07068" stroke-width="1.2" fill="none" opacity="0.4"/>
-    <!-- Mid petals -->
-    <path d="M1-22 C10-20 22-10 22 2 C22 14 14 22 2 24 C-10 26-20 18-22 6 C-24-6-16-20-4-24 C-2-25 0-23 1-22Z" fill="url(#tl-cel-rose)" stroke="#c07068" stroke-width="1.6"/>
-    <path d="M-1-22 C-10-20-22-10-22 2 C-22 14-14 22-2 24 C10 26 20 18 22 6" fill="url(#tl-cel-rose2)" stroke="#c07068" stroke-width="1.6"/>
-    <!-- Inner petals -->
-    <path d="M0-15 C8-13 16-5 15 4 C13 13 7 17 0 17 C-7 17-13 13-15 4 C-16-5-8-13 0-15Z" fill="#fde8e0" stroke="#c07068" stroke-width="1.5"/>
-    <path d="M-12 0 C-10-8-4-14 0-13 C6-12 10-7 13 0" fill="#e8b4a8" opacity="0.6"/>
-    <!-- Centre petals (tightly furled) -->
-    <path d="M0-9 C5-7 9-2 8 3 C6 8 3 9 0 9 C-3 9-6 8-8 3 C-9-2-5-7 0-9Z" fill="#fef2ee" stroke="#c07068" stroke-width="1.4"/>
-    <path d="M-4-5 C-2-8 3-7 5-3 C7 1 5 6 0 7" fill="#e8b4a8" opacity="0.5"/>
-    <!-- Tiny rolled centre -->
-    <path d="M-2-4 C0-6 3-4 4-1 C5 2 3 5 0 5 C-2 5-4 3-4 0 C-4-2-3-3-2-4Z" fill="#fff0ec" stroke="#c07068" stroke-width="1.2"/>
-    <!-- Stamens – Ghibli golden dots -->
-    <circle cx="0" cy="0" r="4.5" fill="#f0b830" stroke="#c88820" stroke-width="1.2"/>
-    <circle cx="0" cy="0" r="2.5" fill="#ffd048"/>
-    <circle cx="-1.5" cy="-2" r="1" fill="#ffe878"/>
-    <circle cx="1.8" cy="-1.2" r="0.9" fill="#ffe878"/>
-    <circle cx="1" cy="2" r="0.9" fill="#f8d040"/>
-    <!-- Dewdrop sparkle -->
-    <circle cx="-16" cy="-18" r="2.5" fill="white" opacity="0.7"/>
-    <circle cx="-17" cy="-19" r="1" fill="white" opacity="0.9"/>
-  </g>
+      <path d="M112 148 C104 130 108 112 124 110 C138 108 152 120 148 138 C136 142 124 146 112 148Z" fill="url(#tl-lg2)" opacity="0.72"/>
+      <path d="M112 148 C124 132 138 126 148 138" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.35"/>
 
-  <!-- ── SMALL GHIBLI BLOSSOMS (scattered accents) ── -->
-  <!-- Blossom 1 -->
-  <g transform="translate(132,78)">
-    <circle cx="0" cy="2" r="22" fill="#fce8e0" opacity="0.2" filter="url(#tl-glow)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="url(#tl-cel-peony)" stroke="#c09080" stroke-width="1.5" transform="rotate(0)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="url(#tl-cel-peony)" stroke="#c09080" stroke-width="1.5" transform="rotate(60)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="#fde4d8" stroke="#c09080" stroke-width="1.5" transform="rotate(120)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="url(#tl-cel-peony)" stroke="#c09080" stroke-width="1.5" transform="rotate(180)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="#fde4d8" stroke="#c09080" stroke-width="1.5" transform="rotate(240)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="url(#tl-cel-peony)" stroke="#c09080" stroke-width="1.5" transform="rotate(300)"/>
-    <!-- Golden centre -->
-    <circle cx="0" cy="0" r="6" fill="#f8c830" stroke="#d0a020" stroke-width="1.4"/>
-    <circle cx="0" cy="0" r="3.5" fill="#ffe050"/>
-    <circle cx="-1.2" cy="-1.5" r="1" fill="#fff078"/>
-    <circle cx="1.5" cy="-0.8" r="0.9" fill="#fff078"/>
-    <!-- Sparkle -->
-    <circle cx="-12" cy="-14" r="2" fill="white" opacity="0.75"/>
-    <circle cx="-13" cy="-15" r="0.9" fill="white" opacity="0.9"/>
-  </g>
+      <!-- Upper feathery leaves -->
+      <path d="M128 128 C122 110 128 92 142 90 C154 89 166 100 162 118 C152 122 140 127 128 128Z" fill="url(#tl-lg1)" opacity="0.68"/>
+      <path d="M144 108 C138 92 146 76 160 76 C170 76 180 86 174 102" fill="url(#tl-lg2)" opacity="0.62"/>
+      <path d="M158 88 C155 72 164 58 176 58 C186 58 194 68 188 82" fill="url(#tl-lg1)" opacity="0.55"/>
 
-  <!-- Blossom 2 - tiny blue forget-me-not style -->
-  <g transform="translate(192,48)">
-    <path d="M0-12 C3-10 7-5 5 0 C3 4 1 6 0 6 C-1 6-3 4-5 0 C-7-5-3-10 0-12Z" fill="url(#tl-cel-blue)" stroke="#7090b8" stroke-width="1.3" transform="rotate(0)"/>
-    <path d="M0-12 C3-10 7-5 5 0 C3 4 1 6 0 6 C-1 6-3 4-5 0 C-7-5-3-10 0-12Z" fill="url(#tl-cel-blue)" stroke="#7090b8" stroke-width="1.3" transform="rotate(72)"/>
-    <path d="M0-12 C3-10 7-5 5 0 C3 4 1 6 0 6 C-1 6-3 4-5 0 C-7-5-3-10 0-12Z" fill="#cce4f4" stroke="#7090b8" stroke-width="1.3" transform="rotate(144)"/>
-    <path d="M0-12 C3-10 7-5 5 0 C3 4 1 6 0 6 C-1 6-3 4-5 0 C-7-5-3-10 0-12Z" fill="url(#tl-cel-blue)" stroke="#7090b8" stroke-width="1.3" transform="rotate(216)"/>
-    <path d="M0-12 C3-10 7-5 5 0 C3 4 1 6 0 6 C-1 6-3 4-5 0 C-7-5-3-10 0-12Z" fill="#cce4f4" stroke="#7090b8" stroke-width="1.3" transform="rotate(288)"/>
-    <circle cx="0" cy="0" r="4" fill="#f8e050" stroke="#c8b020" stroke-width="1.2"/>
-    <circle cx="0" cy="0" r="2" fill="#fff878"/>
-  </g>
+      <!-- ── LARGE GARDEN ROSE – hyperrealistic 9-layer ── -->
+      <g transform="translate(52,162)" filter="url(#tl-fshadow)">
+        <!-- Outermost guard petal layer (slightly reflexed/curving back) -->
+        <path d="M0-34 C8-32 18-26 24-16 C30-6 30 8 24 18 C18 28 8 32 0 34 C-8 32-18 28-24 18 C-30 8-30-6-24-16 C-18-26-8-32 0-34Z" fill="url(#tl-rp4)" opacity="0.88"/>
+        <!-- Guard petal horizontal -->
+        <path d="M-34 0 C-32-8-26-18-16-24 C-6-30 8-30 18-24 C28-18 32-8 34 0 C32 8 28 18 18 24 C8 30-6 30-16 24 C-26 18-32 8-34 0Z" fill="url(#tl-rp4)" opacity="0.84"/>
+        <!-- Guard petal diagonal NW-SE -->
+        <path d="M-26-26 C-16-34 2-34 14-24 C26-14 28 4 20 16 C12 26-6 30-18 22 C-30 14-32-4-26-26Z" fill="url(#tl-rp1)" opacity="0.82"/>
+        <!-- Guard petal diagonal NE-SW -->
+        <path d="M26-26 C34-14 34 4 24 16 C14 26-4 28-16 20 C-28 12-30-8-22-18 C-14-28 2-34 14-28 C20-24 24-20 26-26Z" fill="url(#tl-rp2)" opacity="0.82"/>
+        <!-- Petal highlight/fold lines on guard petals -->
+        <path d="M0-34 C2-26 3-16 2-6" stroke="#fce8e4" stroke-width="1.4" fill="none" opacity="0.55"/>
+        <path d="M-34 0 C-26 2 -16 2 -6 1" stroke="#fce8e4" stroke-width="1.1" fill="none" opacity="0.5"/>
+        <path d="M-24-24 C-18-18 -12-10 -8-2" stroke="#f8e0dc" stroke-width="0.9" fill="none" opacity="0.45"/>
+        <!-- Layer 2: mid guard petals (slightly cupped inward) -->
+        <path d="M0-26 C8-22 20-12 18 0 C16 12 8 20 0 26 C-8 20-16 12-18 0 C-20-12-8-22 0-26Z" fill="url(#tl-rp5)" opacity="0.9"/>
+        <path d="M-26 0 C-22-8-12-20 0-18 C12-16 20-8 26 0 C22 8 12 20 0 18 C-12 16-22 8-26 0Z" fill="url(#tl-rp5)" opacity="0.87"/>
+        <!-- Diagonal mid petals -->
+        <path d="M-18-18 C-10-24 4-24 12-16 C20-8 22 6 16 14 C10 22-4 24-12 16 C-20 8-22-6-18-18Z" fill="url(#tl-rp3)" opacity="0.84"/>
+        <path d="M18-18 C24-10 24 4 16 12 C8 20-6 22-14 14 C-22 6-20-10-12-18 C-4-26 10-26 18-18Z" fill="url(#tl-rp3)" opacity="0.84"/>
+        <!-- Mid petal vein highlights -->
+        <path d="M0-26 C1-18 1-10 0-2" stroke="#fef0ec" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M18 0 C10 1 2 1 -2 0" stroke="#fef0ec" stroke-width="0.9" fill="none" opacity="0.55"/>
+        <!-- Layer 3: inner petals (cupped, rose-centre tone) -->
+        <path d="M0-17 C7-13 16-5 14 3 C12 11 7 16 0 17 C-7 16-12 11-14 3 C-16-5-7-13 0-17Z" fill="#f8d8d0" opacity="0.94"/>
+        <path d="M-17 0 C-13-7-5-16 0-14 C8-12 13-7 17 0 C13 7 5 16 0 14 C-5 12-13 7-17 0Z" fill="#fce0d8" opacity="0.9"/>
+        <!-- Inner diagonal petals -->
+        <path d="M-12-12 C-6-16 4-15 9-8 C14-2 13 7 8 12 C2 16-8 15-12 8 C-16 2-15-6-12-12Z" fill="#f8d4cc" opacity="0.88"/>
+        <path d="M12-12 C16-6 15 4 8 9 C2 14-7 13-12 7 C-16 1-14-9-7-12 C-1-16 6-16 12-12Z" fill="#fce0d8" opacity="0.86"/>
+        <!-- Layer 4: innermost furled petals -->
+        <path d="M0-10 C5-7 10-2 8 3 C6 8 3 10 0 10 C-3 10-6 8-8 3 C-10-2-5-7 0-10Z" fill="#feeae6" opacity="0.96"/>
+        <path d="M-9 2 C-6-4 -2-8 0-8 C3-8 6-4 9 2" fill="#fff2ee" opacity="0.88"/>
+        <!-- Tightly furled inner petal -->
+        <path d="M-3-6 C0-8 4-6 5-2 C6 2 4 6 0 7 C-3 7-5 4-5 0 C-5-3-4-5-3-6Z" fill="#fff8f6" opacity="0.95"/>
+        <!-- Stamens disk -->
+        <circle cx="0" cy="0" r="5.5" fill="#c07028" opacity="0.92"/>
+        <circle cx="0" cy="0" r="3.5" fill="#d8902a" opacity="0.96"/>
+        <circle cx="0" cy="0" r="2" fill="#f0b040" opacity="0.9"/>
+        <!-- Individual stamen heads (filaments) -->
+        <circle cx="0" cy="-3.2" r="1.1" fill="#f8d048" opacity="0.92"/>
+        <circle cx="3" cy="-1" r="1" fill="#f4c840" opacity="0.9"/>
+        <circle cx="1.8" cy="2.6" r="1" fill="#f8d048" opacity="0.9"/>
+        <circle cx="-1.8" cy="2.6" r="0.95" fill="#f4cc44" opacity="0.88"/>
+        <circle cx="-3" cy="-1" r="1" fill="#f8d048" opacity="0.88"/>
+        <circle cx="0" cy="0" r="1" fill="#e8a838" opacity="0.95"/>
+      </g>
 
-  <!-- Tiny bud on stem -->
-  <g transform="translate(104,122)">
-    <path d="M0 6 Q0 16 1 20" stroke="#5a7a50" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <path d="M-2 4 C-4 0-3-5 0-7 C3-9 6-5 7-1" fill="#8ab878" stroke="#3a6030" stroke-width="1.2"/>
-    <path d="M0-12 C5-9 10-3 9 2 C7 7 4 10 0 11 C-4 10-7 7-9 2 C-10-3-5-9 0-12Z" fill="#f9d4ca" stroke="#c07068" stroke-width="1.4"/>
-    <path d="M0-7 C3-5 6-1 5 2 C4 5 2 6 0 6 C-2 6-4 5-5 2 C-6-1-3-5 0-7Z" fill="#fde8e0"/>
-  </g>
-  <!-- Another tiny bud -->
-  <g transform="translate(162,52)">
-    <path d="M0 5 Q0 11 1 14" stroke="#5a7a50" stroke-width="1.3" stroke-linecap="round" fill="none"/>
-    <path d="M-2 3 C-3 0-2-4 0-5 C2-6 5-3 5 0" fill="#8ab878" stroke="#3a6030" stroke-width="1.1"/>
-    <path d="M0-9 C4-7 8-2 7 1 C5 5 3 8 0 9 C-3 8-5 5-7 1 C-8-2-4-7 0-9Z" fill="#fde4d8" stroke="#c09080" stroke-width="1.3"/>
-  </g>
+      <!-- ── PEONY – ruffled bomb-type, hyperrealistic ── -->
+      <g transform="translate(136,78)" filter="url(#tl-fshadow)">
+        <!-- Layer 1: wide guard petals -->
+        <path d="M0-30 C10-26 24-14 22 2 C20 16 10 26 0 30 C-10 26-20 16-22 2 C-24-14-10-26 0-30Z" fill="url(#tl-pp1)" opacity="0.86"/>
+        <path d="M-30 0 C-26-10-14-24 0-22 C16-20 26-10 30 0 C26 10 14 24 0 22 C-14 20-26 10-30 0Z" fill="url(#tl-pp2)" opacity="0.82"/>
+        <path d="M-22-22 C-12-28 4-28 14-18 C24-8 26 8 18 18 C10 28-6 28-16 20 C-26 12-28-4-22-22Z" fill="url(#tl-pp1)" opacity="0.78"/>
+        <path d="M22-22 C28-12 28 4 18 14 C8 24-8 26-18 18 C-28 8-26-8-16-18 C-6-28 8-30 18-24 C20-22 22-22 22-22Z" fill="url(#tl-pp2)" opacity="0.78"/>
+        <!-- Guard petal veins -->
+        <path d="M0-30 C1-22 1-12 0-4" stroke="#fff4f2" stroke-width="0.9" fill="none" opacity="0.65"/>
+        <path d="M22 2 C14 0 6 0 0 2" stroke="#fff4f2" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M-22-22 C-14-14 -8-6 -4 0" stroke="#fff4f2" stroke-width="0.7" fill="none" opacity="0.55"/>
+        <!-- Wavy/ruffled petal edges (peony characteristic) -->
+        <path d="M0-30 C3-30 5-29 6-27 C8-26 10-26 12-24 C14-22 15-20 14-18" stroke="url(#tl-pp2)" stroke-width="2.5" fill="none" opacity="0.35"/>
+        <path d="M-30 0 C-30 3-29 5-27 6 C-26 8-26 10-24 12 C-22 14-20 15-18 14" stroke="url(#tl-pp1)" stroke-width="2" fill="none" opacity="0.3"/>
+        <!-- Layer 2: mid petals -->
+        <path d="M0-22 C8-18 18-8 16 2 C14 12 8 18 0 22 C-8 18-14 12-16 2 C-18-8-8-18 0-22Z" fill="url(#tl-pp3)" opacity="0.9"/>
+        <path d="M-22 0 C-18-8-8-18 0-16 C10-14 18-8 22 0 C18 8 8 18 0 16 C-8 14-18 8-22 0Z" fill="url(#tl-pp3)" opacity="0.87"/>
+        <path d="M-16-16 C-8-22 6-22 13-13 C20-4 20 10 13 17 C6 24-8 24-15 16 C-22 8-22-6-16-16Z" fill="#fce8e6" opacity="0.85"/>
+        <path d="M16-16 C22-8 22 6 13 13 C4 20-10 20-16 12 C-22 4-20-10-11-16 C-2-22 8-24 16-16Z" fill="#fdecea" opacity="0.83"/>
+        <!-- Mid petal veins -->
+        <path d="M0-22 C1-16 1-8 0-2" stroke="#fff6f4" stroke-width="0.8" fill="none" opacity="0.7"/>
+        <path d="M16 2 C10 0 4 0 0 2" stroke="#fff6f4" stroke-width="0.7" fill="none" opacity="0.65"/>
+        <!-- Layer 3: inner petals (ball-center of a bomb peony) -->
+        <path d="M0-15 C6-12 13-4 11 3 C9 10 5 14 0 15 C-5 14-9 10-11 3 C-13-4-6-12 0-15Z" fill="#fef0ee" opacity="0.95"/>
+        <path d="M-15 0 C-12-6-4-13 0-11 C7-9 12-5 15 0 C12 5 4 13 0 11 C-5 9-12 5-15 0Z" fill="#fff4f2" opacity="0.92"/>
+        <!-- Cupped inner side petals -->
+        <path d="M-10-10 C-5-14 4-13 8-6 C12 1 10 9 5 12 C0 15-8 13-11 7 C-14 1-13-5-10-10Z" fill="#fce8e6" opacity="0.9"/>
+        <path d="M10-10 C14-5 13 4 6 8 C-1 12-9 10-12 4 C-15-2-12-12-5-13 C2-14 6-14 10-10Z" fill="#feecea" opacity="0.88"/>
+        <!-- Centre tightly-packed petals -->
+        <path d="M0-9 C4-6 8-1 6 3 C4 7 2 8 0 8 C-2 8-4 7-6 3 C-8-1-4-6 0-9Z" fill="#fffaf8" opacity="0.97"/>
+        <path d="M-5-5 C-2-8 3-7 5-3 C7 1 5 6 1 7 C-3 8-7 4-7 0 C-7-3-6-4-5-5Z" fill="#fff8f6" opacity="0.92"/>
+        <path d="M5-5 C8-2 7 3 3 5 C-1 7-6 5-7 1 C-8-3-4-7 0-7 C3-7 4-7 5-5Z" fill="#fffcfa" opacity="0.9"/>
+        <!-- Stamens (barely visible in bomb peony center) -->
+        <circle cx="0" cy="0" r="4" fill="#d4882a" opacity="0.7"/>
+        <circle cx="0" cy="0" r="2.5" fill="#eca040" opacity="0.75"/>
+        <circle cx="0" cy="-2.5" r="0.9" fill="#f8d040" opacity="0.8"/>
+        <circle cx="2.2" cy="-1" r="0.85" fill="#f8cc38" opacity="0.78"/>
+        <circle cx="1.4" cy="2" r="0.85" fill="#f8d040" opacity="0.78"/>
+        <circle cx="-1.4" cy="2" r="0.8" fill="#f8cc38" opacity="0.75"/>
+        <circle cx="-2.2" cy="-1" r="0.85" fill="#f8d040" opacity="0.78"/>
+      </g>
 
-  <!-- ── FLOATING PETALS (Ghibli magic!) ── -->
-  <path d="M220 60 C226 54 230 58 226 64 C222 70 216 68 220 60Z" fill="#fde8e0" stroke="#c07068" stroke-width="1" opacity="0.75"/>
-  <path d="M240 38 C245 32 249 36 246 42 C243 48 238 46 240 38Z" fill="#fde4d8" stroke="#c09080" stroke-width="1" opacity="0.65"/>
-  <path d="M208 28 C214 24 217 28 214 34 C211 38 206 36 208 28Z" fill="#e0eef8" stroke="#7090b8" stroke-width="1" opacity="0.7"/>
+      <!-- ── ANEMONE – 5-petal hyperrealistic ── -->
+      <g transform="translate(195,50)">
+        <!-- 5 individual teardrop petals rotated 72deg each, with gradient fill -->
+        <!-- Petal 1: top -->
+        <path d="M0-20 C5-16 9-8 7 0 C5 4 2 6 0 6 C-2 6-4 3-5 0 C-7-7-4-16 0-20Z" fill="url(#tl-ap1)" opacity="0.9" transform="rotate(0)"/>
+        <path d="M0-20 C1-14 1-8 0 0" stroke="#b0cce4" stroke-width="0.7" fill="none" opacity="0.65" transform="rotate(0)"/>
+        <!-- Petal 2: 72° -->
+        <path d="M0-20 C5-16 9-8 7 0 C5 4 2 6 0 6 C-2 6-4 3-5 0 C-7-7-4-16 0-20Z" fill="url(#tl-ap1)" opacity="0.87" transform="rotate(72)"/>
+        <path d="M0-20 C1-14 1-8 0 0" stroke="#b0cce4" stroke-width="0.7" fill="none" opacity="0.6" transform="rotate(72)"/>
+        <!-- Petal 3: 144° -->
+        <path d="M0-20 C5-16 9-8 7 0 C5 4 2 6 0 6 C-2 6-4 3-5 0 C-7-7-4-16 0-20Z" fill="#d8ecf8" opacity="0.85" transform="rotate(144)"/>
+        <path d="M0-20 C1-14 1-8 0 0" stroke="#b0cce4" stroke-width="0.6" fill="none" opacity="0.55" transform="rotate(144)"/>
+        <!-- Petal 4: 216° -->
+        <path d="M0-20 C5-16 9-8 7 0 C5 4 2 6 0 6 C-2 6-4 3-5 0 C-7-7-4-16 0-20Z" fill="#d0e8f4" opacity="0.85" transform="rotate(216)"/>
+        <path d="M0-20 C1-14 1-8 0 0" stroke="#b0cce4" stroke-width="0.6" fill="none" opacity="0.55" transform="rotate(216)"/>
+        <!-- Petal 5: 288° -->
+        <path d="M0-20 C5-16 9-8 7 0 C5 4 2 6 0 6 C-2 6-4 3-5 0 C-7-7-4-16 0-20Z" fill="url(#tl-ap1)" opacity="0.88" transform="rotate(288)"/>
+        <path d="M0-20 C1-14 1-8 0 0" stroke="#b0cce4" stroke-width="0.7" fill="none" opacity="0.6" transform="rotate(288)"/>
+        <!-- Dark velvety disc with depth -->
+        <circle cx="0" cy="0" r="8" fill="#131e2c" opacity="0.88"/>
+        <circle cx="0" cy="0" r="6.5" fill="#1e3048" opacity="0.92"/>
+        <circle cx="0" cy="0" r="5" fill="#243858" opacity="0.88"/>
+        <!-- Stamen ring (white-tipped) -->
+        <circle cx="0" cy="-5.5" r="1.4" fill="#e0f0f8" opacity="0.95"/>
+        <circle cx="5.2" cy="-1.7" r="1.3" fill="#d4ecf6" opacity="0.92"/>
+        <circle cx="3.2" cy="4.5" r="1.3" fill="#e0f0f8" opacity="0.92"/>
+        <circle cx="-3.2" cy="4.5" r="1.3" fill="#d8eef6" opacity="0.9"/>
+        <circle cx="-5.2" cy="-1.7" r="1.3" fill="#e0f0f8" opacity="0.9"/>
+        <!-- Centre pip -->
+        <circle cx="0" cy="0" r="2.2" fill="#304060" opacity="0.9"/>
+        <circle cx="0" cy="0" r="1" fill="#4a607a" opacity="0.85"/>
+      </g>
 
-  <!-- ── SPARKLE DOTS (Ghibli signature) ── -->
-  <circle cx="175" cy="28" r="2.5" fill="white" opacity="0.8"/>
-  <circle cx="174" cy="27" r="1" fill="white"/>
-  <line x1="175" y1="22" x2="175" y2="24" stroke="white" stroke-width="1.2" opacity="0.7"/>
-  <line x1="170" y1="28" x2="172" y2="28" stroke="white" stroke-width="1.2" opacity="0.7"/>
-  <line x1="178" y1="28" x2="180" y2="28" stroke="white" stroke-width="1.2" opacity="0.7"/>
-  <line x1="175" y1="32" x2="175" y2="34" stroke="white" stroke-width="1.2" opacity="0.7"/>
+      <!-- ── ROSEBUDS (accent) ── -->
+      <g transform="translate(104,122)">
+        <path d="M0 8 Q0 18 2 24" stroke="#5a8a5a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <!-- Sepal -->
+        <path d="M-3 6 C-5 2-4-4 0-6 C4-8 7-4 8-1" fill="#6a9a6a" opacity="0.7"/>
+        <!-- Bud petals -->
+        <path d="M0-14 C6-10 12-4 10 2 C8 8 4 12 0 14 C-4 12-8 8-10 2 C-12-4-6-10 0-14Z" fill="#e89890" opacity="0.88"/>
+        <path d="M0-8 C4-5 8-1 6 2 C4 6 2 8 0 8 C-2 8-4 6-6 2 C-8-1-4-5 0-8Z" fill="#f4c0b8" opacity="0.95"/>
+        <path d="M0-8 C0-4 0 0 0 4" stroke="#f8d8d4" stroke-width="0.8" fill="none" opacity="0.6"/>
+      </g>
 
-  <circle cx="218" cy="90" r="2" fill="white" opacity="0.7"/>
-  <line x1="218" y1="85" x2="218" y2="87" stroke="white" stroke-width="1" opacity="0.6"/>
-  <line x1="213" y1="90" x2="215" y2="90" stroke="white" stroke-width="1" opacity="0.6"/>
-  <line x1="221" y1="90" x2="223" y2="90" stroke="white" stroke-width="1" opacity="0.6"/>
-  <line x1="218" y1="93" x2="218" y2="95" stroke="white" stroke-width="1" opacity="0.6"/>
+      <g transform="translate(165,50)">
+        <path d="M0 6 Q0 13 1 17" stroke="#5a8a5a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+        <path d="M-2 4 C-4 1-3-3 0-5 C3-7 6-3 6 0" fill="#6a9a6a" opacity="0.65"/>
+        <path d="M0-10 C4-7 8-2 7 1 C5 5 3 8 0 10 C-3 8-5 5-7 1 C-8-2-4-7 0-10Z" fill="#d08888" opacity="0.85"/>
+        <path d="M0-5 C3-3 5 0 4 2 C3 4 1 5 0 5 C-1 5-3 4-4 2 C-5 0-3-3 0-5Z" fill="#ecb8b4" opacity="0.92"/>
+      </g>
 
-  <!-- Tiny berry pods -->
-  <path d="M200 18 Q196 28 192 36" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-  <circle cx="200" cy="18" r="5" fill="#b8d4a8" stroke="#5a7a50" stroke-width="1.2"/>
-  <circle cx="200" cy="15" r="1.8" fill="white" opacity="0.6"/>
-  <circle cx="212" cy="12" r="4.5" fill="#a8c898" stroke="#5a7a50" stroke-width="1.2"/>
-  <circle cx="212" cy="9" r="1.5" fill="white" opacity="0.6"/>
-  <circle cx="222" cy="22" r="4" fill="#b8d4a8" stroke="#5a7a50" stroke-width="1.1"/>
-</svg>
+      <!-- ── BERRIES (eucalyptus seed pods) ── -->
+      <path d="M202 18 Q198 28 194 38" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+      <path d="M214 12 Q210 24 206 32" stroke="#5a8a5a" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <circle cx="202" cy="18" r="5.5" fill="#7a9ab5" opacity="0.72"/>
+      <circle cx="202" cy="18" r="3" fill="#9ab8d0" opacity="0.6"/>
+      <circle cx="202" cy="16.5" r="1.2" fill="#d0e4f0" opacity="0.7"/>
+      <circle cx="214" cy="12" r="5" fill="#6a8aaa" opacity="0.68"/>
+      <circle cx="214" cy="12" r="2.8" fill="#8aaac4" opacity="0.55"/>
+      <circle cx="222" cy="20" r="4.5" fill="#8aaac0" opacity="0.64"/>
+      <circle cx="208" cy="6" r="4" fill="#7a9ab5" opacity="0.62"/>
+      <circle cx="220" cy="30" r="4" fill="#6a8aaa" opacity="0.6"/>
+      <circle cx="178" cy="32" r="3.5" fill="#7a9ab5" opacity="0.55"/>
+      <circle cx="186" cy="24" r="3" fill="#6a8aaa" opacity="0.52"/>
+    </svg>
   </div>
 
     </div>
@@ -455,495 +545,496 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
   <!-- TOP RIGHT botanical corner: hyperrealistic (mirrors TL via CSS scaleX) -->
   <div class="floral-corner tr">
     <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <!-- Cel-shade gradients (2-tone, hard) -->
-    <linearGradient id="tr-cel-rose" x1="20%" y1="0%" x2="80%" y2="100%">
-      <stop offset="0%" stop-color="#fde8e0"/>
-      <stop offset="48%" stop-color="#fde8e0"/>
-      <stop offset="49%" stop-color="#e8b4a8"/>
-      <stop offset="100%" stop-color="#e8b4a8"/>
-    </linearGradient>
-    <linearGradient id="tr-cel-rose2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f9d4ca"/>
-      <stop offset="45%" stop-color="#f9d4ca"/>
-      <stop offset="46%" stop-color="#dda090"/>
-      <stop offset="100%" stop-color="#dda090"/>
-    </linearGradient>
-    <linearGradient id="tr-cel-peony" x1="15%" y1="0%" x2="85%" y2="100%">
-      <stop offset="0%" stop-color="#fef0e8"/>
-      <stop offset="44%" stop-color="#fef0e8"/>
-      <stop offset="45%" stop-color="#f0c4b0"/>
-      <stop offset="100%" stop-color="#f0c4b0"/>
-    </linearGradient>
-    <linearGradient id="tr-cel-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-      <stop offset="0%" stop-color="#c8ddb0"/>
-      <stop offset="46%" stop-color="#c8ddb0"/>
-      <stop offset="47%" stop-color="#8ab878"/>
-      <stop offset="100%" stop-color="#8ab878"/>
-    </linearGradient>
-    <linearGradient id="tr-cel-leaf2" x1="0%" y1="0%" x2="60%" y2="100%">
-      <stop offset="0%" stop-color="#b8d8a0"/>
-      <stop offset="44%" stop-color="#b8d8a0"/>
-      <stop offset="45%" stop-color="#78a860"/>
-      <stop offset="100%" stop-color="#78a860"/>
-    </linearGradient>
-    <linearGradient id="tr-cel-blue" x1="10%" y1="0%" x2="90%" y2="100%">
-      <stop offset="0%" stop-color="#e0eef8"/>
-      <stop offset="44%" stop-color="#e0eef8"/>
-      <stop offset="45%" stop-color="#a8c8e8"/>
-      <stop offset="100%" stop-color="#a8c8e8"/>
-    </linearGradient>
-    <filter id="tr-glow" x="-25%" y="-25%" width="150%" height="150%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-  </defs>
+      <defs>
+        <radialGradient id="tr-rp1" cx="40%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#f5cfc8"/>
+          <stop offset="45%" stop-color="#d4827a"/>
+          <stop offset="100%" stop-color="#a85850"/>
+        </radialGradient>
+        <radialGradient id="tr-rp2" cx="55%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#f0c0ba"/>
+          <stop offset="50%" stop-color="#c87870"/>
+          <stop offset="100%" stop-color="#9a5048"/>
+        </radialGradient>
+        <radialGradient id="tr-rp3" cx="50%" cy="40%" r="55%">
+          <stop offset="0%" stop-color="#fad8d4"/>
+          <stop offset="40%" stop-color="#e8a89e"/>
+          <stop offset="100%" stop-color="#c07068"/>
+        </radialGradient>
+        <radialGradient id="tr-pp1" cx="45%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#fde8e4"/>
+          <stop offset="40%" stop-color="#f0c0b8"/>
+          <stop offset="100%" stop-color="#d89088"/>
+        </radialGradient>
+        <radialGradient id="tr-pp2" cx="50%" cy="25%" r="65%">
+          <stop offset="0%" stop-color="#fff0ee"/>
+          <stop offset="45%" stop-color="#f4cac4"/>
+          <stop offset="100%" stop-color="#e0a09a"/>
+        </radialGradient>
+        <radialGradient id="tr-ap1" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#eef4fa"/>
+          <stop offset="55%" stop-color="#c8ddf0"/>
+          <stop offset="100%" stop-color="#9ab8d8"/>
+        </radialGradient>
+        <linearGradient id="tr-lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#a8c8a8"/>
+          <stop offset="50%" stop-color="#6a9a6a"/>
+          <stop offset="100%" stop-color="#4a7a4a"/>
+        </linearGradient>
+        <linearGradient id="tr-lg2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#b8d0b8"/>
+          <stop offset="60%" stop-color="#78aa78"/>
+          <stop offset="100%" stop-color="#558055"/>
+        </linearGradient>
 
-  <!-- ── STEMS  — wobbly, hand-drawn feel ── -->
-  <path d="M2 278 C10 250 30 215 55 180 C75 152 100 128 130 102" stroke="#5a7a50" stroke-width="2.8" stroke-linecap="round" fill="none"/>
-  <path d="M0 260 C15 238 35 210 55 185 C72 163 92 145 115 125" stroke="#6a8a5a" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.6"/>
-  <path d="M18 278 C35 255 58 228 82 200 C104 175 128 155 152 132" stroke="#5a7a50" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
-
-  <!-- ── GHIBLI LEAVES — round, plump, cel-shaded ── -->
-  <!-- Leaf 1 lower left -->
-  <path d="M18 252 C4 238 0 218 12 208 C24 198 44 204 50 218 C44 230 32 244 18 252Z" fill="url(#tl-cel-leaf)" stroke="#3a6030" stroke-width="1.6" stroke-linejoin="round"/>
-  <path d="M18 252 C28 236 40 222 50 218" stroke="#3a6030" stroke-width="1.1" fill="none"/>
-  <!-- Leaf shadow chunk -->
-  <path d="M22 246 C16 236 14 224 20 216 C28 212 38 216 42 224" fill="#8ab878" opacity="0.45"/>
-
-  <!-- Leaf 2 -->
-  <path d="M8 265 C-4 250 -5 230 8 222 C20 214 38 220 42 235 C30 245 20 257 8 265Z" fill="url(#tl-cel-leaf2)" stroke="#3a6030" stroke-width="1.6" stroke-linejoin="round"/>
-  <path d="M8 265 C18 250 30 238 42 235" stroke="#3a6030" stroke-width="1.1" fill="none"/>
-
-  <!-- Leaf 3 mid -->
-  <path d="M42 228 C28 212 28 192 44 184 C58 177 76 186 76 202 C64 212 54 222 42 228Z" fill="url(#tl-cel-leaf)" stroke="#3a6030" stroke-width="1.5" stroke-linejoin="round"/>
-  <path d="M42 228 C54 212 66 202 76 202" stroke="#3a6030" stroke-width="1" fill="none"/>
-  <path d="M46 222 C40 212 40 200 48 196" fill="#8ab878" opacity="0.4"/>
-
-  <!-- Leaf 4 -->
-  <path d="M60 208 C48 190 50 170 65 164 C79 158 96 168 94 186 C82 194 70 204 60 208Z" fill="url(#tl-cel-leaf2)" stroke="#3a6030" stroke-width="1.5" stroke-linejoin="round"/>
-  <path d="M60 208 C72 192 84 184 94 186" stroke="#3a6030" stroke-width="1" fill="none"/>
-
-  <!-- Leaf 5 -->
-  <path d="M80 186 C68 168 70 148 86 142 C100 136 116 148 114 166 C102 174 90 183 80 186Z" fill="url(#tl-cel-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-  <path d="M80 186 C92 170 105 163 114 166" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-
-  <!-- Leaf 6 small upper -->
-  <path d="M100 162 C90 148 92 132 104 128 C116 124 130 134 126 150 C116 156 108 161 100 162Z" fill="url(#tl-cel-leaf2)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-  <path d="M100 162 C110 148 122 142 126 150" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-
-  <!-- Tiny round leaf tips upper -->
-  <path d="M126 128 C120 112 126 96 138 94 C150 92 160 104 156 120" fill="url(#tl-cel-leaf)" stroke="#3a6030" stroke-width="1.2" stroke-linejoin="round"/>
-  <path d="M142 106 C138 92 146 78 156 78 C164 78 170 88 166 102" fill="url(#tl-cel-leaf2)" stroke="#3a6030" stroke-width="1.1" stroke-linejoin="round"/>
-
-  <!-- ── BIG GHIBLI ROSE (lower focal, ~r32) ── -->
-  <g transform="translate(52,160)">
-    <!-- Soft glow behind -->
-    <circle cx="0" cy="2" r="34" fill="#fce8e0" opacity="0.3" filter="url(#tl-glow)"/>
-    <!-- Outermost petals – wide, rounded, slightly uneven (hand-drawn) -->
-    <path d="M2-32 C12-30 28-18 30-4 C32 10 24 26 8 32 C-4 36-20 30-28 18 C-34 8-32-10-24-22 C-16-34-2-34 2-32Z" fill="url(#tl-cel-rose)" stroke="#c07068" stroke-width="1.8" stroke-linejoin="round"/>
-    <path d="M-2-32 C-14-28-30-14-30 2 C-30 16-20 28-6 32 C8 36 24 28 28 16 C34 4 30-12 20-24 C12-34 4-34-2-32Z" fill="url(#tl-cel-rose2)" stroke="#c07068" stroke-width="1.8" stroke-linejoin="round"/>
-    <!-- Cel shadow on outermost petals -->
-    <path d="M-24-22 C-30-10-32 6-24 18" stroke="#c07068" stroke-width="1.2" fill="none" opacity="0.5"/>
-    <path d="M24-22 C30-10 32 6 24 18" stroke="#c07068" stroke-width="1.2" fill="none" opacity="0.4"/>
-    <!-- Mid petals -->
-    <path d="M1-22 C10-20 22-10 22 2 C22 14 14 22 2 24 C-10 26-20 18-22 6 C-24-6-16-20-4-24 C-2-25 0-23 1-22Z" fill="url(#tl-cel-rose)" stroke="#c07068" stroke-width="1.6"/>
-    <path d="M-1-22 C-10-20-22-10-22 2 C-22 14-14 22-2 24 C10 26 20 18 22 6" fill="url(#tl-cel-rose2)" stroke="#c07068" stroke-width="1.6"/>
-    <!-- Inner petals -->
-    <path d="M0-15 C8-13 16-5 15 4 C13 13 7 17 0 17 C-7 17-13 13-15 4 C-16-5-8-13 0-15Z" fill="#fde8e0" stroke="#c07068" stroke-width="1.5"/>
-    <path d="M-12 0 C-10-8-4-14 0-13 C6-12 10-7 13 0" fill="#e8b4a8" opacity="0.6"/>
-    <!-- Centre petals (tightly furled) -->
-    <path d="M0-9 C5-7 9-2 8 3 C6 8 3 9 0 9 C-3 9-6 8-8 3 C-9-2-5-7 0-9Z" fill="#fef2ee" stroke="#c07068" stroke-width="1.4"/>
-    <path d="M-4-5 C-2-8 3-7 5-3 C7 1 5 6 0 7" fill="#e8b4a8" opacity="0.5"/>
-    <!-- Tiny rolled centre -->
-    <path d="M-2-4 C0-6 3-4 4-1 C5 2 3 5 0 5 C-2 5-4 3-4 0 C-4-2-3-3-2-4Z" fill="#fff0ec" stroke="#c07068" stroke-width="1.2"/>
-    <!-- Stamens – Ghibli golden dots -->
-    <circle cx="0" cy="0" r="4.5" fill="#f0b830" stroke="#c88820" stroke-width="1.2"/>
-    <circle cx="0" cy="0" r="2.5" fill="#ffd048"/>
-    <circle cx="-1.5" cy="-2" r="1" fill="#ffe878"/>
-    <circle cx="1.8" cy="-1.2" r="0.9" fill="#ffe878"/>
-    <circle cx="1" cy="2" r="0.9" fill="#f8d040"/>
-    <!-- Dewdrop sparkle -->
-    <circle cx="-16" cy="-18" r="2.5" fill="white" opacity="0.7"/>
-    <circle cx="-17" cy="-19" r="1" fill="white" opacity="0.9"/>
-  </g>
-
-  <!-- ── SMALL GHIBLI BLOSSOMS (scattered accents) ── -->
-  <!-- Blossom 1 -->
-  <g transform="translate(132,78)">
-    <circle cx="0" cy="2" r="22" fill="#fce8e0" opacity="0.2" filter="url(#tl-glow)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="url(#tl-cel-peony)" stroke="#c09080" stroke-width="1.5" transform="rotate(0)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="url(#tl-cel-peony)" stroke="#c09080" stroke-width="1.5" transform="rotate(60)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="#fde4d8" stroke="#c09080" stroke-width="1.5" transform="rotate(120)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="url(#tl-cel-peony)" stroke="#c09080" stroke-width="1.5" transform="rotate(180)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="#fde4d8" stroke="#c09080" stroke-width="1.5" transform="rotate(240)"/>
-    <path d="M0-18 C5-15 10-7 8 0 C6 6 3 10 0 10 C-3 10-6 6-8 0 C-10-7-5-15 0-18Z" fill="url(#tl-cel-peony)" stroke="#c09080" stroke-width="1.5" transform="rotate(300)"/>
-    <!-- Golden centre -->
-    <circle cx="0" cy="0" r="6" fill="#f8c830" stroke="#d0a020" stroke-width="1.4"/>
-    <circle cx="0" cy="0" r="3.5" fill="#ffe050"/>
-    <circle cx="-1.2" cy="-1.5" r="1" fill="#fff078"/>
-    <circle cx="1.5" cy="-0.8" r="0.9" fill="#fff078"/>
-    <!-- Sparkle -->
-    <circle cx="-12" cy="-14" r="2" fill="white" opacity="0.75"/>
-    <circle cx="-13" cy="-15" r="0.9" fill="white" opacity="0.9"/>
-  </g>
-
-  <!-- Blossom 2 - tiny blue forget-me-not style -->
-  <g transform="translate(192,48)">
-    <path d="M0-12 C3-10 7-5 5 0 C3 4 1 6 0 6 C-1 6-3 4-5 0 C-7-5-3-10 0-12Z" fill="url(#tl-cel-blue)" stroke="#7090b8" stroke-width="1.3" transform="rotate(0)"/>
-    <path d="M0-12 C3-10 7-5 5 0 C3 4 1 6 0 6 C-1 6-3 4-5 0 C-7-5-3-10 0-12Z" fill="url(#tl-cel-blue)" stroke="#7090b8" stroke-width="1.3" transform="rotate(72)"/>
-    <path d="M0-12 C3-10 7-5 5 0 C3 4 1 6 0 6 C-1 6-3 4-5 0 C-7-5-3-10 0-12Z" fill="#cce4f4" stroke="#7090b8" stroke-width="1.3" transform="rotate(144)"/>
-    <path d="M0-12 C3-10 7-5 5 0 C3 4 1 6 0 6 C-1 6-3 4-5 0 C-7-5-3-10 0-12Z" fill="url(#tl-cel-blue)" stroke="#7090b8" stroke-width="1.3" transform="rotate(216)"/>
-    <path d="M0-12 C3-10 7-5 5 0 C3 4 1 6 0 6 C-1 6-3 4-5 0 C-7-5-3-10 0-12Z" fill="#cce4f4" stroke="#7090b8" stroke-width="1.3" transform="rotate(288)"/>
-    <circle cx="0" cy="0" r="4" fill="#f8e050" stroke="#c8b020" stroke-width="1.2"/>
-    <circle cx="0" cy="0" r="2" fill="#fff878"/>
-  </g>
-
-  <!-- Tiny bud on stem -->
-  <g transform="translate(104,122)">
-    <path d="M0 6 Q0 16 1 20" stroke="#5a7a50" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <path d="M-2 4 C-4 0-3-5 0-7 C3-9 6-5 7-1" fill="#8ab878" stroke="#3a6030" stroke-width="1.2"/>
-    <path d="M0-12 C5-9 10-3 9 2 C7 7 4 10 0 11 C-4 10-7 7-9 2 C-10-3-5-9 0-12Z" fill="#f9d4ca" stroke="#c07068" stroke-width="1.4"/>
-    <path d="M0-7 C3-5 6-1 5 2 C4 5 2 6 0 6 C-2 6-4 5-5 2 C-6-1-3-5 0-7Z" fill="#fde8e0"/>
-  </g>
-  <!-- Another tiny bud -->
-  <g transform="translate(162,52)">
-    <path d="M0 5 Q0 11 1 14" stroke="#5a7a50" stroke-width="1.3" stroke-linecap="round" fill="none"/>
-    <path d="M-2 3 C-3 0-2-4 0-5 C2-6 5-3 5 0" fill="#8ab878" stroke="#3a6030" stroke-width="1.1"/>
-    <path d="M0-9 C4-7 8-2 7 1 C5 5 3 8 0 9 C-3 8-5 5-7 1 C-8-2-4-7 0-9Z" fill="#fde4d8" stroke="#c09080" stroke-width="1.3"/>
-  </g>
-
-  <!-- ── FLOATING PETALS (Ghibli magic!) ── -->
-  <path d="M220 60 C226 54 230 58 226 64 C222 70 216 68 220 60Z" fill="#fde8e0" stroke="#c07068" stroke-width="1" opacity="0.75"/>
-  <path d="M240 38 C245 32 249 36 246 42 C243 48 238 46 240 38Z" fill="#fde4d8" stroke="#c09080" stroke-width="1" opacity="0.65"/>
-  <path d="M208 28 C214 24 217 28 214 34 C211 38 206 36 208 28Z" fill="#e0eef8" stroke="#7090b8" stroke-width="1" opacity="0.7"/>
-
-  <!-- ── SPARKLE DOTS (Ghibli signature) ── -->
-  <circle cx="175" cy="28" r="2.5" fill="white" opacity="0.8"/>
-  <circle cx="174" cy="27" r="1" fill="white"/>
-  <line x1="175" y1="22" x2="175" y2="24" stroke="white" stroke-width="1.2" opacity="0.7"/>
-  <line x1="170" y1="28" x2="172" y2="28" stroke="white" stroke-width="1.2" opacity="0.7"/>
-  <line x1="178" y1="28" x2="180" y2="28" stroke="white" stroke-width="1.2" opacity="0.7"/>
-  <line x1="175" y1="32" x2="175" y2="34" stroke="white" stroke-width="1.2" opacity="0.7"/>
-
-  <circle cx="218" cy="90" r="2" fill="white" opacity="0.7"/>
-  <line x1="218" y1="85" x2="218" y2="87" stroke="white" stroke-width="1" opacity="0.6"/>
-  <line x1="213" y1="90" x2="215" y2="90" stroke="white" stroke-width="1" opacity="0.6"/>
-  <line x1="221" y1="90" x2="223" y2="90" stroke="white" stroke-width="1" opacity="0.6"/>
-  <line x1="218" y1="93" x2="218" y2="95" stroke="white" stroke-width="1" opacity="0.6"/>
-
-  <!-- Tiny berry pods -->
-  <path d="M200 18 Q196 28 192 36" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-  <circle cx="200" cy="18" r="5" fill="#b8d4a8" stroke="#5a7a50" stroke-width="1.2"/>
-  <circle cx="200" cy="15" r="1.8" fill="white" opacity="0.6"/>
-  <circle cx="212" cy="12" r="4.5" fill="#a8c898" stroke="#5a7a50" stroke-width="1.2"/>
-  <circle cx="212" cy="9" r="1.5" fill="white" opacity="0.6"/>
-  <circle cx="222" cy="22" r="4" fill="#b8d4a8" stroke="#5a7a50" stroke-width="1.1"/>
-</svg>
+        <radialGradient id="tr-rp4" cx="35%" cy="28%" r="70%">
+          <stop offset="0%" stop-color="#ffeae8"/>
+          <stop offset="25%" stop-color="#f0b8b0"/>
+          <stop offset="60%" stop-color="#cc7068"/>
+          <stop offset="100%" stop-color="#8a3830"/>
+        </radialGradient>
+        <radialGradient id="tr-rp5" cx="60%" cy="45%" r="58%">
+          <stop offset="0%" stop-color="#fff0ee"/>
+          <stop offset="35%" stop-color="#f8d0ca"/>
+          <stop offset="75%" stop-color="#dc9088"/>
+          <stop offset="100%" stop-color="#b06058"/>
+        </radialGradient>
+        <radialGradient id="tr-pp3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff8f6"/>
+          <stop offset="30%" stop-color="#fce4e0"/>
+          <stop offset="65%" stop-color="#f0b8b2"/>
+          <stop offset="100%" stop-color="#d88880"/>
+        </radialGradient>
+        <filter id="tr-fshadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="1.5" dy="2.5" stdDeviation="2.5" flood-color="#6a3030" flood-opacity="0.22"/>
+        </filter>
+        <filter id="tr-blur" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.2"/>
+        </filter>
+      </defs>
+      <!-- Stems -->
+      <path d="M0 280 Q48 215 82 165 Q116 118 152 80" stroke="#4a7a4a" stroke-width="2.8" stroke-linecap="round" fill="none" opacity="0.35" filter="url(#tr-blur)"/>
+      <path d="M0 280 Q48 215 82 165 Q116 118 152 80" stroke="#6a9a6a" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M0 280 Q22 238 45 198 Q70 158 98 125 Q125 95 155 70" stroke="#578a57" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+      <path d="M18 280 Q58 228 95 185 Q128 148 158 115" stroke="#7aaa7a" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.55"/>
+      <!-- Leaves -->
+      <path d="M22 248 C8 235 5 218 18 210 C28 204 42 208 50 220 C38 228 30 240 22 248Z" fill="url(#tr-lg2)" opacity="0.85"/>
+      <path d="M22 248 C32 235 42 222 50 220" stroke="#4a7a4a" stroke-width="0.7" fill="none" opacity="0.5"/>
+      <path d="M10 262 C-2 248 -4 230 10 222 C22 215 38 220 44 234 C30 242 20 254 10 262Z" fill="url(#tr-lg1)" opacity="0.8"/>
+      <path d="M44 228 C32 212 32 194 46 188 C58 183 74 190 78 205 C64 212 54 222 44 228Z" fill="url(#tr-lg2)" opacity="0.82"/>
+      <path d="M60 210 C50 194 52 176 66 170 C78 165 94 174 96 190 C82 196 70 205 60 210Z" fill="url(#tr-lg1)" opacity="0.8"/>
+      <path d="M80 188 C68 170 70 150 86 144 C100 138 116 148 116 166 C102 172 90 182 80 188Z" fill="url(#tr-lg2)" opacity="0.78"/>
+      <path d="M96 168 C86 150 90 132 106 128 C120 124 135 136 133 154 C120 158 108 165 96 168Z" fill="url(#tr-lg1)" opacity="0.75"/>
+      <path d="M112 148 C104 130 108 112 124 110 C138 108 152 120 148 138 C136 142 124 146 112 148Z" fill="url(#tr-lg2)" opacity="0.72"/>
+      <path d="M128 128 C122 110 128 92 142 90 C154 89 166 100 162 118 C152 122 140 127 128 128Z" fill="url(#tr-lg1)" opacity="0.68"/>
+      <path d="M144 108 C138 92 146 76 160 76 C170 76 180 86 174 102" fill="url(#tr-lg2)" opacity="0.62"/>
+      <path d="M158 88 C155 72 164 58 176 58 C186 58 194 68 188 82" fill="url(#tr-lg1)" opacity="0.55"/>
+      <!-- Blush Peony (lower) -->
+      <g transform="translate(42,155)">
+        <ellipse cx="2" cy="4" rx="28" ry="10" fill="#7a4050" opacity="0.18" filter="url(#tr-blur)"/>
+        <path d="M0-28 C8-24 22-12 20 2 C18 14 8 24 0 28 C-8 24-18 14-20 2 C-22-12-8-24 0-28Z" fill="url(#tr-pp1)" opacity="0.88"/>
+        <path d="M-28 0 C-24-8-12-22 0-20 C14-18 24-8 28 0 C24 8 12 22 0 20 C-12 18-24 8-28 0Z" fill="url(#tr-pp2)" opacity="0.84"/>
+        <path d="M-20-20 C-12-26 4-26 13-17 C22-8 23 8 16 17 C9 25-8 26-17 18 C-26 10-26-8-20-20Z" fill="url(#tr-pp1)" opacity="0.8"/>
+        <path d="M20-20 C26-12 26 4 17 13 C8 22-8 23-17 16 C-25 9-24-8-16-17 C-8-26 10-28 20-20Z" fill="url(#tr-pp2)" opacity="0.8"/>
+        <path d="M0-28 C2-20 2-10 0-2" stroke="#faf0ee" stroke-width="0.8" fill="none" opacity="0.7"/>
+        <path d="M0-18 C7-14 16-6 14 2 C12 10 7 16 0 18 C-7 16-12 10-14 2 C-16-6-7-14 0-18Z" fill="#fde8e6" opacity="0.92"/>
+        <path d="M-18 0 C-14-7-6-16 0-14 C8-12 14-7 18 0 C14 7 6 16 0 14 C-6 12-14 7-18 0Z" fill="#fff2f0" opacity="0.88"/>
+        <path d="M0-10 C5-6 10 0 8 5 C6 10 2 10 0 10 C-2 10-6 10-8 5 C-10 0-5-6 0-10Z" fill="#fef4f2" opacity="0.95"/>
+        <circle cx="0" cy="0" r="4" fill="#c87830" opacity="0.88"/>
+        <circle cx="0" cy="0" r="2.5" fill="#e09040" opacity="0.92"/>
+        <circle cx="-1.2" cy="-1.8" r="0.8" fill="#f8d060" opacity="0.9"/>
+        <circle cx="1.8" cy="-1" r="0.8" fill="#f8d060" opacity="0.9"/>
+        <circle cx="1.2" cy="1.8" r="0.8" fill="#f8d060" opacity="0.88"/>
+      </g>
+      <!-- Rose upper – 9-layer hyperrealistic -->
+      <g transform="translate(136,78)" filter="url(#tr-fshadow)">
+        <path d="M0-34 C8-32 18-26 24-16 C30-6 30 8 24 18 C18 28 8 32 0 34 C-8 32-18 28-24 18 C-30 8-30-6-24-16 C-18-26-8-32 0-34Z" fill="url(#tr-rp4)" opacity="0.88"/>
+        <path d="M-34 0 C-32-8-26-18-16-24 C-6-30 8-30 18-24 C28-18 32-8 34 0 C32 8 28 18 18 24 C8 30-6 30-16 24 C-26 18-32 8-34 0Z" fill="url(#tr-rp4)" opacity="0.84"/>
+        <path d="M-26-26 C-16-34 2-34 14-24 C26-14 28 4 20 16 C12 26-6 30-18 22 C-30 14-32-4-26-26Z" fill="url(#tr-rp1)" opacity="0.82"/>
+        <path d="M26-26 C34-14 34 4 24 16 C14 26-4 28-16 20 C-28 12-30-8-22-18 C-14-28 2-34 14-28 C20-24 24-20 26-26Z" fill="url(#tr-rp2)" opacity="0.82"/>
+        <path d="M0-34 C2-26 3-16 2-6" stroke="#fce8e4" stroke-width="1.4" fill="none" opacity="0.55"/>
+        <path d="M-34 0 C-26 2-16 2-6 1" stroke="#fce8e4" stroke-width="1.1" fill="none" opacity="0.5"/>
+        <path d="M0-26 C8-22 20-12 18 0 C16 12 8 20 0 26 C-8 20-16 12-18 0 C-20-12-8-22 0-26Z" fill="url(#tr-rp5)" opacity="0.9"/>
+        <path d="M-26 0 C-22-8-12-20 0-18 C12-16 20-8 26 0 C22 8 12 20 0 18 C-12 16-22 8-26 0Z" fill="url(#tr-rp5)" opacity="0.87"/>
+        <path d="M-18-18 C-10-24 4-24 12-16 C20-8 22 6 16 14 C10 22-4 24-12 16 C-20 8-22-6-18-18Z" fill="url(#tr-rp3)" opacity="0.84"/>
+        <path d="M18-18 C24-10 24 4 16 12 C8 20-6 22-14 14 C-22 6-20-10-12-18 C-4-26 10-26 18-18Z" fill="url(#tr-rp3)" opacity="0.84"/>
+        <path d="M0-26 C1-18 1-10 0-2" stroke="#fef0ec" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M0-17 C7-13 16-5 14 3 C12 11 7 16 0 17 C-7 16-12 11-14 3 C-16-5-7-13 0-17Z" fill="#f8d8d0" opacity="0.94"/>
+        <path d="M-17 0 C-13-7-5-16 0-14 C8-12 13-7 17 0 C13 7 5 16 0 14 C-5 12-13 7-17 0Z" fill="#fce0d8" opacity="0.9"/>
+        <path d="M-12-12 C-6-16 4-15 9-8 C14-2 13 7 8 12 C2 16-8 15-12 8 C-16 2-15-6-12-12Z" fill="#f8d4cc" opacity="0.88"/>
+        <path d="M12-12 C16-6 15 4 8 9 C2 14-7 13-12 7 C-16 1-14-9-7-12 C-1-16 6-16 12-12Z" fill="#fce0d8" opacity="0.86"/>
+        <path d="M0-10 C5-7 10-2 8 3 C6 8 3 10 0 10 C-3 10-6 8-8 3 C-10-2-5-7 0-10Z" fill="#feeae6" opacity="0.96"/>
+        <path d="M-3-6 C0-8 4-6 5-2 C6 2 4 6 0 7 C-3 7-5 4-5 0 C-5-3-4-5-3-6Z" fill="#fff8f6" opacity="0.95"/>
+        <circle cx="0" cy="0" r="5.5" fill="#c07028" opacity="0.92"/>
+        <circle cx="0" cy="0" r="3.5" fill="#d8902a" opacity="0.96"/>
+        <circle cx="0" cy="0" r="2" fill="#f0b040" opacity="0.9"/>
+        <circle cx="0" cy="-3.2" r="1.1" fill="#f8d048" opacity="0.92"/>
+        <circle cx="3" cy="-1" r="1" fill="#f4c840" opacity="0.9"/>
+        <circle cx="1.8" cy="2.6" r="1" fill="#f8d048" opacity="0.9"/>
+        <circle cx="-1.8" cy="2.6" r="0.95" fill="#f4cc44" opacity="0.88"/>
+        <circle cx="-3" cy="-1" r="1" fill="#f8d048" opacity="0.88"/>
+      </g>
+      <!-- Anemone upper right – 5-petal -->
+      <g transform="translate(195,50)">
+        <path d="M0-20 C5-16 9-8 7 0 C5 4 2 6 0 6 C-2 6-4 3-5 0 C-7-7-4-16 0-20Z" fill="url(#tr-ap1)" opacity="0.9" transform="rotate(0)"/>
+        <path d="M0-20 C1-14 1-8 0 0" stroke="#b0cce4" stroke-width="0.7" fill="none" opacity="0.65" transform="rotate(0)"/>
+        <path d="M0-20 C5-16 9-8 7 0 C5 4 2 6 0 6 C-2 6-4 3-5 0 C-7-7-4-16 0-20Z" fill="url(#tr-ap1)" opacity="0.87" transform="rotate(72)"/>
+        <path d="M0-20 C1-14 1-8 0 0" stroke="#b0cce4" stroke-width="0.7" fill="none" opacity="0.6" transform="rotate(72)"/>
+        <path d="M0-20 C5-16 9-8 7 0 C5 4 2 6 0 6 C-2 6-4 3-5 0 C-7-7-4-16 0-20Z" fill="#d8ecf8" opacity="0.85" transform="rotate(144)"/>
+        <path d="M0-20 C5-16 9-8 7 0 C5 4 2 6 0 6 C-2 6-4 3-5 0 C-7-7-4-16 0-20Z" fill="#d0e8f4" opacity="0.85" transform="rotate(216)"/>
+        <path d="M0-20 C5-16 9-8 7 0 C5 4 2 6 0 6 C-2 6-4 3-5 0 C-7-7-4-16 0-20Z" fill="url(#tr-ap1)" opacity="0.88" transform="rotate(288)"/>
+        <circle cx="0" cy="0" r="8" fill="#131e2c" opacity="0.88"/>
+        <circle cx="0" cy="0" r="6.5" fill="#1e3048" opacity="0.92"/>
+        <circle cx="0" cy="0" r="5" fill="#243858" opacity="0.88"/>
+        <circle cx="0" cy="-5.5" r="1.4" fill="#e0f0f8" opacity="0.95"/>
+        <circle cx="5.2" cy="-1.7" r="1.3" fill="#d4ecf6" opacity="0.92"/>
+        <circle cx="3.2" cy="4.5" r="1.3" fill="#e0f0f8" opacity="0.92"/>
+        <circle cx="-3.2" cy="4.5" r="1.3" fill="#d8eef6" opacity="0.9"/>
+        <circle cx="-5.2" cy="-1.7" r="1.3" fill="#e0f0f8" opacity="0.9"/>
+        <circle cx="0" cy="0" r="2.2" fill="#304060" opacity="0.9"/>
+      </g>
+      <!-- Rosebuds -->
+      <g transform="translate(104,122)">
+        <path d="M0 8 Q0 18 2 24" stroke="#5a8a5a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M-3 6 C-5 2-4-4 0-6 C4-8 7-4 8-1" fill="#6a9a6a" opacity="0.7"/>
+        <path d="M0-14 C6-10 12-4 10 2 C8 8 4 12 0 14 C-4 12-8 8-10 2 C-12-4-6-10 0-14Z" fill="#e89890" opacity="0.88"/>
+        <path d="M0-8 C4-5 8-1 6 2 C4 6 2 8 0 8 C-2 8-4 6-6 2 C-8-1-4-5 0-8Z" fill="#f4c0b8" opacity="0.95"/>
+      </g>
+      <g transform="translate(165,50)">
+        <path d="M0 6 Q0 13 1 17" stroke="#5a8a5a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+        <path d="M0-10 C4-7 8-2 7 1 C5 5 3 8 0 10 C-3 8-5 5-7 1 C-8-2-4-7 0-10Z" fill="#d08888" opacity="0.85"/>
+        <path d="M0-5 C3-3 5 0 4 2 C3 4 1 5 0 5 C-1 5-3 4-4 2 C-5 0-3-3 0-5Z" fill="#ecb8b4" opacity="0.92"/>
+      </g>
+      <!-- Berries -->
+      <path d="M202 18 Q198 28 194 38" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+      <path d="M214 12 Q210 24 206 32" stroke="#5a8a5a" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <circle cx="202" cy="18" r="5.5" fill="#7a9ab5" opacity="0.72"/>
+      <circle cx="202" cy="18" r="3" fill="#9ab8d0" opacity="0.6"/>
+      <circle cx="202" cy="16.5" r="1.2" fill="#d0e4f0" opacity="0.7"/>
+      <circle cx="214" cy="12" r="5" fill="#6a8aaa" opacity="0.68"/>
+      <circle cx="222" cy="20" r="4.5" fill="#8aaac0" opacity="0.64"/>
+      <circle cx="208" cy="6" r="4" fill="#7a9ab5" opacity="0.62"/>
+      <circle cx="178" cy="32" r="3.5" fill="#7a9ab5" opacity="0.55"/>
+    </svg>
   </div>
 
   <!-- BOTTOM LEFT hyperrealistic -->
   <div class="floral-corner bl">
     <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bl-cel-daisy" x1="15%" y1="0%" x2="85%" y2="100%">
-      <stop offset="0%" stop-color="#fffbe8"/>
-      <stop offset="45%" stop-color="#fffbe8"/>
-      <stop offset="46%" stop-color="#f0e4a0"/>
-      <stop offset="100%" stop-color="#f0e4a0"/>
-    </linearGradient>
-    <linearGradient id="bl-cel-pink" x1="15%" y1="0%" x2="85%" y2="100%">
-      <stop offset="0%" stop-color="#fde8f0"/>
-      <stop offset="45%" stop-color="#fde8f0"/>
-      <stop offset="46%" stop-color="#f0b8cc"/>
-      <stop offset="100%" stop-color="#f0b8cc"/>
-    </linearGradient>
-    <linearGradient id="bl-cel-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-      <stop offset="0%" stop-color="#c0d8a0"/>
-      <stop offset="44%" stop-color="#c0d8a0"/>
-      <stop offset="45%" stop-color="#82a860"/>
-      <stop offset="100%" stop-color="#82a860"/>
-    </linearGradient>
-    <linearGradient id="bl-cel-leaf2" x1="0%" y1="0%" x2="60%" y2="100%">
-      <stop offset="0%" stop-color="#b0d090"/>
-      <stop offset="44%" stop-color="#b0d090"/>
-      <stop offset="45%" stop-color="#709858"/>
-      <stop offset="100%" stop-color="#709858"/>
-    </linearGradient>
-    <linearGradient id="bl-cel-lavender" x1="15%" y1="0%" x2="85%" y2="100%">
-      <stop offset="0%" stop-color="#e8e0f8"/>
-      <stop offset="44%" stop-color="#e8e0f8"/>
-      <stop offset="45%" stop-color="#c0b0e0"/>
-      <stop offset="100%" stop-color="#c0b0e0"/>
-    </linearGradient>
-    <filter id="bl-glow" x="-25%" y="-25%" width="150%" height="150%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-  </defs>
+      <defs>
+        <radialGradient id="bl-rp1" cx="40%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#f5cfc8"/>
+          <stop offset="45%" stop-color="#d4827a"/>
+          <stop offset="100%" stop-color="#a85850"/>
+        </radialGradient>
+        <radialGradient id="bl-rp2" cx="55%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#fad8d4"/>
+          <stop offset="50%" stop-color="#e0a49c"/>
+          <stop offset="100%" stop-color="#be7870"/>
+        </radialGradient>
+        <radialGradient id="bl-pp1" cx="45%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#fde8e4"/>
+          <stop offset="40%" stop-color="#f0c0b8"/>
+          <stop offset="100%" stop-color="#d89088"/>
+        </radialGradient>
+        <radialGradient id="bl-pp2" cx="50%" cy="25%" r="65%">
+          <stop offset="0%" stop-color="#fff0ee"/>
+          <stop offset="45%" stop-color="#f4cac4"/>
+          <stop offset="100%" stop-color="#e0a09a"/>
+        </radialGradient>
+        <radialGradient id="bl-ap1" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#eef4fa"/>
+          <stop offset="55%" stop-color="#c8ddf0"/>
+          <stop offset="100%" stop-color="#9ab8d8"/>
+        </radialGradient>
+        <linearGradient id="bl-lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#a8c8a8"/>
+          <stop offset="50%" stop-color="#6a9a6a"/>
+          <stop offset="100%" stop-color="#4a7a4a"/>
+        </linearGradient>
+        <linearGradient id="bl-lg2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#b8d0b8"/>
+          <stop offset="60%" stop-color="#78aa78"/>
+          <stop offset="100%" stop-color="#558055"/>
+        </linearGradient>
 
-  <!-- Stems -->
-  <path d="M2 238 C12 210 34 180 58 152 C80 126 105 106 128 86" stroke="#5a7a50" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-  <path d="M0 220 C18 198 40 172 62 148 C82 126 106 108 128 90" stroke="#6a8a5a" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.55"/>
-  <path d="M14 238 C38 212 62 185 86 160 C106 140 126 123 144 106" stroke="#5a7a50" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.45"/>
-
-  <!-- Leaves -->
-  <path d="M18 214 C4 200 2 180 16 172 C28 165 46 172 48 188 C38 198 28 208 18 214Z" fill="url(#bl-cel-leaf)" stroke="#3a6030" stroke-width="1.5" stroke-linejoin="round"/>
-  <path d="M18 214 C28 198 38 186 48 188" stroke="#3a6030" stroke-width="1" fill="none"/>
-  <path d="M22 208 C16 198 16 186 22 180" fill="#82a860" opacity="0.4"/>
-
-  <path d="M6 228 C-6 214 -6 194 8 186 C20 179 38 186 40 202 C28 212 18 222 6 228Z" fill="url(#bl-cel-leaf2)" stroke="#3a6030" stroke-width="1.5" stroke-linejoin="round"/>
-  <path d="M6 228 C16 212 28 200 40 202" stroke="#3a6030" stroke-width="1" fill="none"/>
-
-  <path d="M38 196 C26 180 28 160 42 154 C56 148 72 158 70 174 C58 182 48 192 38 196Z" fill="url(#bl-cel-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-  <path d="M38 196 C50 180 62 172 70 174" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-
-  <path d="M55 178 C43 162 45 142 59 136 C73 130 89 142 85 158 C74 167 63 175 55 178Z" fill="url(#bl-cel-leaf2)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-  <path d="M55 178 C67 162 79 154 85 158" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-
-  <path d="M72 158 C62 142 64 122 78 118 C92 114 106 126 100 144 C90 152 80 157 72 158Z" fill="url(#bl-cel-leaf)" stroke="#3a6030" stroke-width="1.2" stroke-linejoin="round"/>
-  <path d="M72 158 C82 143 94 137 100 144" stroke="#3a6030" stroke-width="0.8" fill="none"/>
-
-  <path d="M90 138 C82 122 84 104 98 100 C112 96 124 108 118 126 C108 134 98 138 90 138Z" fill="url(#bl-cel-leaf2)" stroke="#3a6030" stroke-width="1.2" stroke-linejoin="round"/>
-  <path d="M108 128 C102 114 106 98 118 96" fill="url(#bl-cel-leaf)" stroke="#3a6030" stroke-width="1.1" stroke-linejoin="round"/>
-
-  <!-- ── BIG GHIBLI DAISY (lower focal) ── -->
-  <g transform="translate(40,140)">
-    <circle cx="0" cy="2" r="30" fill="#fff8e0" opacity="0.25" filter="url(#bl-glow)"/>
-    <!-- 12 elongated petals, alternating slight rotation for natural look -->
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(0)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(30)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(60)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(90)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(120)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(150)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(180)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(210)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(240)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(270)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(300)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(330)"/>
-    <!-- Fluffy golden centre -->
-    <circle cx="0" cy="0" r="11" fill="#e8a820" stroke="#b87818" stroke-width="1.8"/>
-    <circle cx="0" cy="0" r="8" fill="#f0b830"/>
-    <circle cx="0" cy="0" r="5" fill="#f8cc48"/>
-    <!-- Texture dots on centre -->
-    <circle cx="0" cy="-5" r="1.2" fill="#c88018" opacity="0.6"/>
-    <circle cx="4.7" cy="-1.5" r="1.1" fill="#c88018" opacity="0.6"/>
-    <circle cx="2.9" cy="4" r="1.1" fill="#c88018" opacity="0.6"/>
-    <circle cx="-2.9" cy="4" r="1.1" fill="#c88018" opacity="0.6"/>
-    <circle cx="-4.7" cy="-1.5" r="1.1" fill="#c88018" opacity="0.6"/>
-    <!-- Dewdrop sparkle -->
-    <circle cx="-18" cy="-20" r="3" fill="white" opacity="0.75"/>
-    <circle cx="-19" cy="-21" r="1.2" fill="white" opacity="0.9"/>
-  </g>
-
-  <!-- ── HYDRANGEA CLUSTER (upper accent) ── -->
-  <g transform="translate(110,72)">
-    <!-- 4-petal hydrangea florets clustered -->
-    <g transform="translate(-8,-8)">
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="url(#bl-cel-lavender)" stroke="#8870b8" stroke-width="1.2" transform="rotate(0)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="#dcd0f0" stroke="#8870b8" stroke-width="1.2" transform="rotate(90)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="url(#bl-cel-lavender)" stroke="#8870b8" stroke-width="1.2" transform="rotate(180)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="#dcd0f0" stroke="#8870b8" stroke-width="1.2" transform="rotate(270)"/>
-      <circle cx="0" cy="0" r="3" fill="#f0e870" stroke="#a8a020" stroke-width="1"/>
-    </g>
-    <g transform="translate(8,-6)">
-      <path d="M0-8 C3-6 6-2 4 2 C2 5 1 6 0 6 C-1 6-2 5-4 2 C-6-2-3-6 0-8Z" fill="#dcd0f0" stroke="#8870b8" stroke-width="1.2" transform="rotate(0)"/>
-      <path d="M0-8 C3-6 6-2 4 2 C2 5 1 6 0 6 C-1 6-2 5-4 2 C-6-2-3-6 0-8Z" fill="url(#bl-cel-lavender)" stroke="#8870b8" stroke-width="1.2" transform="rotate(90)"/>
-      <path d="M0-8 C3-6 6-2 4 2 C2 5 1 6 0 6 C-1 6-2 5-4 2 C-6-2-3-6 0-8Z" fill="#dcd0f0" stroke="#8870b8" stroke-width="1.2" transform="rotate(180)"/>
-      <path d="M0-8 C3-6 6-2 4 2 C2 5 1 6 0 6 C-1 6-2 5-4 2 C-6-2-3-6 0-8Z" fill="url(#bl-cel-lavender)" stroke="#8870b8" stroke-width="1.2" transform="rotate(270)"/>
-      <circle cx="0" cy="0" r="2.8" fill="#f0e870" stroke="#a8a020" stroke-width="1"/>
-    </g>
-    <g transform="translate(0,10)">
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="url(#bl-cel-pink)" stroke="#c07090" stroke-width="1.2" transform="rotate(0)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="#f8c8dc" stroke="#c07090" stroke-width="1.2" transform="rotate(90)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="url(#bl-cel-pink)" stroke="#c07090" stroke-width="1.2" transform="rotate(180)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="#f8c8dc" stroke="#c07090" stroke-width="1.2" transform="rotate(270)"/>
-      <circle cx="0" cy="0" r="3" fill="#f0e870" stroke="#a8a020" stroke-width="1"/>
-    </g>
-    <!-- Sparkle -->
-    <circle cx="18" cy="-18" r="2.2" fill="white" opacity="0.8"/>
-    <circle cx="17" cy="-19" r="0.9" fill="white" opacity="0.9"/>
-    <line x1="18" y1="-24" x2="18" y2="-22" stroke="white" stroke-width="1.1" opacity="0.7"/>
-    <line x1="22" y1="-18" x2="24" y2="-18" stroke="white" stroke-width="1.1" opacity="0.7"/>
-    <line x1="14" y1="-18" x2="12" y2="-18" stroke="white" stroke-width="1.1" opacity="0.7"/>
-    <line x1="18" y1="-12" x2="18" y2="-14" stroke="white" stroke-width="1.1" opacity="0.7"/>
-  </g>
-
-  <!-- Tiny bud -->
-  <g transform="translate(62,158)">
-    <path d="M0 6 Q0 14 -1 18" stroke="#5a7a50" stroke-width="1.3" stroke-linecap="round" fill="none"/>
-    <path d="M-2 4 C-4 0-3-4 0-6 C3-8 6-4 6 0" fill="#8ab870" stroke="#3a6030" stroke-width="1.1"/>
-    <path d="M0-10 C4-8 8-2 7 2 C5 6 3 8 0 9 C-3 8-5 6-7 2 C-8-2-4-8 0-10Z" fill="#fde8f0" stroke="#c07090" stroke-width="1.3"/>
-    <path d="M0-5 C3-3 5 0 4 2 C3 4 1 5 0 5" fill="#f0b8cc" opacity="0.5"/>
-  </g>
-
-  <!-- Floating petals -->
-  <path d="M155 45 C160 39 164 43 162 50 C158 56 153 52 155 45Z" fill="#fffbe8" stroke="#a89040" stroke-width="1" opacity="0.7"/>
-  <path d="M170 28 C175 23 178 27 176 33 C173 38 168 35 170 28Z" fill="#e8e0f8" stroke="#8870b8" stroke-width="1" opacity="0.65"/>
-  <path d="M140 32 C144 27 148 31 146 37 C143 42 138 39 140 32Z" fill="#fde8f0" stroke="#c07090" stroke-width="1" opacity="0.7"/>
-
-  <!-- Sparkles -->
-  <circle cx="148" cy="62" r="2.2" fill="white" opacity="0.75"/>
-  <circle cx="147" cy="61" r="0.9" fill="white"/>
-  <line x1="148" y1="57" x2="148" y2="59" stroke="white" stroke-width="1" opacity="0.65"/>
-  <line x1="143" y1="62" x2="145" y2="62" stroke="white" stroke-width="1" opacity="0.65"/>
-  <line x1="151" y1="62" x2="153" y2="62" stroke="white" stroke-width="1" opacity="0.65"/>
-  <line x1="148" y1="65" x2="148" y2="67" stroke="white" stroke-width="1" opacity="0.65"/>
-</svg>
+        <radialGradient id="bl-rp4" cx="35%" cy="28%" r="70%">
+          <stop offset="0%" stop-color="#ffeae8"/>
+          <stop offset="25%" stop-color="#f0b8b0"/>
+          <stop offset="60%" stop-color="#cc7068"/>
+          <stop offset="100%" stop-color="#8a3830"/>
+        </radialGradient>
+        <radialGradient id="bl-rp5" cx="60%" cy="45%" r="58%">
+          <stop offset="0%" stop-color="#fff0ee"/>
+          <stop offset="35%" stop-color="#f8d0ca"/>
+          <stop offset="75%" stop-color="#dc9088"/>
+          <stop offset="100%" stop-color="#b06058"/>
+        </radialGradient>
+        <radialGradient id="bl-pp3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff8f6"/>
+          <stop offset="30%" stop-color="#fce4e0"/>
+          <stop offset="65%" stop-color="#f0b8b2"/>
+          <stop offset="100%" stop-color="#d88880"/>
+        </radialGradient>
+        <filter id="bl-fshadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="1.5" dy="2.5" stdDeviation="2.5" flood-color="#6a3030" flood-opacity="0.22"/>
+        </filter>
+        <filter id="bl-blur" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.2"/>
+        </filter>
+      </defs>
+      <!-- Stems -->
+      <path d="M0 240 Q32 188 62 148 Q90 112 118 80" stroke="#4a7a4a" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.3" filter="url(#bl-blur)"/>
+      <path d="M0 240 Q32 188 62 148 Q90 112 118 80" stroke="#6a9a6a" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      <path d="M0 240 Q22 202 46 170 Q70 140 94 114 Q118 90 140 68" stroke="#578a57" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.68"/>
+      <path d="M14 240 Q48 198 78 162 Q105 130 128 102" stroke="#7aaa7a" stroke-width="1.1" stroke-linecap="round" fill="none" opacity="0.52"/>
+      <!-- Leaves -->
+      <path d="M20 216 C6 202 4 184 18 176 C30 169 46 175 50 190 C38 198 28 210 20 216Z" fill="url(#bl-lg2)" opacity="0.85"/>
+      <path d="M20 216 C30 202 40 190 50 190" stroke="#4a7a4a" stroke-width="0.7" fill="none" opacity="0.5"/>
+      <path d="M8 230 C-4 215 -5 196 10 188 C22 182 38 188 42 204 C28 212 16 223 8 230Z" fill="url(#bl-lg1)" opacity="0.8"/>
+      <path d="M40 196 C28 180 30 162 44 156 C56 151 72 160 74 176 C62 182 50 192 40 196Z" fill="url(#bl-lg2)" opacity="0.82"/>
+      <path d="M56 178 C46 162 48 144 62 140 C75 136 90 146 88 162 C76 168 64 176 56 178Z" fill="url(#bl-lg1)" opacity="0.78"/>
+      <path d="M72 158 C62 142 66 124 80 120 C94 116 108 126 104 144 C92 150 80 156 72 158Z" fill="url(#bl-lg2)" opacity="0.75"/>
+      <path d="M88 138 C80 122 84 104 98 102 C112 100 124 112 120 128 C108 134 96 138 88 138Z" fill="url(#bl-lg1)" opacity="0.7"/>
+      <path d="M104 118 C97 102 102 84 116 84 C128 84 138 95 132 112 C122 116 112 118 104 118Z" fill="url(#bl-lg2)" opacity="0.65"/>
+      <path d="M118 98 C114 82 120 66 134 66 C144 66 152 78 146 94 C138 98 128 100 118 98Z" fill="url(#bl-lg1)" opacity="0.58"/>
+      <!-- ROSE lower – 9-layer hyperrealistic -->
+      <g transform="translate(40,142)" filter="url(#bl-fshadow)">
+        <path d="M0-34 C8-32 18-26 24-16 C30-6 30 8 24 18 C18 28 8 32 0 34 C-8 32-18 28-24 18 C-30 8-30-6-24-16 C-18-26-8-32 0-34Z" fill="url(#bl-rp4)" opacity="0.88"/>
+        <path d="M-34 0 C-32-8-26-18-16-24 C-6-30 8-30 18-24 C28-18 32-8 34 0 C32 8 28 18 18 24 C8 30-6 30-16 24 C-26 18-32 8-34 0Z" fill="url(#bl-rp4)" opacity="0.84"/>
+        <path d="M-26-26 C-16-34 2-34 14-24 C26-14 28 4 20 16 C12 26-6 30-18 22 C-30 14-32-4-26-26Z" fill="url(#bl-rp1)" opacity="0.82"/>
+        <path d="M26-26 C34-14 34 4 24 16 C14 26-4 28-16 20 C-28 12-30-8-22-18 C-14-28 2-34 14-28 C20-24 24-20 26-26Z" fill="url(#bl-rp2)" opacity="0.82"/>
+        <path d="M0-34 C2-26 3-16 2-6" stroke="#fce8e4" stroke-width="1.4" fill="none" opacity="0.55"/>
+        <path d="M0-26 C8-22 20-12 18 0 C16 12 8 20 0 26 C-8 20-16 12-18 0 C-20-12-8-22 0-26Z" fill="url(#bl-rp5)" opacity="0.9"/>
+        <path d="M-26 0 C-22-8-12-20 0-18 C12-16 20-8 26 0 C22 8 12 20 0 18 C-12 16-22 8-26 0Z" fill="url(#bl-rp5)" opacity="0.87"/>
+        <path d="M-18-18 C-10-24 4-24 12-16 C20-8 22 6 16 14 C10 22-4 24-12 16 C-20 8-22-6-18-18Z" fill="url(#bl-rp2)" opacity="0.84"/>
+        <path d="M18-18 C24-10 24 4 16 12 C8 20-6 22-14 14 C-22 6-20-10-12-18 C-4-26 10-26 18-18Z" fill="url(#bl-rp1)" opacity="0.84"/>
+        <path d="M0-26 C1-18 1-10 0-2" stroke="#fef0ec" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M0-17 C7-13 16-5 14 3 C12 11 7 16 0 17 C-7 16-12 11-14 3 C-16-5-7-13 0-17Z" fill="#f8d8d0" opacity="0.94"/>
+        <path d="M-17 0 C-13-7-5-16 0-14 C8-12 13-7 17 0 C13 7 5 16 0 14 C-5 12-13 7-17 0Z" fill="#fce0d8" opacity="0.9"/>
+        <path d="M-12-12 C-6-16 4-15 9-8 C14-2 13 7 8 12 C2 16-8 15-12 8 C-16 2-15-6-12-12Z" fill="#f8d4cc" opacity="0.88"/>
+        <path d="M12-12 C16-6 15 4 8 9 C2 14-7 13-12 7 C-16 1-14-9-7-12 C-1-16 6-16 12-12Z" fill="#fce0d8" opacity="0.86"/>
+        <path d="M0-10 C5-7 10-2 8 3 C6 8 3 10 0 10 C-3 10-6 8-8 3 C-10-2-5-7 0-10Z" fill="#feeae6" opacity="0.96"/>
+        <path d="M-3-6 C0-8 4-6 5-2 C6 2 4 6 0 7 C-3 7-5 4-5 0 C-5-3-4-5-3-6Z" fill="#fff8f6" opacity="0.95"/>
+        <circle cx="0" cy="0" r="5.5" fill="#c07028" opacity="0.92"/>
+        <circle cx="0" cy="0" r="3.5" fill="#d8902a" opacity="0.96"/>
+        <circle cx="0" cy="0" r="2" fill="#f0b040" opacity="0.9"/>
+        <circle cx="0" cy="-3.2" r="1.1" fill="#f8d048" opacity="0.92"/>
+        <circle cx="3" cy="-1" r="1" fill="#f4c840" opacity="0.9"/>
+        <circle cx="1.8" cy="2.6" r="1" fill="#f8d048" opacity="0.9"/>
+        <circle cx="-1.8" cy="2.6" r="0.95" fill="#f4cc44" opacity="0.88"/>
+        <circle cx="-3" cy="-1" r="1" fill="#f8d048" opacity="0.88"/>
+      </g>
+      <!-- PEONY (upper) -->
+      <g transform="translate(114,72)">
+        <ellipse cx="2" cy="4" rx="22" ry="8" fill="#7a4050" opacity="0.15" filter="url(#bl-blur)"/>
+        <path d="M0-24 C8-20 20-10 18 2 C16 12 8 20 0 24 C-8 20-16 12-18 2 C-20-10-8-20 0-24Z" fill="url(#bl-pp1)" opacity="0.88"/>
+        <path d="M-24 0 C-20-8-10-20 0-18 C12-16 20-8 24 0 C20 8 10 20 0 18 C-10 16-20 8-24 0Z" fill="url(#bl-pp2)" opacity="0.84"/>
+        <path d="M-17-17 C-10-23 4-23 12-15 C20-7 21 7 14 15 C7 22-8 23-15 15 C-22 7-22-7-17-17Z" fill="url(#bl-pp1)" opacity="0.8"/>
+        <path d="M17-17 C23-10 23 4 15 12 C7 20-8 21-15 14 C-22 7-21-8-13-15 C-5-22 9-24 17-17Z" fill="url(#bl-pp2)" opacity="0.8"/>
+        <path d="M0-24 C2-17 2-8 0-2" stroke="#faf0ee" stroke-width="0.8" fill="none" opacity="0.7"/>
+        <path d="M0-15 C6-11 13-5 11 2 C9 9 5 13 0 15 C-5 13-9 9-11 2 C-13-5-6-11 0-15Z" fill="#fde8e6" opacity="0.92"/>
+        <path d="M-15 0 C-11-6-5-13 0-11 C7-9 11-5 15 0 C11 5 5 13 0 11 C-5 9-11 5-15 0Z" fill="#fff2f0" opacity="0.88"/>
+        <path d="M0-9 C4-5 8 0 6 4 C4 8 2 8 0 8 C-2 8-4 8-6 4 C-8 0-4-5 0-9Z" fill="#fef4f2" opacity="0.95"/>
+        <circle cx="0" cy="0" r="4" fill="#c87830" opacity="0.88"/>
+        <circle cx="0" cy="0" r="2.5" fill="#e09040" opacity="0.92"/>
+        <circle cx="-1" cy="-1.5" r="0.8" fill="#f8d060" opacity="0.9"/>
+        <circle cx="1.5" cy="-0.8" r="0.8" fill="#f8d060" opacity="0.88"/>
+      </g>
+      <!-- ANEMONE mid – 5-petal hyperrealistic -->
+      <g transform="translate(80,106)">
+        <path d="M0-18 C4-14 8-7 6 0 C4 4 2 5 0 5 C-2 5-3 3-4 0 C-6-6-3-14 0-18Z" fill="url(#bl-ap1)" opacity="0.9" transform="rotate(0)"/>
+        <path d="M0-18 C1-12 1-7 0 0" stroke="#b0cce4" stroke-width="0.65" fill="none" opacity="0.65" transform="rotate(0)"/>
+        <path d="M0-18 C4-14 8-7 6 0 C4 4 2 5 0 5 C-2 5-3 3-4 0 C-6-6-3-14 0-18Z" fill="url(#bl-ap1)" opacity="0.87" transform="rotate(72)"/>
+        <path d="M0-18 C1-12 1-7 0 0" stroke="#b0cce4" stroke-width="0.6" fill="none" opacity="0.6" transform="rotate(72)"/>
+        <path d="M0-18 C4-14 8-7 6 0 C4 4 2 5 0 5 C-2 5-3 3-4 0 C-6-6-3-14 0-18Z" fill="#d8ecf8" opacity="0.85" transform="rotate(144)"/>
+        <path d="M0-18 C4-14 8-7 6 0 C4 4 2 5 0 5 C-2 5-3 3-4 0 C-6-6-3-14 0-18Z" fill="#d0e8f4" opacity="0.85" transform="rotate(216)"/>
+        <path d="M0-18 C4-14 8-7 6 0 C4 4 2 5 0 5 C-2 5-3 3-4 0 C-6-6-3-14 0-18Z" fill="url(#bl-ap1)" opacity="0.88" transform="rotate(288)"/>
+        <circle cx="0" cy="0" r="7" fill="#131e2c" opacity="0.88"/>
+        <circle cx="0" cy="0" r="5.5" fill="#1e3048" opacity="0.92"/>
+        <circle cx="0" cy="0" r="4.2" fill="#243858" opacity="0.88"/>
+        <circle cx="0" cy="-5" r="1.2" fill="#e0f0f8" opacity="0.95"/>
+        <circle cx="4.7" cy="-1.5" r="1.2" fill="#d4ecf6" opacity="0.92"/>
+        <circle cx="2.9" cy="4" r="1.1" fill="#e0f0f8" opacity="0.92"/>
+        <circle cx="-2.9" cy="4" r="1.1" fill="#d8eef6" opacity="0.9"/>
+        <circle cx="-4.7" cy="-1.5" r="1.2" fill="#e0f0f8" opacity="0.9"/>
+        <circle cx="0" cy="0" r="2" fill="#304060" opacity="0.9"/>
+        <circle cx="0" cy="0" r="0.9" fill="#4a607a" opacity="0.85"/>
+      </g>
+      <!-- Bud -->
+      <g transform="translate(62,158)">
+        <path d="M0 7 Q0 15 -1 19" stroke="#5a8a5a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+        <path d="M-3 5 C-4 1-3-3 0-5 C3-7 6-3 6 0" fill="#6a9a6a" opacity="0.7"/>
+        <path d="M0-11 C4-8 9-3 8 1 C6 5 3 9 0 11 C-3 9-6 5-8 1 C-9-3-4-8 0-11Z" fill="#e08888" opacity="0.85"/>
+        <path d="M0-6 C3-4 6-1 5 1 C4 4 2 5 0 5 C-2 5-4 4-5 1 C-6-1-3-4 0-6Z" fill="#f4bab6" opacity="0.92"/>
+      </g>
+      <!-- Berries -->
+      <path d="M150 45 Q146 56 142 64" stroke="#5a8a5a" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <path d="M160 38 Q156 50 152 58" stroke="#5a8a5a" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <circle cx="150" cy="45" r="5" fill="#7a9ab5" opacity="0.7"/>
+      <circle cx="150" cy="45" r="2.8" fill="#9ab8d0" opacity="0.58"/>
+      <circle cx="150" cy="43.5" r="1.1" fill="#d0e4f0" opacity="0.7"/>
+      <circle cx="162" cy="38" r="4.5" fill="#6a8aaa" opacity="0.66"/>
+      <circle cx="157" cy="30" r="4" fill="#8aaac0" opacity="0.62"/>
+      <circle cx="167" cy="46" r="4" fill="#7a9ab5" opacity="0.6"/>
+      <circle cx="170" cy="30" r="3.5" fill="#6a8aaa" opacity="0.56"/>
+    </svg>
   </div>
 
     <!-- BOTTOM RIGHT hyperrealistic mirror -->
   <div class="floral-corner br">
     <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="br-cel-daisy" x1="15%" y1="0%" x2="85%" y2="100%">
-      <stop offset="0%" stop-color="#fffbe8"/>
-      <stop offset="45%" stop-color="#fffbe8"/>
-      <stop offset="46%" stop-color="#f0e4a0"/>
-      <stop offset="100%" stop-color="#f0e4a0"/>
-    </linearGradient>
-    <linearGradient id="br-cel-pink" x1="15%" y1="0%" x2="85%" y2="100%">
-      <stop offset="0%" stop-color="#fde8f0"/>
-      <stop offset="45%" stop-color="#fde8f0"/>
-      <stop offset="46%" stop-color="#f0b8cc"/>
-      <stop offset="100%" stop-color="#f0b8cc"/>
-    </linearGradient>
-    <linearGradient id="br-cel-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-      <stop offset="0%" stop-color="#c0d8a0"/>
-      <stop offset="44%" stop-color="#c0d8a0"/>
-      <stop offset="45%" stop-color="#82a860"/>
-      <stop offset="100%" stop-color="#82a860"/>
-    </linearGradient>
-    <linearGradient id="br-cel-leaf2" x1="0%" y1="0%" x2="60%" y2="100%">
-      <stop offset="0%" stop-color="#b0d090"/>
-      <stop offset="44%" stop-color="#b0d090"/>
-      <stop offset="45%" stop-color="#709858"/>
-      <stop offset="100%" stop-color="#709858"/>
-    </linearGradient>
-    <linearGradient id="br-cel-lavender" x1="15%" y1="0%" x2="85%" y2="100%">
-      <stop offset="0%" stop-color="#e8e0f8"/>
-      <stop offset="44%" stop-color="#e8e0f8"/>
-      <stop offset="45%" stop-color="#c0b0e0"/>
-      <stop offset="100%" stop-color="#c0b0e0"/>
-    </linearGradient>
-    <filter id="br-glow" x="-25%" y="-25%" width="150%" height="150%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-  </defs>
+      <defs>
+        <radialGradient id="br-rp1" cx="40%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#f5cfc8"/>
+          <stop offset="45%" stop-color="#d4827a"/>
+          <stop offset="100%" stop-color="#a85850"/>
+        </radialGradient>
+        <radialGradient id="br-rp2" cx="55%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#fad8d4"/>
+          <stop offset="50%" stop-color="#e0a49c"/>
+          <stop offset="100%" stop-color="#be7870"/>
+        </radialGradient>
+        <radialGradient id="br-pp1" cx="45%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#fde8e4"/>
+          <stop offset="40%" stop-color="#f0c0b8"/>
+          <stop offset="100%" stop-color="#d89088"/>
+        </radialGradient>
+        <radialGradient id="br-pp2" cx="50%" cy="25%" r="65%">
+          <stop offset="0%" stop-color="#fff0ee"/>
+          <stop offset="45%" stop-color="#f4cac4"/>
+          <stop offset="100%" stop-color="#e0a09a"/>
+        </radialGradient>
+        <radialGradient id="br-ap1" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#eef4fa"/>
+          <stop offset="55%" stop-color="#c8ddf0"/>
+          <stop offset="100%" stop-color="#9ab8d8"/>
+        </radialGradient>
+        <linearGradient id="br-lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#a8c8a8"/>
+          <stop offset="50%" stop-color="#6a9a6a"/>
+          <stop offset="100%" stop-color="#4a7a4a"/>
+        </linearGradient>
+        <linearGradient id="br-lg2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#b8d0b8"/>
+          <stop offset="60%" stop-color="#78aa78"/>
+          <stop offset="100%" stop-color="#558055"/>
+        </linearGradient>
 
-  <!-- Stems -->
-  <path d="M2 238 C12 210 34 180 58 152 C80 126 105 106 128 86" stroke="#5a7a50" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-  <path d="M0 220 C18 198 40 172 62 148 C82 126 106 108 128 90" stroke="#6a8a5a" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.55"/>
-  <path d="M14 238 C38 212 62 185 86 160 C106 140 126 123 144 106" stroke="#5a7a50" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.45"/>
-
-  <!-- Leaves -->
-  <path d="M18 214 C4 200 2 180 16 172 C28 165 46 172 48 188 C38 198 28 208 18 214Z" fill="url(#bl-cel-leaf)" stroke="#3a6030" stroke-width="1.5" stroke-linejoin="round"/>
-  <path d="M18 214 C28 198 38 186 48 188" stroke="#3a6030" stroke-width="1" fill="none"/>
-  <path d="M22 208 C16 198 16 186 22 180" fill="#82a860" opacity="0.4"/>
-
-  <path d="M6 228 C-6 214 -6 194 8 186 C20 179 38 186 40 202 C28 212 18 222 6 228Z" fill="url(#bl-cel-leaf2)" stroke="#3a6030" stroke-width="1.5" stroke-linejoin="round"/>
-  <path d="M6 228 C16 212 28 200 40 202" stroke="#3a6030" stroke-width="1" fill="none"/>
-
-  <path d="M38 196 C26 180 28 160 42 154 C56 148 72 158 70 174 C58 182 48 192 38 196Z" fill="url(#bl-cel-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-  <path d="M38 196 C50 180 62 172 70 174" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-
-  <path d="M55 178 C43 162 45 142 59 136 C73 130 89 142 85 158 C74 167 63 175 55 178Z" fill="url(#bl-cel-leaf2)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-  <path d="M55 178 C67 162 79 154 85 158" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-
-  <path d="M72 158 C62 142 64 122 78 118 C92 114 106 126 100 144 C90 152 80 157 72 158Z" fill="url(#bl-cel-leaf)" stroke="#3a6030" stroke-width="1.2" stroke-linejoin="round"/>
-  <path d="M72 158 C82 143 94 137 100 144" stroke="#3a6030" stroke-width="0.8" fill="none"/>
-
-  <path d="M90 138 C82 122 84 104 98 100 C112 96 124 108 118 126 C108 134 98 138 90 138Z" fill="url(#bl-cel-leaf2)" stroke="#3a6030" stroke-width="1.2" stroke-linejoin="round"/>
-  <path d="M108 128 C102 114 106 98 118 96" fill="url(#bl-cel-leaf)" stroke="#3a6030" stroke-width="1.1" stroke-linejoin="round"/>
-
-  <!-- ── BIG GHIBLI DAISY (lower focal) ── -->
-  <g transform="translate(40,140)">
-    <circle cx="0" cy="2" r="30" fill="#fff8e0" opacity="0.25" filter="url(#bl-glow)"/>
-    <!-- 12 elongated petals, alternating slight rotation for natural look -->
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(0)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(30)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(60)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(90)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(120)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(150)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(180)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(210)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(240)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(270)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="url(#bl-cel-daisy)" stroke="#a89040" stroke-width="1.4" transform="rotate(300)"/>
-    <path d="M0-28 C4-24 6-14 5-4 C4 2 2 5 0 5 C-2 5-4 2-5-4 C-6-14-4-24 0-28Z" fill="#fff8e0" stroke="#a89040" stroke-width="1.4" transform="rotate(330)"/>
-    <!-- Fluffy golden centre -->
-    <circle cx="0" cy="0" r="11" fill="#e8a820" stroke="#b87818" stroke-width="1.8"/>
-    <circle cx="0" cy="0" r="8" fill="#f0b830"/>
-    <circle cx="0" cy="0" r="5" fill="#f8cc48"/>
-    <!-- Texture dots on centre -->
-    <circle cx="0" cy="-5" r="1.2" fill="#c88018" opacity="0.6"/>
-    <circle cx="4.7" cy="-1.5" r="1.1" fill="#c88018" opacity="0.6"/>
-    <circle cx="2.9" cy="4" r="1.1" fill="#c88018" opacity="0.6"/>
-    <circle cx="-2.9" cy="4" r="1.1" fill="#c88018" opacity="0.6"/>
-    <circle cx="-4.7" cy="-1.5" r="1.1" fill="#c88018" opacity="0.6"/>
-    <!-- Dewdrop sparkle -->
-    <circle cx="-18" cy="-20" r="3" fill="white" opacity="0.75"/>
-    <circle cx="-19" cy="-21" r="1.2" fill="white" opacity="0.9"/>
-  </g>
-
-  <!-- ── HYDRANGEA CLUSTER (upper accent) ── -->
-  <g transform="translate(110,72)">
-    <!-- 4-petal hydrangea florets clustered -->
-    <g transform="translate(-8,-8)">
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="url(#bl-cel-lavender)" stroke="#8870b8" stroke-width="1.2" transform="rotate(0)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="#dcd0f0" stroke="#8870b8" stroke-width="1.2" transform="rotate(90)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="url(#bl-cel-lavender)" stroke="#8870b8" stroke-width="1.2" transform="rotate(180)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="#dcd0f0" stroke="#8870b8" stroke-width="1.2" transform="rotate(270)"/>
-      <circle cx="0" cy="0" r="3" fill="#f0e870" stroke="#a8a020" stroke-width="1"/>
-    </g>
-    <g transform="translate(8,-6)">
-      <path d="M0-8 C3-6 6-2 4 2 C2 5 1 6 0 6 C-1 6-2 5-4 2 C-6-2-3-6 0-8Z" fill="#dcd0f0" stroke="#8870b8" stroke-width="1.2" transform="rotate(0)"/>
-      <path d="M0-8 C3-6 6-2 4 2 C2 5 1 6 0 6 C-1 6-2 5-4 2 C-6-2-3-6 0-8Z" fill="url(#bl-cel-lavender)" stroke="#8870b8" stroke-width="1.2" transform="rotate(90)"/>
-      <path d="M0-8 C3-6 6-2 4 2 C2 5 1 6 0 6 C-1 6-2 5-4 2 C-6-2-3-6 0-8Z" fill="#dcd0f0" stroke="#8870b8" stroke-width="1.2" transform="rotate(180)"/>
-      <path d="M0-8 C3-6 6-2 4 2 C2 5 1 6 0 6 C-1 6-2 5-4 2 C-6-2-3-6 0-8Z" fill="url(#bl-cel-lavender)" stroke="#8870b8" stroke-width="1.2" transform="rotate(270)"/>
-      <circle cx="0" cy="0" r="2.8" fill="#f0e870" stroke="#a8a020" stroke-width="1"/>
-    </g>
-    <g transform="translate(0,10)">
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="url(#bl-cel-pink)" stroke="#c07090" stroke-width="1.2" transform="rotate(0)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="#f8c8dc" stroke="#c07090" stroke-width="1.2" transform="rotate(90)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="url(#bl-cel-pink)" stroke="#c07090" stroke-width="1.2" transform="rotate(180)"/>
-      <path d="M0-9 C3-7 7-2 5 2 C3 6 1 7 0 7 C-1 7-3 6-5 2 C-7-2-3-7 0-9Z" fill="#f8c8dc" stroke="#c07090" stroke-width="1.2" transform="rotate(270)"/>
-      <circle cx="0" cy="0" r="3" fill="#f0e870" stroke="#a8a020" stroke-width="1"/>
-    </g>
-    <!-- Sparkle -->
-    <circle cx="18" cy="-18" r="2.2" fill="white" opacity="0.8"/>
-    <circle cx="17" cy="-19" r="0.9" fill="white" opacity="0.9"/>
-    <line x1="18" y1="-24" x2="18" y2="-22" stroke="white" stroke-width="1.1" opacity="0.7"/>
-    <line x1="22" y1="-18" x2="24" y2="-18" stroke="white" stroke-width="1.1" opacity="0.7"/>
-    <line x1="14" y1="-18" x2="12" y2="-18" stroke="white" stroke-width="1.1" opacity="0.7"/>
-    <line x1="18" y1="-12" x2="18" y2="-14" stroke="white" stroke-width="1.1" opacity="0.7"/>
-  </g>
-
-  <!-- Tiny bud -->
-  <g transform="translate(62,158)">
-    <path d="M0 6 Q0 14 -1 18" stroke="#5a7a50" stroke-width="1.3" stroke-linecap="round" fill="none"/>
-    <path d="M-2 4 C-4 0-3-4 0-6 C3-8 6-4 6 0" fill="#8ab870" stroke="#3a6030" stroke-width="1.1"/>
-    <path d="M0-10 C4-8 8-2 7 2 C5 6 3 8 0 9 C-3 8-5 6-7 2 C-8-2-4-8 0-10Z" fill="#fde8f0" stroke="#c07090" stroke-width="1.3"/>
-    <path d="M0-5 C3-3 5 0 4 2 C3 4 1 5 0 5" fill="#f0b8cc" opacity="0.5"/>
-  </g>
-
-  <!-- Floating petals -->
-  <path d="M155 45 C160 39 164 43 162 50 C158 56 153 52 155 45Z" fill="#fffbe8" stroke="#a89040" stroke-width="1" opacity="0.7"/>
-  <path d="M170 28 C175 23 178 27 176 33 C173 38 168 35 170 28Z" fill="#e8e0f8" stroke="#8870b8" stroke-width="1" opacity="0.65"/>
-  <path d="M140 32 C144 27 148 31 146 37 C143 42 138 39 140 32Z" fill="#fde8f0" stroke="#c07090" stroke-width="1" opacity="0.7"/>
-
-  <!-- Sparkles -->
-  <circle cx="148" cy="62" r="2.2" fill="white" opacity="0.75"/>
-  <circle cx="147" cy="61" r="0.9" fill="white"/>
-  <line x1="148" y1="57" x2="148" y2="59" stroke="white" stroke-width="1" opacity="0.65"/>
-  <line x1="143" y1="62" x2="145" y2="62" stroke="white" stroke-width="1" opacity="0.65"/>
-  <line x1="151" y1="62" x2="153" y2="62" stroke="white" stroke-width="1" opacity="0.65"/>
-  <line x1="148" y1="65" x2="148" y2="67" stroke="white" stroke-width="1" opacity="0.65"/>
-</svg>
+        <radialGradient id="br-rp4" cx="35%" cy="28%" r="70%">
+          <stop offset="0%" stop-color="#ffeae8"/>
+          <stop offset="25%" stop-color="#f0b8b0"/>
+          <stop offset="60%" stop-color="#cc7068"/>
+          <stop offset="100%" stop-color="#8a3830"/>
+        </radialGradient>
+        <radialGradient id="br-rp5" cx="60%" cy="45%" r="58%">
+          <stop offset="0%" stop-color="#fff0ee"/>
+          <stop offset="35%" stop-color="#f8d0ca"/>
+          <stop offset="75%" stop-color="#dc9088"/>
+          <stop offset="100%" stop-color="#b06058"/>
+        </radialGradient>
+        <radialGradient id="br-pp3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff8f6"/>
+          <stop offset="30%" stop-color="#fce4e0"/>
+          <stop offset="65%" stop-color="#f0b8b2"/>
+          <stop offset="100%" stop-color="#d88880"/>
+        </radialGradient>
+        <filter id="br-fshadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="1.5" dy="2.5" stdDeviation="2.5" flood-color="#6a3030" flood-opacity="0.22"/>
+        </filter>
+        <filter id="br-blur" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.2"/>
+        </filter>
+      </defs>
+      <path d="M0 240 Q32 188 62 148 Q90 112 118 80" stroke="#4a7a4a" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.3" filter="url(#br-blur)"/>
+      <path d="M0 240 Q32 188 62 148 Q90 112 118 80" stroke="#6a9a6a" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      <path d="M0 240 Q22 202 46 170 Q70 140 94 114 Q118 90 140 68" stroke="#578a57" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.68"/>
+      <path d="M14 240 Q48 198 78 162 Q105 130 128 102" stroke="#7aaa7a" stroke-width="1.1" stroke-linecap="round" fill="none" opacity="0.52"/>
+      <path d="M20 216 C6 202 4 184 18 176 C30 169 46 175 50 190 C38 198 28 210 20 216Z" fill="url(#br-lg2)" opacity="0.85"/>
+      <path d="M20 216 C30 202 40 190 50 190" stroke="#4a7a4a" stroke-width="0.7" fill="none" opacity="0.5"/>
+      <path d="M8 230 C-4 215 -5 196 10 188 C22 182 38 188 42 204 C28 212 16 223 8 230Z" fill="url(#br-lg1)" opacity="0.8"/>
+      <path d="M40 196 C28 180 30 162 44 156 C56 151 72 160 74 176 C62 182 50 192 40 196Z" fill="url(#br-lg2)" opacity="0.82"/>
+      <path d="M56 178 C46 162 48 144 62 140 C75 136 90 146 88 162 C76 168 64 176 56 178Z" fill="url(#br-lg1)" opacity="0.78"/>
+      <path d="M72 158 C62 142 66 124 80 120 C94 116 108 126 104 144 C92 150 80 156 72 158Z" fill="url(#br-lg2)" opacity="0.75"/>
+      <path d="M88 138 C80 122 84 104 98 102 C112 100 124 112 120 128 C108 134 96 138 88 138Z" fill="url(#br-lg1)" opacity="0.7"/>
+      <path d="M104 118 C97 102 102 84 116 84 C128 84 138 95 132 112 C122 116 112 118 104 118Z" fill="url(#br-lg2)" opacity="0.65"/>
+      <path d="M118 98 C114 82 120 66 134 66 C144 66 152 78 146 94 C138 98 128 100 118 98Z" fill="url(#br-lg1)" opacity="0.58"/>
+      <!-- BLUSH PEONY lower -->
+      <g transform="translate(40,142)">
+        <ellipse cx="2" cy="4" rx="26" ry="9" fill="#7a4050" opacity="0.18" filter="url(#br-blur)"/>
+        <path d="M0-28 C8-24 22-12 20 2 C18 14 8 24 0 28 C-8 24-18 14-20 2 C-22-12-8-24 0-28Z" fill="url(#br-pp1)" opacity="0.88"/>
+        <path d="M-28 0 C-24-8-12-22 0-20 C14-18 24-8 28 0 C24 8 12 22 0 20 C-12 18-24 8-28 0Z" fill="url(#br-pp2)" opacity="0.84"/>
+        <path d="M-20-20 C-12-26 4-26 13-17 C22-8 23 8 16 17 C9 25-8 26-17 18 C-26 10-26-8-20-20Z" fill="url(#br-pp1)" opacity="0.8"/>
+        <path d="M20-20 C26-12 26 4 17 13 C8 22-8 23-17 16 C-25 9-24-8-16-17 C-8-26 10-28 20-20Z" fill="url(#br-pp2)" opacity="0.8"/>
+        <path d="M0-28 C2-20 2-10 0-2" stroke="#faf0ee" stroke-width="0.8" fill="none" opacity="0.7"/>
+        <path d="M0-18 C7-14 16-6 14 2 C12 10 7 16 0 18 C-7 16-12 10-14 2 C-16-6-7-14 0-18Z" fill="#fde8e6" opacity="0.92"/>
+        <path d="M-18 0 C-14-7-6-16 0-14 C8-12 14-7 18 0 C14 7 6 16 0 14 C-6 12-14 7-18 0Z" fill="#fff2f0" opacity="0.88"/>
+        <path d="M0-10 C5-6 10 0 8 5 C6 10 2 10 0 10 C-2 10-6 10-8 5 C-10 0-5-6 0-10Z" fill="#fef4f2" opacity="0.95"/>
+        <circle cx="0" cy="0" r="4.5" fill="#c87830" opacity="0.88"/>
+        <circle cx="0" cy="0" r="2.8" fill="#e09040" opacity="0.92"/>
+        <circle cx="-1.2" cy="-1.8" r="0.9" fill="#f8d060" opacity="0.9"/>
+        <circle cx="1.8" cy="-1" r="0.9" fill="#f8d060" opacity="0.9"/>
+      </g>
+      <!-- ROSE upper – 9-layer hyperrealistic -->
+      <g transform="translate(114,72)" filter="url(#br-fshadow)">
+        <path d="M0-34 C8-32 18-26 24-16 C30-6 30 8 24 18 C18 28 8 32 0 34 C-8 32-18 28-24 18 C-30 8-30-6-24-16 C-18-26-8-32 0-34Z" fill="url(#br-rp4)" opacity="0.88"/>
+        <path d="M-34 0 C-32-8-26-18-16-24 C-6-30 8-30 18-24 C28-18 32-8 34 0 C32 8 28 18 18 24 C8 30-6 30-16 24 C-26 18-32 8-34 0Z" fill="url(#br-rp4)" opacity="0.84"/>
+        <path d="M-26-26 C-16-34 2-34 14-24 C26-14 28 4 20 16 C12 26-6 30-18 22 C-30 14-32-4-26-26Z" fill="url(#br-rp1)" opacity="0.82"/>
+        <path d="M26-26 C34-14 34 4 24 16 C14 26-4 28-16 20 C-28 12-30-8-22-18 C-14-28 2-34 14-28 C20-24 24-20 26-26Z" fill="url(#br-rp2)" opacity="0.82"/>
+        <path d="M0-34 C2-26 3-16 2-6" stroke="#fce8e4" stroke-width="1.4" fill="none" opacity="0.55"/>
+        <path d="M0-26 C8-22 20-12 18 0 C16 12 8 20 0 26 C-8 20-16 12-18 0 C-20-12-8-22 0-26Z" fill="url(#br-rp5)" opacity="0.9"/>
+        <path d="M-26 0 C-22-8-12-20 0-18 C12-16 20-8 26 0 C22 8 12 20 0 18 C-12 16-22 8-26 0Z" fill="url(#br-rp5)" opacity="0.87"/>
+        <path d="M-18-18 C-10-24 4-24 12-16 C20-8 22 6 16 14 C10 22-4 24-12 16 C-20 8-22-6-18-18Z" fill="url(#br-rp2)" opacity="0.84"/>
+        <path d="M18-18 C24-10 24 4 16 12 C8 20-6 22-14 14 C-22 6-20-10-12-18 C-4-26 10-26 18-18Z" fill="url(#br-rp1)" opacity="0.84"/>
+        <path d="M0-26 C1-18 1-10 0-2" stroke="#fef0ec" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M0-17 C7-13 16-5 14 3 C12 11 7 16 0 17 C-7 16-12 11-14 3 C-16-5-7-13 0-17Z" fill="#f8d8d0" opacity="0.94"/>
+        <path d="M-17 0 C-13-7-5-16 0-14 C8-12 13-7 17 0 C13 7 5 16 0 14 C-5 12-13 7-17 0Z" fill="#fce0d8" opacity="0.9"/>
+        <path d="M-12-12 C-6-16 4-15 9-8 C14-2 13 7 8 12 C2 16-8 15-12 8 C-16 2-15-6-12-12Z" fill="#f8d4cc" opacity="0.88"/>
+        <path d="M12-12 C16-6 15 4 8 9 C2 14-7 13-12 7 C-16 1-14-9-7-12 C-1-16 6-16 12-12Z" fill="#fce0d8" opacity="0.86"/>
+        <path d="M0-10 C5-7 10-2 8 3 C6 8 3 10 0 10 C-3 10-6 8-8 3 C-10-2-5-7 0-10Z" fill="#feeae6" opacity="0.96"/>
+        <path d="M-3-6 C0-8 4-6 5-2 C6 2 4 6 0 7 C-3 7-5 4-5 0 C-5-3-4-5-3-6Z" fill="#fff8f6" opacity="0.95"/>
+        <circle cx="0" cy="0" r="5.5" fill="#c07028" opacity="0.92"/>
+        <circle cx="0" cy="0" r="3.5" fill="#d8902a" opacity="0.96"/>
+        <circle cx="0" cy="0" r="2" fill="#f0b040" opacity="0.9"/>
+        <circle cx="0" cy="-3.2" r="1.1" fill="#f8d048" opacity="0.92"/>
+        <circle cx="3" cy="-1" r="1" fill="#f4c840" opacity="0.9"/>
+        <circle cx="1.8" cy="2.6" r="1" fill="#f8d048" opacity="0.9"/>
+        <circle cx="-1.8" cy="2.6" r="0.95" fill="#f4cc44" opacity="0.88"/>
+        <circle cx="-3" cy="-1" r="1" fill="#f8d048" opacity="0.88"/>
+      </g>
+      <!-- ANEMONE mid -->
+      <g transform="translate(80,106)">
+        <path d="M0-16 C5-12 11-5 9 0 C7 6 3 12 0 16 C-3 12-7 6-9 0 C-11-5-5-12 0-16Z" fill="url(#br-ap1)" opacity="0.88"/>
+        <path d="M-16 0 C-12-5-5-11 0-9 C6-7 12-3 16 0 C12 3 6 11 0 9 C-5 7-12 5-16 0Z" fill="url(#br-ap1)" opacity="0.85"/>
+        <path d="M-12-12 C-6-16 3-15 8-8 C12-2 11 7 6 12 C1 16-8 15-12 9 C-16 3-15-6-12-12Z" fill="#d8ecf8" opacity="0.82"/>
+        <path d="M12-12 C16-6 15 3 8 8 C1 12-8 11-12 6 C-16 1-15-9-8-12 C-2-16 7-15 12-12Z" fill="#daeefa" opacity="0.82"/>
+        <path d="M0-16 C1-10 1-5 0 0" stroke="#b8d4ec" stroke-width="0.7" fill="none" opacity="0.6"/>
+        <circle cx="0" cy="0" r="6.5" fill="#1e3448" opacity="0.82"/>
+        <circle cx="0" cy="0" r="4.5" fill="#2a4460" opacity="0.9"/>
+        <circle cx="0" cy="-4" r="1.1" fill="#c8dff0" opacity="0.95"/>
+        <circle cx="3.8" cy="-1.2" r="1.1" fill="#b8d4ea" opacity="0.9"/>
+        <circle cx="2.3" cy="3.3" r="1.1" fill="#c8dff0" opacity="0.9"/>
+        <circle cx="-2.3" cy="3.3" r="1.1" fill="#c0d8ec" opacity="0.9"/>
+        <circle cx="-3.8" cy="-1.2" r="1.1" fill="#c8dff0" opacity="0.88"/>
+        <circle cx="0" cy="0" r="1.8" fill="#3a5878" opacity="0.9"/>
+      </g>
+      <!-- Bud -->
+      <g transform="translate(62,158)">
+        <path d="M0 7 Q0 15 -1 19" stroke="#5a8a5a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+        <path d="M-3 5 C-4 1-3-3 0-5 C3-7 6-3 6 0" fill="#6a9a6a" opacity="0.7"/>
+        <path d="M0-11 C4-8 9-3 8 1 C6 5 3 9 0 11 C-3 9-6 5-8 1 C-9-3-4-8 0-11Z" fill="#eab0b0" opacity="0.85"/>
+        <path d="M0-6 C3-4 6-1 5 1 C4 4 2 5 0 5 C-2 5-4 4-5 1 C-6-1-3-4 0-6Z" fill="#f8d0cc" opacity="0.92"/>
+      </g>
+      <!-- Berries -->
+      <path d="M150 45 Q146 56 142 64" stroke="#5a8a5a" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <path d="M160 38 Q156 50 152 58" stroke="#5a8a5a" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <circle cx="150" cy="45" r="5" fill="#7a9ab5" opacity="0.7"/>
+      <circle cx="150" cy="45" r="2.8" fill="#9ab8d0" opacity="0.58"/>
+      <circle cx="150" cy="43.5" r="1.1" fill="#d0e4f0" opacity="0.7"/>
+      <circle cx="162" cy="38" r="4.5" fill="#6a8aaa" opacity="0.66"/>
+      <circle cx="157" cy="30" r="4" fill="#8aaac0" opacity="0.62"/>
+      <circle cx="167" cy="46" r="4" fill="#7a9ab5" opacity="0.6"/>
+    </svg>
   </div>
 
     <p class="monogram">Y &amp; E</p>
@@ -978,69 +1069,49 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 
 <!-- BOTANICAL SPRIG DIVIDER -->
 <div class="sprig-divider to-warm">
-      <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="sg-a-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-        <stop offset="0%" stop-color="#c8dda8"/>
-        <stop offset="44%" stop-color="#c8dda8"/>
-        <stop offset="45%" stop-color="#88b868"/>
-        <stop offset="100%" stop-color="#88b868"/>
+      <linearGradient id="sprig-lf1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#b8d4b8"/>
+        <stop offset="100%" stop-color="#5a8a5a"/>
       </linearGradient>
-      <linearGradient id="sg-a-blossom" x1="15%" y1="0%" x2="85%" y2="100%">
-        <stop offset="0%" stop-color="#fde8dc"/>
-        <stop offset="44%" stop-color="#fde8dc"/>
-        <stop offset="45%" stop-color="#f0b8a0"/>
-        <stop offset="100%" stop-color="#f0b8a0"/>
+      <linearGradient id="sprig-lf2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c8e0c8"/>
+        <stop offset="100%" stop-color="#6a9a6a"/>
       </linearGradient>
+      <radialGradient id="sprig-rose" cx="40%" cy="35%" r="65%">
+        <stop offset="0%" stop-color="#fad8d4"/>
+        <stop offset="50%" stop-color="#d4827a"/>
+        <stop offset="100%" stop-color="#a85850"/>
+      </radialGradient>
     </defs>
-    <!-- Wobbly centre stem -->
-    <path d="M160 58 C159 44 161 32 160 10" stroke="#5a7a50" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-    <!-- Left branch -->
-    <path d="M160 40 C148 34 136 28 118 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C144 23 128 18 106 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <!-- Right branch -->
-    <path d="M160 40 C172 34 184 28 202 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C176 23 192 18 214 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <!-- Round plump leaves left -->
-    <path d="M126 26 C114 18 110 8 120 4 C128 0 140 8 138 20 C134 23 130 25 126 26Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M126 26 C130 18 134 11 138 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M108 17 C97 10 95 1 105 -2 C113 -4 122 3 120 15 C116 17 112 18 108 17Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M120 30 C110 24 108 15 116 11 C123 8 132 15 128 26 C125 28 122 30 120 30Z" fill="#c0d8a0" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Round plump leaves right (mirror) -->
-    <path d="M194 26 C206 18 210 8 200 4 C192 0 180 8 182 20 C186 23 190 25 194 26Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M194 26 C190 18 186 11 182 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M212 17 C223 10 225 1 215 -2 C207 -4 198 3 200 15 C204 17 208 18 212 17Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M200 30 C210 24 212 15 204 11 C197 8 188 15 192 26 C195 28 198 30 200 30Z" fill="#c0d8a0" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Centre Ghibli blossom -->
-    <g transform="translate(160,11)">
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(0)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#fdd8c8" stroke="#c08070" stroke-width="1.3" transform="rotate(72)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(144)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#fdd8c8" stroke="#c08070" stroke-width="1.3" transform="rotate(216)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="4" fill="#f8c830" stroke="#b89020" stroke-width="1.2"/>
-      <circle cx="0" cy="0" r="2.2" fill="#ffe050"/>
+    <path d="M160 58 Q160 38 160 10" stroke="#5a8a5a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q142 30 120 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q136 22 108 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q178 30 200 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q184 22 212 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M128 25 C118 18 112 10 120 6 C126 3 136 10 136 20 C132 22 130 24 128 25Z" fill="url(#sprig-lf1)" opacity="0.85"/>
+    <path d="M128 25 C130 18 133 12 136 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M110 18 C100 12 96 4 104 1 C110 -1 120 5 118 16 C115 17 112 18 110 18Z" fill="url(#sprig-lf2)" opacity="0.8"/>
+    <path d="M110 18 C112 12 115 7 118 16" stroke="#4a7a4a" stroke-width="0.5" fill="none" opacity="0.45"/>
+    <path d="M122 30 C112 26 108 18 116 14 C122 11 132 18 128 28 C126 29 124 30 122 30Z" fill="url(#sprig-lf1)" opacity="0.78"/>
+    <path d="M192 25 C202 18 208 10 200 6 C194 3 184 10 184 20 C188 22 190 24 192 25Z" fill="url(#sprig-lf1)" opacity="0.85"/>
+    <path d="M192 25 C190 18 187 12 184 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M210 18 C220 12 224 4 216 1 C210 -1 200 5 202 16 C205 17 208 18 210 18Z" fill="url(#sprig-lf2)" opacity="0.8"/>
+    <path d="M210 18 C208 12 205 7 202 16" stroke="#4a7a4a" stroke-width="0.5" fill="none" opacity="0.45"/>
+    <path d="M198 30 C208 26 212 18 204 14 C198 11 188 18 192 28 C194 29 196 30 198 30Z" fill="url(#sprig-lf1)" opacity="0.78"/>
+    <g transform="translate(160,12)">
+      <path d="M0-10 C5-7 11-3 9 1 C7 6 4 9 0 10 C-4 9-7 6-9 1 C-11-3-5-7 0-10Z" fill="url(#sprig-rose)" opacity="0.88"/>
+      <path d="M-10 0 C-7-5-3-10 0-9 C4-7 7-3 10 0 C7 4 3 9 0 8 C-3 7-7 4-10 0Z" fill="#e8c0bc" opacity="0.82"/>
+      <path d="M0-6 C3-4 6-1 5 1 C4 4 2 5 0 5 C-2 5-4 4-5 1 C-6-1-3-4 0-6Z" fill="#fce8e4" opacity="0.92"/>
+      <circle cx="0" cy="0" r="2.5" fill="#c87830" opacity="0.88"/>
+      <circle cx="0" cy="0" r="1.4" fill="#e8a050" opacity="0.92"/>
     </g>
-    <!-- Sparkle left -->
-    <circle cx="88" cy="18" r="2" fill="white" opacity="0.8"/>
-    <circle cx="87" cy="17" r="0.8" fill="white"/>
-    <line x1="88" y1="13" x2="88" y2="15" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="83" y1="18" x2="85" y2="18" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="91" y1="18" x2="93" y2="18" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="88" y1="21" x2="88" y2="23" stroke="white" stroke-width="1" opacity="0.7"/>
-    <!-- Sparkle right -->
-    <circle cx="232" cy="18" r="2" fill="white" opacity="0.75"/>
-    <circle cx="231" cy="17" r="0.8" fill="white"/>
-    <line x1="232" y1="13" x2="232" y2="15" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="227" y1="18" x2="229" y2="18" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="235" y1="18" x2="237" y2="18" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="232" y1="21" x2="232" y2="23" stroke="white" stroke-width="1" opacity="0.65"/>
-    <!-- Line ornaments -->
-    <path d="M54 30 L70 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
-    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 75 30)"/>
-    <path d="M78 30 L242 30" stroke="#a09060" stroke-width="0.7" opacity="0.25"/>
-    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 247 30)"/>
-    <path d="M250 30 L266 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.7" opacity="0.3"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
   </svg>
 </div>
 
@@ -1089,62 +1160,53 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 
 <!-- DETAILS -->
 <div class="sprig-divider to-cool">
-      <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="sg-b-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-        <stop offset="0%" stop-color="#b8d898"/>
-        <stop offset="44%" stop-color="#b8d898"/>
-        <stop offset="45%" stop-color="#78a858"/>
-        <stop offset="100%" stop-color="#78a858"/>
+      <linearGradient id="spriga-lf1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#b8d4b8"/>
+        <stop offset="100%" stop-color="#5a8a5a"/>
       </linearGradient>
-      <linearGradient id="sg-b-blue" x1="15%" y1="0%" x2="85%" y2="100%">
-        <stop offset="0%" stop-color="#ddeef8"/>
-        <stop offset="44%" stop-color="#ddeef8"/>
-        <stop offset="45%" stop-color="#a8cce8"/>
-        <stop offset="100%" stop-color="#a8cce8"/>
+      <linearGradient id="spriga-lf2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c8e0c8"/>
+        <stop offset="100%" stop-color="#6a9a6a"/>
       </linearGradient>
+      <radialGradient id="spriga-an" cx="50%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="#eef4fa"/>
+        <stop offset="55%" stop-color="#c8ddf0"/>
+        <stop offset="100%" stop-color="#9ab8d8"/>
+      </radialGradient>
     </defs>
-    <path d="M160 58 C159 44 161 32 160 10" stroke="#5a7a50" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-    <path d="M160 40 C148 34 136 28 118 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C144 23 128 18 106 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <path d="M160 40 C172 34 184 28 202 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C176 23 192 18 214 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <path d="M126 26 C114 18 110 8 120 4 C128 0 140 8 138 20 C134 23 130 25 126 26Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M126 26 C130 18 134 11 138 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M108 17 C97 10 95 1 105 -2 C113 -4 122 3 120 15 C116 17 112 18 108 17Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M120 30 C110 24 108 15 116 11 C123 8 132 15 128 26 C125 28 122 30 120 30Z" fill="#b0d090" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M194 26 C206 18 210 8 200 4 C192 0 180 8 182 20 C186 23 190 25 194 26Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M194 26 C190 18 186 11 182 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M212 17 C223 10 225 1 215 -2 C207 -4 198 3 200 15 C204 17 208 18 212 17Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M200 30 C210 24 212 15 204 11 C197 8 188 15 192 26 C195 28 198 30 200 30Z" fill="#b0d090" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Blue forget-me-not centre -->
-    <g transform="translate(160,11)">
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-b-blue)" stroke="#6080b0" stroke-width="1.3" transform="rotate(0)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#cce0f0" stroke="#6080b0" stroke-width="1.3" transform="rotate(72)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-b-blue)" stroke="#6080b0" stroke-width="1.3" transform="rotate(144)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#cce0f0" stroke="#6080b0" stroke-width="1.3" transform="rotate(216)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-b-blue)" stroke="#6080b0" stroke-width="1.3" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="4" fill="#f8e050" stroke="#b8a020" stroke-width="1.2"/>
-      <circle cx="0" cy="0" r="2.2" fill="#fff878"/>
+    <path d="M160 58 Q160 38 160 10" stroke="#5a8a5a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q142 30 120 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q136 22 108 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q178 30 200 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q184 22 212 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M128 25 C118 18 112 10 120 6 C126 3 136 10 136 20 C132 22 130 24 128 25Z" fill="url(#spriga-lf1)" opacity="0.85"/>
+    <path d="M128 25 C130 18 133 12 136 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M110 18 C100 12 96 4 104 1 C110 -1 120 5 118 16 C115 17 112 18 110 18Z" fill="url(#spriga-lf2)" opacity="0.8"/>
+    <path d="M122 30 C112 26 108 18 116 14 C122 11 132 18 128 28 C126 29 124 30 122 30Z" fill="url(#spriga-lf1)" opacity="0.78"/>
+    <path d="M192 25 C202 18 208 10 200 6 C194 3 184 10 184 20 C188 22 190 24 192 25Z" fill="url(#spriga-lf1)" opacity="0.85"/>
+    <path d="M192 25 C190 18 187 12 184 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M210 18 C220 12 224 4 216 1 C210 -1 200 5 202 16 C205 17 208 18 210 18Z" fill="url(#spriga-lf2)" opacity="0.8"/>
+    <path d="M198 30 C208 26 212 18 204 14 C198 11 188 18 192 28 C194 29 196 30 198 30Z" fill="url(#spriga-lf1)" opacity="0.78"/>
+    <g transform="translate(160,12)">
+      <path d="M0-10 C4-7 9-3 7 1 C5 5 3 9 0 10 C-3 9-5 5-7 1 C-9-3-4-7 0-10Z" fill="url(#spriga-an)" opacity="0.88"/>
+      <path d="M-10 0 C-7-4-3-9 0-7 C4-5 7-3 10 0 C7 4 3 9 0 7 C-3 5-7 4-10 0Z" fill="#d8ecf8" opacity="0.84"/>
+      <path d="M-7-7 C-3-10 3-9 6-5 C9-1 8 5 4 8 C0 11-6 10-8 6 C-10 2-9-4-7-7Z" fill="#daeefa" opacity="0.82"/>
+      <path d="M7-7 C10-3 9 3 5 6 C1 9-5 8-7 4 C-9 0-8-6-4-7 C0-10 4-9 7-7Z" fill="#d0e8f4" opacity="0.82"/>
+      <circle cx="0" cy="0" r="4" fill="#1e3448" opacity="0.82"/>
+      <circle cx="0" cy="0" r="2.5" fill="#2a4460" opacity="0.9"/>
+      <circle cx="0" cy="-2.8" r="0.7" fill="#c8dff0" opacity="0.95"/>
+      <circle cx="2.6" cy="-0.9" r="0.7" fill="#c8dff0" opacity="0.9"/>
+      <circle cx="1.6" cy="2.2" r="0.7" fill="#c8dff0" opacity="0.9"/>
+      <circle cx="-1.6" cy="2.2" r="0.7" fill="#c8dff0" opacity="0.9"/>
+      <circle cx="-2.6" cy="-0.9" r="0.7" fill="#c8dff0" opacity="0.88"/>
     </g>
-    <!-- Sparkles -->
-    <circle cx="88" cy="18" r="2" fill="white" opacity="0.78"/>
-    <circle cx="87" cy="17" r="0.8" fill="white"/>
-    <line x1="88" y1="13" x2="88" y2="15" stroke="white" stroke-width="1" opacity="0.68"/>
-    <line x1="83" y1="18" x2="85" y2="18" stroke="white" stroke-width="1" opacity="0.68"/>
-    <line x1="91" y1="18" x2="93" y2="18" stroke="white" stroke-width="1" opacity="0.68"/>
-    <line x1="88" y1="21" x2="88" y2="23" stroke="white" stroke-width="1" opacity="0.68"/>
-    <circle cx="232" cy="18" r="2" fill="white" opacity="0.72"/>
-    <circle cx="231" cy="17" r="0.8" fill="white"/>
-    <line x1="232" y1="13" x2="232" y2="15" stroke="white" stroke-width="1" opacity="0.62"/>
-    <line x1="227" y1="18" x2="229" y2="18" stroke="white" stroke-width="1" opacity="0.62"/>
-    <line x1="235" y1="18" x2="237" y2="18" stroke="white" stroke-width="1" opacity="0.62"/>
-    <line x1="232" y1="21" x2="232" y2="23" stroke="white" stroke-width="1" opacity="0.62"/>
-    <path d="M54 30 L70 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
-    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 75 30)"/>
-    <path d="M78 30 L242 30" stroke="#a09060" stroke-width="0.7" opacity="0.25"/>
-    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 247 30)"/>
-    <path d="M250 30 L266 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.7" opacity="0.3"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
   </svg>
 </div>
 <section id="details">
@@ -1192,69 +1254,49 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 
 <!-- SCHEDULE -->
 <div class="sprig-divider to-warm">
-      <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="sg-a-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-        <stop offset="0%" stop-color="#c8dda8"/>
-        <stop offset="44%" stop-color="#c8dda8"/>
-        <stop offset="45%" stop-color="#88b868"/>
-        <stop offset="100%" stop-color="#88b868"/>
+      <linearGradient id="sprig-lf1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#b8d4b8"/>
+        <stop offset="100%" stop-color="#5a8a5a"/>
       </linearGradient>
-      <linearGradient id="sg-a-blossom" x1="15%" y1="0%" x2="85%" y2="100%">
-        <stop offset="0%" stop-color="#fde8dc"/>
-        <stop offset="44%" stop-color="#fde8dc"/>
-        <stop offset="45%" stop-color="#f0b8a0"/>
-        <stop offset="100%" stop-color="#f0b8a0"/>
+      <linearGradient id="sprig-lf2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c8e0c8"/>
+        <stop offset="100%" stop-color="#6a9a6a"/>
       </linearGradient>
+      <radialGradient id="sprig-rose" cx="40%" cy="35%" r="65%">
+        <stop offset="0%" stop-color="#fad8d4"/>
+        <stop offset="50%" stop-color="#d4827a"/>
+        <stop offset="100%" stop-color="#a85850"/>
+      </radialGradient>
     </defs>
-    <!-- Wobbly centre stem -->
-    <path d="M160 58 C159 44 161 32 160 10" stroke="#5a7a50" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-    <!-- Left branch -->
-    <path d="M160 40 C148 34 136 28 118 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C144 23 128 18 106 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <!-- Right branch -->
-    <path d="M160 40 C172 34 184 28 202 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C176 23 192 18 214 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <!-- Round plump leaves left -->
-    <path d="M126 26 C114 18 110 8 120 4 C128 0 140 8 138 20 C134 23 130 25 126 26Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M126 26 C130 18 134 11 138 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M108 17 C97 10 95 1 105 -2 C113 -4 122 3 120 15 C116 17 112 18 108 17Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M120 30 C110 24 108 15 116 11 C123 8 132 15 128 26 C125 28 122 30 120 30Z" fill="#c0d8a0" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Round plump leaves right (mirror) -->
-    <path d="M194 26 C206 18 210 8 200 4 C192 0 180 8 182 20 C186 23 190 25 194 26Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M194 26 C190 18 186 11 182 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M212 17 C223 10 225 1 215 -2 C207 -4 198 3 200 15 C204 17 208 18 212 17Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M200 30 C210 24 212 15 204 11 C197 8 188 15 192 26 C195 28 198 30 200 30Z" fill="#c0d8a0" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Centre Ghibli blossom -->
-    <g transform="translate(160,11)">
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(0)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#fdd8c8" stroke="#c08070" stroke-width="1.3" transform="rotate(72)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(144)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#fdd8c8" stroke="#c08070" stroke-width="1.3" transform="rotate(216)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="4" fill="#f8c830" stroke="#b89020" stroke-width="1.2"/>
-      <circle cx="0" cy="0" r="2.2" fill="#ffe050"/>
+    <path d="M160 58 Q160 38 160 10" stroke="#5a8a5a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q142 30 120 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q136 22 108 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q178 30 200 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q184 22 212 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M128 25 C118 18 112 10 120 6 C126 3 136 10 136 20 C132 22 130 24 128 25Z" fill="url(#sprig-lf1)" opacity="0.85"/>
+    <path d="M128 25 C130 18 133 12 136 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M110 18 C100 12 96 4 104 1 C110 -1 120 5 118 16 C115 17 112 18 110 18Z" fill="url(#sprig-lf2)" opacity="0.8"/>
+    <path d="M110 18 C112 12 115 7 118 16" stroke="#4a7a4a" stroke-width="0.5" fill="none" opacity="0.45"/>
+    <path d="M122 30 C112 26 108 18 116 14 C122 11 132 18 128 28 C126 29 124 30 122 30Z" fill="url(#sprig-lf1)" opacity="0.78"/>
+    <path d="M192 25 C202 18 208 10 200 6 C194 3 184 10 184 20 C188 22 190 24 192 25Z" fill="url(#sprig-lf1)" opacity="0.85"/>
+    <path d="M192 25 C190 18 187 12 184 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M210 18 C220 12 224 4 216 1 C210 -1 200 5 202 16 C205 17 208 18 210 18Z" fill="url(#sprig-lf2)" opacity="0.8"/>
+    <path d="M210 18 C208 12 205 7 202 16" stroke="#4a7a4a" stroke-width="0.5" fill="none" opacity="0.45"/>
+    <path d="M198 30 C208 26 212 18 204 14 C198 11 188 18 192 28 C194 29 196 30 198 30Z" fill="url(#sprig-lf1)" opacity="0.78"/>
+    <g transform="translate(160,12)">
+      <path d="M0-10 C5-7 11-3 9 1 C7 6 4 9 0 10 C-4 9-7 6-9 1 C-11-3-5-7 0-10Z" fill="url(#sprig-rose)" opacity="0.88"/>
+      <path d="M-10 0 C-7-5-3-10 0-9 C4-7 7-3 10 0 C7 4 3 9 0 8 C-3 7-7 4-10 0Z" fill="#e8c0bc" opacity="0.82"/>
+      <path d="M0-6 C3-4 6-1 5 1 C4 4 2 5 0 5 C-2 5-4 4-5 1 C-6-1-3-4 0-6Z" fill="#fce8e4" opacity="0.92"/>
+      <circle cx="0" cy="0" r="2.5" fill="#c87830" opacity="0.88"/>
+      <circle cx="0" cy="0" r="1.4" fill="#e8a050" opacity="0.92"/>
     </g>
-    <!-- Sparkle left -->
-    <circle cx="88" cy="18" r="2" fill="white" opacity="0.8"/>
-    <circle cx="87" cy="17" r="0.8" fill="white"/>
-    <line x1="88" y1="13" x2="88" y2="15" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="83" y1="18" x2="85" y2="18" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="91" y1="18" x2="93" y2="18" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="88" y1="21" x2="88" y2="23" stroke="white" stroke-width="1" opacity="0.7"/>
-    <!-- Sparkle right -->
-    <circle cx="232" cy="18" r="2" fill="white" opacity="0.75"/>
-    <circle cx="231" cy="17" r="0.8" fill="white"/>
-    <line x1="232" y1="13" x2="232" y2="15" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="227" y1="18" x2="229" y2="18" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="235" y1="18" x2="237" y2="18" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="232" y1="21" x2="232" y2="23" stroke="white" stroke-width="1" opacity="0.65"/>
-    <!-- Line ornaments -->
-    <path d="M54 30 L70 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
-    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 75 30)"/>
-    <path d="M78 30 L242 30" stroke="#a09060" stroke-width="0.7" opacity="0.25"/>
-    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 247 30)"/>
-    <path d="M250 30 L266 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.7" opacity="0.3"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
   </svg>
 </div>
 <section id="schedule">
@@ -1275,62 +1317,53 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 
 <!-- DRESS CODE -->
 <div class="sprig-divider to-cool">
-      <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="sg-b-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-        <stop offset="0%" stop-color="#b8d898"/>
-        <stop offset="44%" stop-color="#b8d898"/>
-        <stop offset="45%" stop-color="#78a858"/>
-        <stop offset="100%" stop-color="#78a858"/>
+      <linearGradient id="spriga-lf1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#b8d4b8"/>
+        <stop offset="100%" stop-color="#5a8a5a"/>
       </linearGradient>
-      <linearGradient id="sg-b-blue" x1="15%" y1="0%" x2="85%" y2="100%">
-        <stop offset="0%" stop-color="#ddeef8"/>
-        <stop offset="44%" stop-color="#ddeef8"/>
-        <stop offset="45%" stop-color="#a8cce8"/>
-        <stop offset="100%" stop-color="#a8cce8"/>
+      <linearGradient id="spriga-lf2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c8e0c8"/>
+        <stop offset="100%" stop-color="#6a9a6a"/>
       </linearGradient>
+      <radialGradient id="spriga-an" cx="50%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="#eef4fa"/>
+        <stop offset="55%" stop-color="#c8ddf0"/>
+        <stop offset="100%" stop-color="#9ab8d8"/>
+      </radialGradient>
     </defs>
-    <path d="M160 58 C159 44 161 32 160 10" stroke="#5a7a50" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-    <path d="M160 40 C148 34 136 28 118 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C144 23 128 18 106 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <path d="M160 40 C172 34 184 28 202 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C176 23 192 18 214 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <path d="M126 26 C114 18 110 8 120 4 C128 0 140 8 138 20 C134 23 130 25 126 26Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M126 26 C130 18 134 11 138 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M108 17 C97 10 95 1 105 -2 C113 -4 122 3 120 15 C116 17 112 18 108 17Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M120 30 C110 24 108 15 116 11 C123 8 132 15 128 26 C125 28 122 30 120 30Z" fill="#b0d090" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M194 26 C206 18 210 8 200 4 C192 0 180 8 182 20 C186 23 190 25 194 26Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M194 26 C190 18 186 11 182 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M212 17 C223 10 225 1 215 -2 C207 -4 198 3 200 15 C204 17 208 18 212 17Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M200 30 C210 24 212 15 204 11 C197 8 188 15 192 26 C195 28 198 30 200 30Z" fill="#b0d090" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Blue forget-me-not centre -->
-    <g transform="translate(160,11)">
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-b-blue)" stroke="#6080b0" stroke-width="1.3" transform="rotate(0)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#cce0f0" stroke="#6080b0" stroke-width="1.3" transform="rotate(72)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-b-blue)" stroke="#6080b0" stroke-width="1.3" transform="rotate(144)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#cce0f0" stroke="#6080b0" stroke-width="1.3" transform="rotate(216)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-b-blue)" stroke="#6080b0" stroke-width="1.3" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="4" fill="#f8e050" stroke="#b8a020" stroke-width="1.2"/>
-      <circle cx="0" cy="0" r="2.2" fill="#fff878"/>
+    <path d="M160 58 Q160 38 160 10" stroke="#5a8a5a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q142 30 120 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q136 22 108 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q178 30 200 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q184 22 212 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M128 25 C118 18 112 10 120 6 C126 3 136 10 136 20 C132 22 130 24 128 25Z" fill="url(#spriga-lf1)" opacity="0.85"/>
+    <path d="M128 25 C130 18 133 12 136 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M110 18 C100 12 96 4 104 1 C110 -1 120 5 118 16 C115 17 112 18 110 18Z" fill="url(#spriga-lf2)" opacity="0.8"/>
+    <path d="M122 30 C112 26 108 18 116 14 C122 11 132 18 128 28 C126 29 124 30 122 30Z" fill="url(#spriga-lf1)" opacity="0.78"/>
+    <path d="M192 25 C202 18 208 10 200 6 C194 3 184 10 184 20 C188 22 190 24 192 25Z" fill="url(#spriga-lf1)" opacity="0.85"/>
+    <path d="M192 25 C190 18 187 12 184 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M210 18 C220 12 224 4 216 1 C210 -1 200 5 202 16 C205 17 208 18 210 18Z" fill="url(#spriga-lf2)" opacity="0.8"/>
+    <path d="M198 30 C208 26 212 18 204 14 C198 11 188 18 192 28 C194 29 196 30 198 30Z" fill="url(#spriga-lf1)" opacity="0.78"/>
+    <g transform="translate(160,12)">
+      <path d="M0-10 C4-7 9-3 7 1 C5 5 3 9 0 10 C-3 9-5 5-7 1 C-9-3-4-7 0-10Z" fill="url(#spriga-an)" opacity="0.88"/>
+      <path d="M-10 0 C-7-4-3-9 0-7 C4-5 7-3 10 0 C7 4 3 9 0 7 C-3 5-7 4-10 0Z" fill="#d8ecf8" opacity="0.84"/>
+      <path d="M-7-7 C-3-10 3-9 6-5 C9-1 8 5 4 8 C0 11-6 10-8 6 C-10 2-9-4-7-7Z" fill="#daeefa" opacity="0.82"/>
+      <path d="M7-7 C10-3 9 3 5 6 C1 9-5 8-7 4 C-9 0-8-6-4-7 C0-10 4-9 7-7Z" fill="#d0e8f4" opacity="0.82"/>
+      <circle cx="0" cy="0" r="4" fill="#1e3448" opacity="0.82"/>
+      <circle cx="0" cy="0" r="2.5" fill="#2a4460" opacity="0.9"/>
+      <circle cx="0" cy="-2.8" r="0.7" fill="#c8dff0" opacity="0.95"/>
+      <circle cx="2.6" cy="-0.9" r="0.7" fill="#c8dff0" opacity="0.9"/>
+      <circle cx="1.6" cy="2.2" r="0.7" fill="#c8dff0" opacity="0.9"/>
+      <circle cx="-1.6" cy="2.2" r="0.7" fill="#c8dff0" opacity="0.9"/>
+      <circle cx="-2.6" cy="-0.9" r="0.7" fill="#c8dff0" opacity="0.88"/>
     </g>
-    <!-- Sparkles -->
-    <circle cx="88" cy="18" r="2" fill="white" opacity="0.78"/>
-    <circle cx="87" cy="17" r="0.8" fill="white"/>
-    <line x1="88" y1="13" x2="88" y2="15" stroke="white" stroke-width="1" opacity="0.68"/>
-    <line x1="83" y1="18" x2="85" y2="18" stroke="white" stroke-width="1" opacity="0.68"/>
-    <line x1="91" y1="18" x2="93" y2="18" stroke="white" stroke-width="1" opacity="0.68"/>
-    <line x1="88" y1="21" x2="88" y2="23" stroke="white" stroke-width="1" opacity="0.68"/>
-    <circle cx="232" cy="18" r="2" fill="white" opacity="0.72"/>
-    <circle cx="231" cy="17" r="0.8" fill="white"/>
-    <line x1="232" y1="13" x2="232" y2="15" stroke="white" stroke-width="1" opacity="0.62"/>
-    <line x1="227" y1="18" x2="229" y2="18" stroke="white" stroke-width="1" opacity="0.62"/>
-    <line x1="235" y1="18" x2="237" y2="18" stroke="white" stroke-width="1" opacity="0.62"/>
-    <line x1="232" y1="21" x2="232" y2="23" stroke="white" stroke-width="1" opacity="0.62"/>
-    <path d="M54 30 L70 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
-    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 75 30)"/>
-    <path d="M78 30 L242 30" stroke="#a09060" stroke-width="0.7" opacity="0.25"/>
-    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 247 30)"/>
-    <path d="M250 30 L266 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.7" opacity="0.3"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
   </svg>
 </div>
 <section id="dresscode">
@@ -1361,69 +1394,49 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 
 <!-- GIFTS -->
 <div class="sprig-divider to-warm">
-      <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="sg-a-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-        <stop offset="0%" stop-color="#c8dda8"/>
-        <stop offset="44%" stop-color="#c8dda8"/>
-        <stop offset="45%" stop-color="#88b868"/>
-        <stop offset="100%" stop-color="#88b868"/>
+      <linearGradient id="sprig-lf1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#b8d4b8"/>
+        <stop offset="100%" stop-color="#5a8a5a"/>
       </linearGradient>
-      <linearGradient id="sg-a-blossom" x1="15%" y1="0%" x2="85%" y2="100%">
-        <stop offset="0%" stop-color="#fde8dc"/>
-        <stop offset="44%" stop-color="#fde8dc"/>
-        <stop offset="45%" stop-color="#f0b8a0"/>
-        <stop offset="100%" stop-color="#f0b8a0"/>
+      <linearGradient id="sprig-lf2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c8e0c8"/>
+        <stop offset="100%" stop-color="#6a9a6a"/>
       </linearGradient>
+      <radialGradient id="sprig-rose" cx="40%" cy="35%" r="65%">
+        <stop offset="0%" stop-color="#fad8d4"/>
+        <stop offset="50%" stop-color="#d4827a"/>
+        <stop offset="100%" stop-color="#a85850"/>
+      </radialGradient>
     </defs>
-    <!-- Wobbly centre stem -->
-    <path d="M160 58 C159 44 161 32 160 10" stroke="#5a7a50" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-    <!-- Left branch -->
-    <path d="M160 40 C148 34 136 28 118 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C144 23 128 18 106 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <!-- Right branch -->
-    <path d="M160 40 C172 34 184 28 202 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C176 23 192 18 214 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <!-- Round plump leaves left -->
-    <path d="M126 26 C114 18 110 8 120 4 C128 0 140 8 138 20 C134 23 130 25 126 26Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M126 26 C130 18 134 11 138 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M108 17 C97 10 95 1 105 -2 C113 -4 122 3 120 15 C116 17 112 18 108 17Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M120 30 C110 24 108 15 116 11 C123 8 132 15 128 26 C125 28 122 30 120 30Z" fill="#c0d8a0" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Round plump leaves right (mirror) -->
-    <path d="M194 26 C206 18 210 8 200 4 C192 0 180 8 182 20 C186 23 190 25 194 26Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M194 26 C190 18 186 11 182 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M212 17 C223 10 225 1 215 -2 C207 -4 198 3 200 15 C204 17 208 18 212 17Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M200 30 C210 24 212 15 204 11 C197 8 188 15 192 26 C195 28 198 30 200 30Z" fill="#c0d8a0" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Centre Ghibli blossom -->
-    <g transform="translate(160,11)">
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(0)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#fdd8c8" stroke="#c08070" stroke-width="1.3" transform="rotate(72)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(144)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#fdd8c8" stroke="#c08070" stroke-width="1.3" transform="rotate(216)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="4" fill="#f8c830" stroke="#b89020" stroke-width="1.2"/>
-      <circle cx="0" cy="0" r="2.2" fill="#ffe050"/>
+    <path d="M160 58 Q160 38 160 10" stroke="#5a8a5a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q142 30 120 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q136 22 108 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q178 30 200 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q184 22 212 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M128 25 C118 18 112 10 120 6 C126 3 136 10 136 20 C132 22 130 24 128 25Z" fill="url(#sprig-lf1)" opacity="0.85"/>
+    <path d="M128 25 C130 18 133 12 136 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M110 18 C100 12 96 4 104 1 C110 -1 120 5 118 16 C115 17 112 18 110 18Z" fill="url(#sprig-lf2)" opacity="0.8"/>
+    <path d="M110 18 C112 12 115 7 118 16" stroke="#4a7a4a" stroke-width="0.5" fill="none" opacity="0.45"/>
+    <path d="M122 30 C112 26 108 18 116 14 C122 11 132 18 128 28 C126 29 124 30 122 30Z" fill="url(#sprig-lf1)" opacity="0.78"/>
+    <path d="M192 25 C202 18 208 10 200 6 C194 3 184 10 184 20 C188 22 190 24 192 25Z" fill="url(#sprig-lf1)" opacity="0.85"/>
+    <path d="M192 25 C190 18 187 12 184 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M210 18 C220 12 224 4 216 1 C210 -1 200 5 202 16 C205 17 208 18 210 18Z" fill="url(#sprig-lf2)" opacity="0.8"/>
+    <path d="M210 18 C208 12 205 7 202 16" stroke="#4a7a4a" stroke-width="0.5" fill="none" opacity="0.45"/>
+    <path d="M198 30 C208 26 212 18 204 14 C198 11 188 18 192 28 C194 29 196 30 198 30Z" fill="url(#sprig-lf1)" opacity="0.78"/>
+    <g transform="translate(160,12)">
+      <path d="M0-10 C5-7 11-3 9 1 C7 6 4 9 0 10 C-4 9-7 6-9 1 C-11-3-5-7 0-10Z" fill="url(#sprig-rose)" opacity="0.88"/>
+      <path d="M-10 0 C-7-5-3-10 0-9 C4-7 7-3 10 0 C7 4 3 9 0 8 C-3 7-7 4-10 0Z" fill="#e8c0bc" opacity="0.82"/>
+      <path d="M0-6 C3-4 6-1 5 1 C4 4 2 5 0 5 C-2 5-4 4-5 1 C-6-1-3-4 0-6Z" fill="#fce8e4" opacity="0.92"/>
+      <circle cx="0" cy="0" r="2.5" fill="#c87830" opacity="0.88"/>
+      <circle cx="0" cy="0" r="1.4" fill="#e8a050" opacity="0.92"/>
     </g>
-    <!-- Sparkle left -->
-    <circle cx="88" cy="18" r="2" fill="white" opacity="0.8"/>
-    <circle cx="87" cy="17" r="0.8" fill="white"/>
-    <line x1="88" y1="13" x2="88" y2="15" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="83" y1="18" x2="85" y2="18" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="91" y1="18" x2="93" y2="18" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="88" y1="21" x2="88" y2="23" stroke="white" stroke-width="1" opacity="0.7"/>
-    <!-- Sparkle right -->
-    <circle cx="232" cy="18" r="2" fill="white" opacity="0.75"/>
-    <circle cx="231" cy="17" r="0.8" fill="white"/>
-    <line x1="232" y1="13" x2="232" y2="15" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="227" y1="18" x2="229" y2="18" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="235" y1="18" x2="237" y2="18" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="232" y1="21" x2="232" y2="23" stroke="white" stroke-width="1" opacity="0.65"/>
-    <!-- Line ornaments -->
-    <path d="M54 30 L70 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
-    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 75 30)"/>
-    <path d="M78 30 L242 30" stroke="#a09060" stroke-width="0.7" opacity="0.25"/>
-    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 247 30)"/>
-    <path d="M250 30 L266 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.7" opacity="0.3"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
   </svg>
 </div>
 <section id="gifts">
@@ -1449,62 +1462,53 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 
 <!-- RSVP -->
 <div class="sprig-divider to-cool">
-      <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="sg-b-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-        <stop offset="0%" stop-color="#b8d898"/>
-        <stop offset="44%" stop-color="#b8d898"/>
-        <stop offset="45%" stop-color="#78a858"/>
-        <stop offset="100%" stop-color="#78a858"/>
+      <linearGradient id="spriga-lf1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#b8d4b8"/>
+        <stop offset="100%" stop-color="#5a8a5a"/>
       </linearGradient>
-      <linearGradient id="sg-b-blue" x1="15%" y1="0%" x2="85%" y2="100%">
-        <stop offset="0%" stop-color="#ddeef8"/>
-        <stop offset="44%" stop-color="#ddeef8"/>
-        <stop offset="45%" stop-color="#a8cce8"/>
-        <stop offset="100%" stop-color="#a8cce8"/>
+      <linearGradient id="spriga-lf2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c8e0c8"/>
+        <stop offset="100%" stop-color="#6a9a6a"/>
       </linearGradient>
+      <radialGradient id="spriga-an" cx="50%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="#eef4fa"/>
+        <stop offset="55%" stop-color="#c8ddf0"/>
+        <stop offset="100%" stop-color="#9ab8d8"/>
+      </radialGradient>
     </defs>
-    <path d="M160 58 C159 44 161 32 160 10" stroke="#5a7a50" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-    <path d="M160 40 C148 34 136 28 118 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C144 23 128 18 106 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <path d="M160 40 C172 34 184 28 202 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C176 23 192 18 214 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <path d="M126 26 C114 18 110 8 120 4 C128 0 140 8 138 20 C134 23 130 25 126 26Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M126 26 C130 18 134 11 138 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M108 17 C97 10 95 1 105 -2 C113 -4 122 3 120 15 C116 17 112 18 108 17Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M120 30 C110 24 108 15 116 11 C123 8 132 15 128 26 C125 28 122 30 120 30Z" fill="#b0d090" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M194 26 C206 18 210 8 200 4 C192 0 180 8 182 20 C186 23 190 25 194 26Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M194 26 C190 18 186 11 182 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M212 17 C223 10 225 1 215 -2 C207 -4 198 3 200 15 C204 17 208 18 212 17Z" fill="url(#sg-b-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M200 30 C210 24 212 15 204 11 C197 8 188 15 192 26 C195 28 198 30 200 30Z" fill="#b0d090" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Blue forget-me-not centre -->
-    <g transform="translate(160,11)">
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-b-blue)" stroke="#6080b0" stroke-width="1.3" transform="rotate(0)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#cce0f0" stroke="#6080b0" stroke-width="1.3" transform="rotate(72)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-b-blue)" stroke="#6080b0" stroke-width="1.3" transform="rotate(144)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#cce0f0" stroke="#6080b0" stroke-width="1.3" transform="rotate(216)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-b-blue)" stroke="#6080b0" stroke-width="1.3" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="4" fill="#f8e050" stroke="#b8a020" stroke-width="1.2"/>
-      <circle cx="0" cy="0" r="2.2" fill="#fff878"/>
+    <path d="M160 58 Q160 38 160 10" stroke="#5a8a5a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q142 30 120 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q136 22 108 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q178 30 200 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q184 22 212 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M128 25 C118 18 112 10 120 6 C126 3 136 10 136 20 C132 22 130 24 128 25Z" fill="url(#spriga-lf1)" opacity="0.85"/>
+    <path d="M128 25 C130 18 133 12 136 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M110 18 C100 12 96 4 104 1 C110 -1 120 5 118 16 C115 17 112 18 110 18Z" fill="url(#spriga-lf2)" opacity="0.8"/>
+    <path d="M122 30 C112 26 108 18 116 14 C122 11 132 18 128 28 C126 29 124 30 122 30Z" fill="url(#spriga-lf1)" opacity="0.78"/>
+    <path d="M192 25 C202 18 208 10 200 6 C194 3 184 10 184 20 C188 22 190 24 192 25Z" fill="url(#spriga-lf1)" opacity="0.85"/>
+    <path d="M192 25 C190 18 187 12 184 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M210 18 C220 12 224 4 216 1 C210 -1 200 5 202 16 C205 17 208 18 210 18Z" fill="url(#spriga-lf2)" opacity="0.8"/>
+    <path d="M198 30 C208 26 212 18 204 14 C198 11 188 18 192 28 C194 29 196 30 198 30Z" fill="url(#spriga-lf1)" opacity="0.78"/>
+    <g transform="translate(160,12)">
+      <path d="M0-10 C4-7 9-3 7 1 C5 5 3 9 0 10 C-3 9-5 5-7 1 C-9-3-4-7 0-10Z" fill="url(#spriga-an)" opacity="0.88"/>
+      <path d="M-10 0 C-7-4-3-9 0-7 C4-5 7-3 10 0 C7 4 3 9 0 7 C-3 5-7 4-10 0Z" fill="#d8ecf8" opacity="0.84"/>
+      <path d="M-7-7 C-3-10 3-9 6-5 C9-1 8 5 4 8 C0 11-6 10-8 6 C-10 2-9-4-7-7Z" fill="#daeefa" opacity="0.82"/>
+      <path d="M7-7 C10-3 9 3 5 6 C1 9-5 8-7 4 C-9 0-8-6-4-7 C0-10 4-9 7-7Z" fill="#d0e8f4" opacity="0.82"/>
+      <circle cx="0" cy="0" r="4" fill="#1e3448" opacity="0.82"/>
+      <circle cx="0" cy="0" r="2.5" fill="#2a4460" opacity="0.9"/>
+      <circle cx="0" cy="-2.8" r="0.7" fill="#c8dff0" opacity="0.95"/>
+      <circle cx="2.6" cy="-0.9" r="0.7" fill="#c8dff0" opacity="0.9"/>
+      <circle cx="1.6" cy="2.2" r="0.7" fill="#c8dff0" opacity="0.9"/>
+      <circle cx="-1.6" cy="2.2" r="0.7" fill="#c8dff0" opacity="0.9"/>
+      <circle cx="-2.6" cy="-0.9" r="0.7" fill="#c8dff0" opacity="0.88"/>
     </g>
-    <!-- Sparkles -->
-    <circle cx="88" cy="18" r="2" fill="white" opacity="0.78"/>
-    <circle cx="87" cy="17" r="0.8" fill="white"/>
-    <line x1="88" y1="13" x2="88" y2="15" stroke="white" stroke-width="1" opacity="0.68"/>
-    <line x1="83" y1="18" x2="85" y2="18" stroke="white" stroke-width="1" opacity="0.68"/>
-    <line x1="91" y1="18" x2="93" y2="18" stroke="white" stroke-width="1" opacity="0.68"/>
-    <line x1="88" y1="21" x2="88" y2="23" stroke="white" stroke-width="1" opacity="0.68"/>
-    <circle cx="232" cy="18" r="2" fill="white" opacity="0.72"/>
-    <circle cx="231" cy="17" r="0.8" fill="white"/>
-    <line x1="232" y1="13" x2="232" y2="15" stroke="white" stroke-width="1" opacity="0.62"/>
-    <line x1="227" y1="18" x2="229" y2="18" stroke="white" stroke-width="1" opacity="0.62"/>
-    <line x1="235" y1="18" x2="237" y2="18" stroke="white" stroke-width="1" opacity="0.62"/>
-    <line x1="232" y1="21" x2="232" y2="23" stroke="white" stroke-width="1" opacity="0.62"/>
-    <path d="M54 30 L70 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
-    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 75 30)"/>
-    <path d="M78 30 L242 30" stroke="#a09060" stroke-width="0.7" opacity="0.25"/>
-    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 247 30)"/>
-    <path d="M250 30 L266 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.7" opacity="0.3"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
   </svg>
 </div>
 <section id="rsvp">
@@ -1521,69 +1525,49 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 
 <!-- FOOTER -->
 <div class="sprig-divider to-warm">
-      <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="sg-a-leaf" x1="0%" y1="0%" x2="60%" y2="100%">
-        <stop offset="0%" stop-color="#c8dda8"/>
-        <stop offset="44%" stop-color="#c8dda8"/>
-        <stop offset="45%" stop-color="#88b868"/>
-        <stop offset="100%" stop-color="#88b868"/>
+      <linearGradient id="sprig-lf1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#b8d4b8"/>
+        <stop offset="100%" stop-color="#5a8a5a"/>
       </linearGradient>
-      <linearGradient id="sg-a-blossom" x1="15%" y1="0%" x2="85%" y2="100%">
-        <stop offset="0%" stop-color="#fde8dc"/>
-        <stop offset="44%" stop-color="#fde8dc"/>
-        <stop offset="45%" stop-color="#f0b8a0"/>
-        <stop offset="100%" stop-color="#f0b8a0"/>
+      <linearGradient id="sprig-lf2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c8e0c8"/>
+        <stop offset="100%" stop-color="#6a9a6a"/>
       </linearGradient>
+      <radialGradient id="sprig-rose" cx="40%" cy="35%" r="65%">
+        <stop offset="0%" stop-color="#fad8d4"/>
+        <stop offset="50%" stop-color="#d4827a"/>
+        <stop offset="100%" stop-color="#a85850"/>
+      </radialGradient>
     </defs>
-    <!-- Wobbly centre stem -->
-    <path d="M160 58 C159 44 161 32 160 10" stroke="#5a7a50" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-    <!-- Left branch -->
-    <path d="M160 40 C148 34 136 28 118 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C144 23 128 18 106 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <!-- Right branch -->
-    <path d="M160 40 C172 34 184 28 202 22" stroke="#6a8a5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-    <path d="M160 28 C176 23 192 18 214 16" stroke="#5a7a50" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-    <!-- Round plump leaves left -->
-    <path d="M126 26 C114 18 110 8 120 4 C128 0 140 8 138 20 C134 23 130 25 126 26Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M126 26 C130 18 134 11 138 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M108 17 C97 10 95 1 105 -2 C113 -4 122 3 120 15 C116 17 112 18 108 17Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M120 30 C110 24 108 15 116 11 C123 8 132 15 128 26 C125 28 122 30 120 30Z" fill="#c0d8a0" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Round plump leaves right (mirror) -->
-    <path d="M194 26 C206 18 210 8 200 4 C192 0 180 8 182 20 C186 23 190 25 194 26Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M194 26 C190 18 186 11 182 20" stroke="#3a6030" stroke-width="0.9" fill="none"/>
-    <path d="M212 17 C223 10 225 1 215 -2 C207 -4 198 3 200 15 C204 17 208 18 212 17Z" fill="url(#sg-a-leaf)" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <path d="M200 30 C210 24 212 15 204 11 C197 8 188 15 192 26 C195 28 198 30 200 30Z" fill="#c0d8a0" stroke="#3a6030" stroke-width="1.3" stroke-linejoin="round"/>
-    <!-- Centre Ghibli blossom -->
-    <g transform="translate(160,11)">
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(0)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#fdd8c8" stroke="#c08070" stroke-width="1.3" transform="rotate(72)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(144)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="#fdd8c8" stroke="#c08070" stroke-width="1.3" transform="rotate(216)"/>
-      <path d="M0-10 C3-8 6-3 5 1 C3 5 1 7 0 7 C-1 7-3 5-5 1 C-6-3-3-8 0-10Z" fill="url(#sg-a-blossom)" stroke="#c08070" stroke-width="1.3" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="4" fill="#f8c830" stroke="#b89020" stroke-width="1.2"/>
-      <circle cx="0" cy="0" r="2.2" fill="#ffe050"/>
+    <path d="M160 58 Q160 38 160 10" stroke="#5a8a5a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q142 30 120 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q136 22 108 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M160 40 Q178 30 200 23" stroke="#6a9a6a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M160 30 Q184 22 212 17" stroke="#5a8a5a" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <path d="M128 25 C118 18 112 10 120 6 C126 3 136 10 136 20 C132 22 130 24 128 25Z" fill="url(#sprig-lf1)" opacity="0.85"/>
+    <path d="M128 25 C130 18 133 12 136 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M110 18 C100 12 96 4 104 1 C110 -1 120 5 118 16 C115 17 112 18 110 18Z" fill="url(#sprig-lf2)" opacity="0.8"/>
+    <path d="M110 18 C112 12 115 7 118 16" stroke="#4a7a4a" stroke-width="0.5" fill="none" opacity="0.45"/>
+    <path d="M122 30 C112 26 108 18 116 14 C122 11 132 18 128 28 C126 29 124 30 122 30Z" fill="url(#sprig-lf1)" opacity="0.78"/>
+    <path d="M192 25 C202 18 208 10 200 6 C194 3 184 10 184 20 C188 22 190 24 192 25Z" fill="url(#sprig-lf1)" opacity="0.85"/>
+    <path d="M192 25 C190 18 187 12 184 20" stroke="#4a7a4a" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M210 18 C220 12 224 4 216 1 C210 -1 200 5 202 16 C205 17 208 18 210 18Z" fill="url(#sprig-lf2)" opacity="0.8"/>
+    <path d="M210 18 C208 12 205 7 202 16" stroke="#4a7a4a" stroke-width="0.5" fill="none" opacity="0.45"/>
+    <path d="M198 30 C208 26 212 18 204 14 C198 11 188 18 192 28 C194 29 196 30 198 30Z" fill="url(#sprig-lf1)" opacity="0.78"/>
+    <g transform="translate(160,12)">
+      <path d="M0-10 C5-7 11-3 9 1 C7 6 4 9 0 10 C-4 9-7 6-9 1 C-11-3-5-7 0-10Z" fill="url(#sprig-rose)" opacity="0.88"/>
+      <path d="M-10 0 C-7-5-3-10 0-9 C4-7 7-3 10 0 C7 4 3 9 0 8 C-3 7-7 4-10 0Z" fill="#e8c0bc" opacity="0.82"/>
+      <path d="M0-6 C3-4 6-1 5 1 C4 4 2 5 0 5 C-2 5-4 4-5 1 C-6-1-3-4 0-6Z" fill="#fce8e4" opacity="0.92"/>
+      <circle cx="0" cy="0" r="2.5" fill="#c87830" opacity="0.88"/>
+      <circle cx="0" cy="0" r="1.4" fill="#e8a050" opacity="0.92"/>
     </g>
-    <!-- Sparkle left -->
-    <circle cx="88" cy="18" r="2" fill="white" opacity="0.8"/>
-    <circle cx="87" cy="17" r="0.8" fill="white"/>
-    <line x1="88" y1="13" x2="88" y2="15" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="83" y1="18" x2="85" y2="18" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="91" y1="18" x2="93" y2="18" stroke="white" stroke-width="1" opacity="0.7"/>
-    <line x1="88" y1="21" x2="88" y2="23" stroke="white" stroke-width="1" opacity="0.7"/>
-    <!-- Sparkle right -->
-    <circle cx="232" cy="18" r="2" fill="white" opacity="0.75"/>
-    <circle cx="231" cy="17" r="0.8" fill="white"/>
-    <line x1="232" y1="13" x2="232" y2="15" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="227" y1="18" x2="229" y2="18" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="235" y1="18" x2="237" y2="18" stroke="white" stroke-width="1" opacity="0.65"/>
-    <line x1="232" y1="21" x2="232" y2="23" stroke="white" stroke-width="1" opacity="0.65"/>
-    <!-- Line ornaments -->
-    <path d="M54 30 L70 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
-    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 75 30)"/>
-    <path d="M78 30 L242 30" stroke="#a09060" stroke-width="0.7" opacity="0.25"/>
-    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#a09060" stroke-width="0.9" opacity="0.5" transform="rotate(45 247 30)"/>
-    <path d="M250 30 L266 30" stroke="#a09060" stroke-width="0.9" opacity="0.5"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.7" opacity="0.3"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.45"/>
   </svg>
 </div>
 <footer>
