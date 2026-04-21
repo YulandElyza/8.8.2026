@@ -68,9 +68,9 @@ nav a:hover { color: var(--blue-dark); }
 
 /* ── HERO ── */
 #hero {
-  min-height: 100vh; display: flex; flex-direction: column;
+  min-height: 100svh; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center; padding: 5rem 2rem 3rem;
+  text-align: center; padding: 5rem 2rem 2.5rem;
   position: relative; overflow: hidden; background: var(--ivory);
 }
 
@@ -99,15 +99,15 @@ nav a:hover { color: var(--blue-dark); }
 }
 
 /* Hero text */
-.monogram        { font-family:'Cinzel',serif; font-size:clamp(1.4rem,3.5vw,2.1rem); color:var(--blue-dark); letter-spacing:0.18em; margin-bottom:1rem; opacity:0; animation:fadeUp 0.9s ease 2.2s forwards; }
-.hero-date-big   { font-family:'Cinzel',serif; font-size:clamp(1.6rem,4.5vw,2.6rem); font-weight:500; color:var(--blue-dark); letter-spacing:0.25em; margin-bottom:0.5rem; opacity:0; animation:fadeUp 0.9s ease 2.35s forwards; }
-.save-label      { font-family:'Cinzel',serif; font-size:clamp(0.58rem,1.4vw,0.75rem); letter-spacing:0.42em; text-transform:uppercase; color:var(--blue); margin-bottom:1.2rem; opacity:0; animation:fadeUp 0.9s ease 2.5s forwards; }
-h1               { font-family:'Great Vibes',cursive; font-size:clamp(5rem,16vw,10rem); line-height:1.0; color:var(--blue-dark); opacity:0; animation:heroName 1.4s cubic-bezier(0.16,1,0.3,1) 2.6s forwards; margin-bottom:0.4rem; }
-.hero-divider    { display:flex; align-items:center; gap:0.8rem; margin:1.4rem auto; width:min(280px,72vw); opacity:0; animation:fadeUp 0.9s ease 3s forwards; }
+.monogram        { font-family:'Cinzel',serif; font-size:clamp(1rem,3.5vw,2.1rem); color:var(--blue-dark); letter-spacing:0.18em; margin-bottom:0.6rem; opacity:0; animation:fadeUp 0.9s ease 2.2s forwards; }
+.hero-date-big   { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4.5vw,2.6rem); font-weight:500; color:var(--blue-dark); letter-spacing:0.25em; margin-bottom:0.3rem; opacity:0; animation:fadeUp 0.9s ease 2.35s forwards; }
+.save-label      { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.4vw,0.75rem); letter-spacing:0.42em; text-transform:uppercase; color:var(--blue); margin-bottom:0.7rem; opacity:0; animation:fadeUp 0.9s ease 2.5s forwards; }
+h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13vw,10rem); line-height:1.0; color:var(--blue-dark); opacity:0; animation:heroName 1.4s cubic-bezier(0.16,1,0.3,1) 2.6s forwards; margin-bottom:0.2rem; }
+.hero-divider    { display:flex; align-items:center; gap:0.8rem; margin:0.8rem auto; width:min(280px,72vw); opacity:0; animation:fadeUp 0.9s ease 3s forwards; }
 .hero-divider::before,.hero-divider::after { content:''; flex:1; height:1px; background:linear-gradient(to right,transparent,var(--blue-light)); }
 .hero-divider::after { background:linear-gradient(to left,transparent,var(--blue-light)); }
 .hero-divider-gem { width:7px; height:7px; background:var(--blue-light); transform:rotate(45deg); }
-.hero-location   { font-family:'Cinzel',serif; font-size:clamp(0.58rem,1.3vw,0.72rem); letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); line-height:2.4; opacity:0; animation:fadeUp 0.9s ease 3.1s forwards; }
+.hero-location   { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.3vw,0.72rem); letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); line-height:2; opacity:0; animation:fadeUp 0.9s ease 3.1s forwards; }
 
 @keyframes fadeUp  { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
 @keyframes heroName { from{opacity:0;transform:translateY(30px) scale(0.94)} to{opacity:1;transform:none} }
@@ -115,13 +115,13 @@ h1               { font-family:'Great Vibes',cursive; font-size:clamp(5rem,16vw,
 /* ── COUNTDOWN ── */
 .hero-countdown {
   display:flex; align-items:flex-start; justify-content:center; gap:0.15rem;
-  margin-bottom:0.4rem; opacity:0; animation:fadeUp 0.9s ease 2.8s forwards;
+  margin-bottom:0.3rem; opacity:0; animation:fadeUp 0.9s ease 2.8s forwards;
 }
 .countdown-unit { display:flex; flex-direction:column; align-items:center; min-width:2.8rem; }
-.countdown-num { font-family:'Cinzel',serif; font-size:clamp(1.1rem,2.5vw,1.4rem); font-weight:500; color:var(--blue-dark); letter-spacing:0.04em; line-height:1.2; }
-.countdown-num.seconds { color:var(--blue); font-size:clamp(0.95rem,2vw,1.15rem); }
-.countdown-lbl { font-family:'Cinzel',serif; font-size:0.44rem; letter-spacing:0.26em; text-transform:uppercase; color:var(--blue-light); margin-top:0.2rem; }
-.countdown-sep { font-family:'Cinzel',serif; font-size:clamp(1rem,2vw,1.2rem); color:var(--blue-pale); padding-top:0.05rem; align-self:flex-start; line-height:1.35; user-select:none; }
+.countdown-num { font-family:'Cinzel',serif; font-size:clamp(0.95rem,2.5vw,1.4rem); font-weight:500; color:var(--blue-dark); letter-spacing:0.04em; line-height:1.2; }
+.countdown-num.seconds { color:var(--blue); font-size:clamp(0.8rem,2vw,1.15rem); }
+.countdown-lbl { font-family:'Cinzel',serif; font-size:0.42rem; letter-spacing:0.26em; text-transform:uppercase; color:var(--blue-light); margin-top:0.15rem; }
+.countdown-sep { font-family:'Cinzel',serif; font-size:clamp(0.85rem,2vw,1.2rem); color:var(--blue-pale); padding-top:0.05rem; align-self:flex-start; line-height:1.35; user-select:none; }
 @keyframes secTick { 0%{opacity:0.2;transform:translateY(-4px)} 100%{opacity:1;transform:translateY(0)} }
 .countdown-num.seconds.tick { animation:secTick 0.2s ease-out forwards; }
 
@@ -235,8 +235,23 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 @media (max-width:600px) {
   nav { gap:1rem; flex-wrap:wrap; padding:0.8rem 1rem; }
   nav a { font-size:0.52rem; }
-  .floral-corner.tl, .floral-corner.tr { width:200px; height:200px; }
-  .floral-corner.bl, .floral-corner.br { width:160px; height:160px; }
+
+  #hero { padding: 4rem 1.5rem 1.5rem; }
+
+  .floral-corner.tl, .floral-corner.tr { width:150px; height:150px; }
+  .floral-corner.bl, .floral-corner.br { width:130px; height:130px; }
+
+  .monogram      { font-size:clamp(0.85rem,4.5vw,1.2rem); margin-bottom:0.4rem; }
+  .hero-date-big { font-size:clamp(1rem,5.5vw,1.6rem); margin-bottom:0.2rem; }
+  .save-label    { margin-bottom:0.5rem; }
+  h1             { font-size:clamp(3rem,15vw,5rem); margin-bottom:0.1rem; }
+  .hero-divider  { margin:0.5rem auto; }
+  .hero-location { line-height:1.8; }
+
+  .hero-countdown { gap:0.1rem; margin-bottom:0.2rem; }
+  .countdown-unit { min-width:2.2rem; }
+  .countdown-num  { font-size:clamp(0.85rem,3.5vw,1.1rem); }
+  .countdown-sep  { font-size:clamp(0.75rem,3vw,1rem); }
 }
 </style>
 </head>
