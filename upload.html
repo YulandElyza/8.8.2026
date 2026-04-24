@@ -351,10 +351,14 @@
   const UPLOAD_URL    = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
 
   // ── Image resize ──────────────────────────────────────────────
-  // Every photo is normalised to TARGET_W × TARGET_H (cover crop,
-  // centred) before upload so the carousel always gets uniform frames.
+  // Every photo is normalised to TARGET_W × TARGET_H before upload.
+  // Portrait (and any non-16:9) images are letterboxed: the full photo
+  // is fitted inside the frame and the empty sides are filled with a
+  // blurred, brightened version of the photo itself so the result
+  // always looks intentional rather than plain-coloured bars.
   const TARGET_W = 1200;
   const TARGET_H = 900;
+  const BLUR_PX  = 28; // how soft the background blur is
 
   function resizeImage(file) {
     return new Promise((resolve, reject) => {
@@ -364,26 +368,38 @@
       img.onload = () => {
         URL.revokeObjectURL(url);
 
-        // Scale to cover the target box while keeping aspect ratio
-        const scale = Math.max(TARGET_W / img.width, TARGET_H / img.height);
-        const scaledW = img.width  * scale;
-        const scaledH = img.height * scale;
-
-        // Centre-crop offsets
-        const offsetX = (scaledW - TARGET_W) / 2;
-        const offsetY = (scaledH - TARGET_H) / 2;
-
         const canvas = document.createElement('canvas');
         canvas.width  = TARGET_W;
         canvas.height = TARGET_H;
-
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, -offsetX, -offsetY, scaledW, scaledH);
+
+        // ── Step 1: blurred background ───────────────────────────
+        // Scale image to COVER the canvas (same as before), draw it
+        // blurred and slightly brightened as the background layer.
+        const coverScale = Math.max(TARGET_W / img.width, TARGET_H / img.height);
+        const covW = img.width  * coverScale;
+        const covH = img.height * coverScale;
+        const covX = (TARGET_W - covW) / 2;
+        const covY = (TARGET_H - covH) / 2;
+
+        ctx.filter = `blur(${BLUR_PX}px) brightness(0.75)`;
+        ctx.drawImage(img, covX, covY, covW, covH);
+        ctx.filter = 'none';
+
+        // ── Step 2: sharp foreground (contain, centred) ──────────
+        // Scale image to FIT fully inside the canvas.
+        const containScale = Math.min(TARGET_W / img.width, TARGET_H / img.height);
+        const fitW = img.width  * containScale;
+        const fitH = img.height * containScale;
+        const fitX = (TARGET_W - fitW) / 2;
+        const fitY = (TARGET_H - fitH) / 2;
+
+        ctx.drawImage(img, fitX, fitY, fitW, fitH);
 
         canvas.toBlob(blob => {
           if (!blob) { reject(new Error('Canvas toBlob failed')); return; }
           resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' }));
-        }, 'image/jpeg', 0.88); // quality 0.88 — sharp but upload-friendly
+        }, 'image/jpeg', 0.88);
       };
 
       img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Image load failed')); };
