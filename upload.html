@@ -350,69 +350,10 @@
   const FOLDER        = 'Wedding2026';
   const UPLOAD_URL    = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
 
-  // ── Image resize ──────────────────────────────────────────────
-  // Every photo is normalised to TARGET_W × TARGET_H before upload.
-  // Portrait (and any non-16:9) images are letterboxed: the full photo
-  // is fitted inside the frame and the empty sides are filled with a
-  // blurred, brightened version of the photo itself so the result
-  // always looks intentional rather than plain-coloured bars.
-  const TARGET_W = 1200;
-  const TARGET_H = 900;
-  const BLUR_PX  = 28; // how soft the background blur is
-
-  function resizeImage(file) {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      const url = URL.createObjectURL(file);
-
-      img.onload = () => {
-        URL.revokeObjectURL(url);
-
-        const canvas = document.createElement('canvas');
-        canvas.width  = TARGET_W;
-        canvas.height = TARGET_H;
-        const ctx = canvas.getContext('2d');
-
-        // ── Step 1: blurred background ───────────────────────────
-        // Scale image to COVER the canvas (same as before), draw it
-        // blurred and slightly brightened as the background layer.
-        const coverScale = Math.max(TARGET_W / img.width, TARGET_H / img.height);
-        const covW = img.width  * coverScale;
-        const covH = img.height * coverScale;
-        const covX = (TARGET_W - covW) / 2;
-        const covY = (TARGET_H - covH) / 2;
-
-        ctx.filter = `blur(${BLUR_PX}px) brightness(0.75)`;
-        ctx.drawImage(img, covX, covY, covW, covH);
-        ctx.filter = 'none';
-
-        // ── Step 2: sharp foreground (contain, centred) ──────────
-        // Scale image to FIT fully inside the canvas.
-        const containScale = Math.min(TARGET_W / img.width, TARGET_H / img.height);
-        const fitW = img.width  * containScale;
-        const fitH = img.height * containScale;
-        const fitX = (TARGET_W - fitW) / 2;
-        const fitY = (TARGET_H - fitH) / 2;
-
-        ctx.drawImage(img, fitX, fitY, fitW, fitH);
-
-        canvas.toBlob(blob => {
-          if (!blob) { reject(new Error('Canvas toBlob failed')); return; }
-          resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' }));
-        }, 'image/jpeg', 0.88);
-      };
-
-      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Image load failed')); };
-      img.src = url;
-    });
-  }
-  // ─────────────────────────────────────────────────────────────
-
   // Upload a single file to Cloudinary, attaching the message as context metadata
   async function uploadOne(file, message) {
-    const resized = await resizeImage(file); // normalise before upload
     const fd = new FormData();
-    fd.append('file', resized);
+    fd.append('file', file);
     fd.append('upload_preset', UPLOAD_PRESET);
     fd.append('folder', FOLDER);
     fd.append('tags', FOLDER); // tag matches folder name for carousel list endpoint
