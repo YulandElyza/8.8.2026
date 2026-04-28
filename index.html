@@ -67,8 +67,11 @@ html { scroll-behavior: smooth; }
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.45; }
 }
-/* Push nav down so banner doesn't overlap */
-nav { top: 28px; }
+
+@media (max-width: 600px) {
+  .gallery-banner a { font-size: 0.62rem; letter-spacing: 0.18em; }
+}
+/* Push nav down so banner doesn't overlap — applied in the nav block below */
 
 body { background: var(--ivory); color: var(--text); font-family: 'Lato', sans-serif; font-weight: 300; overflow-x: hidden; }
 
@@ -99,7 +102,7 @@ body { background: var(--ivory); color: var(--text); font-family: 'Lato', sans-s
 
 /* ── NAV ── */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  position: fixed; top: 28px; left: 0; right: 0; z-index: 200;
   display: flex; justify-content: center; gap: 2rem; padding: 1rem 2rem;
   background: rgba(245,240,232,0.96); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
