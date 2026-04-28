@@ -26,6 +26,50 @@
 }
 
 html { scroll-behavior: smooth; }
+
+/* ── GALLERY BANNER ── */
+.gallery-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1rem;
+  background: rgba(48,77,101,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(214,228,239,0.2);
+  opacity: 0;
+  animation: fadeIn 0.6s ease 2.6s forwards;
+}
+.gallery-banner a {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--blue-pale);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  animation: bannerPulse 2.4s ease-in-out 3.2s infinite;
+  transition: color 0.2s;
+}
+.gallery-banner a:hover { color: #fff; }
+.gallery-banner-gem {
+  width: 5px; height: 5px;
+  border: 1px solid var(--blue-pale);
+  transform: rotate(45deg);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+@keyframes bannerPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+/* Push nav down so banner doesn't overlap */
+nav { top: 28px; }
+
 body { background: var(--ivory); color: var(--text); font-family: 'Lato', sans-serif; font-weight: 300; overflow-x: hidden; }
 
 /* ── PAGE CURTAIN ── */
@@ -258,6 +302,15 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
 <body>
 <!-- PAGE VIGNETTE -->
 <div id="page-vignette"></div>
+
+<!-- GALLERY BANNER -->
+<div class="gallery-banner">
+  <a href="https://yul46legaspi.github.io/YulandElyzaWedding2026/carousel" target="_blank">
+    <span class="gallery-banner-gem"></span>
+    Click Here for Photo Carousel
+    <span class="gallery-banner-gem"></span>
+  </a>
+</div>
 
 <!-- PAGE CURTAIN -->
 <div id="curtain"><span id="curtain-monogram">Yul &amp; Elyza</span></div>
