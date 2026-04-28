@@ -31,45 +31,40 @@ html { scroll-behavior: smooth; }
 .gallery-banner {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 300;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.45rem 1rem;
-  background: rgba(48,77,101,0.92);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(214,228,239,0.2);
-  opacity: 0;
-  animation: fadeIn 0.6s ease 2.6s forwards;
+  padding: 0.5rem 1rem;
+  background: #304d65;
+  border-bottom: 1px solid rgba(214,228,239,0.25);
 }
 .gallery-banner a {
   font-family: 'Cinzel', serif;
-  font-size: 0.58rem;
-  letter-spacing: 0.28em;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--blue-pale);
+  color: #d6e4ef;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  animation: bannerPulse 2.4s ease-in-out 3.2s infinite;
-  transition: color 0.2s;
+  animation: bannerBlink 2s ease-in-out infinite;
 }
 .gallery-banner a:hover { color: #fff; }
 .gallery-banner-gem {
   width: 5px; height: 5px;
-  border: 1px solid var(--blue-pale);
+  border: 1px solid #d6e4ef;
   transform: rotate(45deg);
   opacity: 0.7;
   flex-shrink: 0;
 }
-@keyframes bannerPulse {
+@keyframes bannerBlink {
   0%, 100% { opacity: 1; }
-  50%       { opacity: 0.45; }
+  50%       { opacity: 0.4; }
 }
-
 @media (max-width: 600px) {
-  .gallery-banner a { font-size: 0.62rem; letter-spacing: 0.18em; }
+  .gallery-banner a { font-size: 0.6rem; letter-spacing: 0.14em; }
 }
 /* Push nav down so banner doesn't overlap — applied in the nav block below */
 
@@ -77,7 +72,7 @@ body { background: var(--ivory); color: var(--text); font-family: 'Lato', sans-s
 
 /* ── PAGE CURTAIN ── */
 #curtain {
-  position: fixed; inset: 0; z-index: 999;
+  position: fixed; inset: 0; z-index: 99999;
   background: var(--ivory);
   display: flex; align-items: center; justify-content: center;
   pointer-events: none;
