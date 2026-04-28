@@ -394,94 +394,6 @@
   .swiper-slide-active .slide-caption-text{ animation: none; }
 }
 
-/* ── THUMBNAIL STRIP ──────────────────────────────────────── */
-.thumb-strip {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1.4rem;
-  padding: 0 0.5rem;
-}
-.thumb-item {
-  width: 56px;
-  height: 56px;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 2px solid transparent;
-  cursor: pointer;
-  opacity: 0.55;
-  transition: opacity 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
-  flex-shrink: 0;
-}
-.thumb-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
-}
-.thumb-item:hover { opacity: 0.85; transform: translateY(-2px); }
-.thumb-item.active {
-  opacity: 1;
-  border-color: var(--blue-light);
-  transform: translateY(-2px);
-}
-@media (max-width: 600px) {
-  .thumb-item { width: 46px; height: 46px; }
-}
-
-/* ── LIGHTBOX ─────────────────────────────────────────────── */
-#lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  background: rgba(20, 28, 36, 0.95);
-  backdrop-filter: blur(14px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-#lightbox.open {
-  opacity: 1;
-  pointer-events: all;
-}
-#lightbox img {
-  max-width: min(92vw, 1200px);
-  max-height: 88vh;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-  transform: scale(0.94);
-  transition: transform 0.35s cubic-bezier(.16,1,.3,1);
-  display: block;
-}
-#lightbox.open img { transform: scale(1); }
-.lightbox-close {
-  position: absolute;
-  top: 1.2rem;
-  right: 1.4rem;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: rgba(245,240,232,0.12);
-  border: 1px solid rgba(245,240,232,0.22);
-  color: var(--ivory);
-  font-size: 1.1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease;
-  line-height: 1;
-}
-.lightbox-close:hover { background: rgba(245,240,232,0.25); }
-/* Hint that photo is clickable */
-.slide-photo-frame { cursor: zoom-in; }
-
 
 /* ── GLOBAL LAYOUT + DESIGN SYSTEM ───────────────────────────── */
 .page {
@@ -583,12 +495,6 @@
   </div>
 </section>
 
-<!-- Lightbox -->
-<div id="lightbox" role="dialog" aria-modal="true" aria-label="Full size photo">
-  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
-  <img id="lightboxImg" src="" alt="Full size wedding photo" />
-</div>
-
 <footer>
   <div class="footer-names">Yul & Elyza</div>
   <p>8.8.26 · Wedding Memories</p>
@@ -611,65 +517,6 @@
   let swiperInstance = null;
   let lastPhotoCount = 0;
 
-  // ── Thumbnail strip ────────────────────────────────────────
-  let thumbStrip = null;
-
-  function buildThumbStrip(images) {
-    if (thumbStrip) { thumbStrip.remove(); thumbStrip = null; }
-    if (images.length <= 1) return;
-
-    thumbStrip = document.createElement('div');
-    thumbStrip.className = 'thumb-strip';
-    thumbStrip.id = 'thumbStrip';
-
-    images.forEach((img, i) => {
-      const item = document.createElement('div');
-      item.className = 'thumb-item' + (i === 0 ? ' active' : '');
-      item.dataset.index = i;
-      item.innerHTML = `<img src="${img.url}" alt="Thumbnail ${i + 1}" loading="lazy" />`;
-      item.addEventListener('click', () => {
-        if (swiperInstance) swiperInstance.slideToLoop(i);
-      });
-      thumbStrip.appendChild(item);
-    });
-
-    document.getElementById('swiperEl').after(thumbStrip);
-  }
-
-  function updateActiveThumb(realIndex) {
-    if (!thumbStrip) return;
-    thumbStrip.querySelectorAll('.thumb-item').forEach((el, i) => {
-      el.classList.toggle('active', i === realIndex);
-    });
-  }
-
-  // ── Lightbox ───────────────────────────────────────────────
-  const lightbox      = document.getElementById('lightbox');
-  const lightboxImg   = document.getElementById('lightboxImg');
-  const lightboxClose = document.getElementById('lightboxClose');
-
-  function openLightbox(url) {
-    lightboxImg.src = url;
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-    setTimeout(() => { if (!lightbox.classList.contains('open')) lightboxImg.src = ''; }, 350);
-  }
-
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-
-  // Delegate clicks on any slide-photo-frame
-  document.getElementById('swiperWrapper').addEventListener('click', e => {
-    const frame = e.target.closest('.slide-photo-frame');
-    if (frame) openLightbox(frame.dataset.url);
-  });
-
-  // ── Build slides ───────────────────────────────────────────
   function buildSlides(images) {
     const wrapper = document.getElementById('swiperWrapper');
     wrapper.innerHTML = '';
@@ -677,7 +524,7 @@
       const slide = document.createElement('div');
       slide.className = 'swiper-slide';
       slide.innerHTML = `
-        <div class="slide-photo-frame" data-url="${img.url}">
+        <div class="slide-photo-frame">
           <img src="${img.url}" alt="Wedding photo" loading="lazy" />
         </div>
         ${img.message ? `
@@ -688,7 +535,6 @@
       `;
       wrapper.appendChild(slide);
     });
-    buildThumbStrip(images);
   }
 
   function escapeHtml(str) {
@@ -756,10 +602,10 @@ function renderCarousel(images) {
             const cap = active.querySelector('.slide-caption-text');
             if (cap) {
               cap.style.animation = 'none';
+              // restart animation
               void cap.offsetWidth;
               cap.style.animation = '';
             }
-            updateActiveThumb(this.realIndex);
           }
         }
       });
