@@ -110,9 +110,9 @@ nav a:hover { color: var(--blue-dark); }
 
 /* ── HERO ── */
 #hero {
-  min-height: 100svh; display: flex; flex-direction: column;
+  min-height: 80svh; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center; padding: 5rem 2rem 2.5rem;
+  text-align: center; padding: 4rem 2rem 2rem;
   position: relative; overflow: hidden; background: var(--ivory);
 }
 
@@ -169,7 +169,7 @@ h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13v
 
 /* ── SECTION DIVIDER with real botanical sprig ── */
 .sprig-divider {
-  height: 90px; overflow: hidden;
+  height: 56px; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
   position: relative;
 }
@@ -178,7 +178,7 @@ h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13v
 .sprig-divider svg { width: 320px; height: 60px; opacity: 0.75; }
 
 /* ── PHOTO GALLERY ── */
-#photo { padding: 4rem 2rem; background: var(--section-bg); }
+#photo { padding: 3rem 2rem; background: var(--section-bg); }
 .photo-gallery { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
 .photo-main { width: 100%; }
 .photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -193,19 +193,19 @@ h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13v
 .photo-slot input[type="file"] { display:none; }
 
 /* ── SECTIONS ── */
-section { padding: 5.5rem 2rem; }
+section { padding: 3rem 2rem; }
 .section-inner { max-width: 700px; margin: 0 auto; }
 .section-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.42em; text-transform:uppercase; color:var(--blue-light); margin-bottom:0.8rem; }
 .section-title { font-family:'Great Vibes',cursive; font-size:clamp(2.6rem,6vw,3.8rem); color:var(--blue-dark); line-height:1.1; }
-.thin-rule { display:flex; align-items:center; gap:0.7rem; margin:1.2rem 0 2rem; }
+.thin-rule { display:flex; align-items:center; gap:0.7rem; margin:0.8rem 0 1.4rem; }
 .thin-rule::before,.thin-rule::after { content:''; flex:0 0 28px; height:1px; background:var(--blue-light); }
 .thin-rule-dot { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
 .section-body { font-size:0.9rem; line-height:2.1; color:var(--mid); }
 
 /* ── DETAILS ── */
 #details { background: var(--ivory); }
-.details-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1.8rem; margin-top:2.5rem; }
-.detail-item { text-align:center; padding:2rem 1rem; border:1px solid var(--border); background:rgba(214,228,239,0.1); transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
+.details-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1.2rem; margin-top:1.5rem; }
+.detail-item { text-align:center; padding:1.4rem 1rem; border:1px solid var(--border); background:rgba(214,228,239,0.1); transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
 .detail-item:hover { transform:translateY(-4px); border-color:var(--blue-light); box-shadow:0 8px 28px rgba(74,101,128,0.1); }
 .detail-icon { width:30px; height:30px; margin:0 auto 0.8rem; opacity:0.5; }
 .detail-label { font-family:'Cinzel',serif; font-size:0.56rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--blue); margin-bottom:0.5rem; }
@@ -214,8 +214,8 @@ section { padding: 5.5rem 2rem; }
 
 /* ── SCHEDULE ── */
 #schedule { background: var(--section-bg); }
-.timeline { margin-top:2.5rem; }
-.timeline-item { display:flex; gap:1.5rem; padding:1.4rem 0; border-bottom:1px solid var(--border); align-items:flex-start; transition: opacity 0.3s; }
+.timeline { margin-top:1.5rem; }
+.timeline-item { display:flex; gap:1.5rem; padding:1rem 0; border-bottom:1px solid var(--border); align-items:flex-start; transition: opacity 0.3s; }
 .timeline-item:last-child { border-bottom:none; }
 .timeline-item:hover { opacity: 0.8; }
 .timeline-time { font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.08em; color:var(--blue); min-width:68px; padding-top:0.15rem; }
@@ -225,20 +225,20 @@ section { padding: 5.5rem 2rem; }
 
 /* ── DRESS CODE ── */
 #dresscode { background: var(--ivory); }
-.dresscode-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; margin-top:2.5rem; }
-.dresscode-card { border:1px solid var(--border); padding:2.2rem 1.5rem; text-align:center; background:rgba(214,228,239,0.1); transition:border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+.dresscode-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.2rem; margin-top:1.5rem; }
+.dresscode-card { border:1px solid var(--border); padding:1.5rem 1.2rem; text-align:center; background:rgba(214,228,239,0.1); transition:border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
 .dresscode-card:hover { border-color:var(--blue-light); transform:translateY(-4px); box-shadow:0 10px 32px rgba(74,101,128,0.1); }
 .dresscode-card-icon { font-size:2rem; margin-bottom:0.8rem; }
 .dresscode-card-title { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--blue); margin-bottom:0.6rem; }
 .dresscode-card-detail { font-family:'Great Vibes',cursive; font-size:1.9rem; color:var(--blue-dark); line-height:1.2; margin-bottom:0.4rem; }
 .dresscode-card-sub { font-size:0.78rem; color:var(--mid); line-height:1.8; }
-.dresscode-note { margin-top:2rem; padding:1.2rem 1.5rem; border-left:2px solid var(--blue-light); background:rgba(214,228,239,0.18); font-size:0.82rem; color:var(--mid); line-height:1.9; }
+.dresscode-note { margin-top:1.2rem; padding:1rem 1.2rem; border-left:2px solid var(--blue-light); background:rgba(214,228,239,0.18); font-size:0.82rem; color:var(--mid); line-height:1.9; }
 .dresscode-note strong { color:var(--blue); font-weight:400; }
 
 /* ── GIFTS ── */
 #gifts { background: var(--section-bg); }
-.gift-note { font-family:'Great Vibes',cursive; font-size:1.7rem; color:var(--blue); line-height:1.8; margin:1.5rem 0; }
-.gift-options { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1.5rem; margin-top:2rem; }
+.gift-note { font-family:'Great Vibes',cursive; font-size:1.7rem; color:var(--blue); line-height:1.8; margin:1rem 0; }
+.gift-options { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1.2rem; margin-top:1.2rem; }
 .gift-card { border:1px solid var(--border); padding:1.8rem 1.2rem; text-align:center; background:var(--ivory); transition:border-color 0.3s, transform 0.3s; }
 .gift-card:hover { border-color:var(--blue-light); transform:translateY(-3px); }
 .gift-card-title { font-family:'Cinzel',serif; font-size:0.56rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--blue); margin-bottom:0.8rem; }
@@ -258,7 +258,7 @@ section { padding: 5.5rem 2rem; }
 .rsvp-google-btn:hover { background:var(--blue); transform:translateY(-3px); box-shadow:0 8px 24px rgba(48,77,101,0.25); }
 
 /* ── FOOTER ── */
-footer { padding:3.5rem 2rem; text-align:center; background:var(--blue-dark); position:relative; overflow:hidden; }
+footer { padding:2rem 2rem; text-align:center; background:var(--blue-dark); position:relative; overflow:hidden; }
 footer::before {
   content:'';
   position:absolute; inset:0;
@@ -278,7 +278,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
   nav { top: 28px; gap:1rem; flex-wrap:wrap; padding:0.8rem 1rem; }
   nav a { font-size:0.52rem; }
 
-  #hero { padding: 4rem 1.5rem 1.5rem; }
+  #hero { padding: 3.5rem 1.5rem 1.5rem; }
 
   .floral-corner.tl, .floral-corner.tr { width:150px; height:150px; }
   .floral-corner.bl, .floral-corner.br { width:130px; height:130px; }
