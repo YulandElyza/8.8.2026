@@ -258,15 +258,9 @@ section { padding: 3rem 2rem; }
 .rsvp-google-btn:hover { background:var(--blue); transform:translateY(-3px); box-shadow:0 8px 24px rgba(48,77,101,0.25); }
 
 /* ── FOOTER ── */
-footer { padding:2rem 2rem; text-align:center; background:var(--blue-dark); position:relative; overflow:hidden; }
-footer::before {
-  content:'';
-  position:absolute; inset:0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(122,154,181,0.15) 0%, transparent 70%);
-  pointer-events:none;
-}
+footer { padding:2rem 2rem; text-align:center; background:var(--blue-dark); }
 .footer-names { font-family:'Great Vibes',cursive; font-size:3.2rem; color:var(--blue-pale); margin-bottom:0.6rem; }
-footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em; color:var(--blue-pale); opacity:0.65; }
+footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em; color:var(--blue-pale); opacity:0.6; }
 
 /* ── REVEAL ON SCROLL ── */
 .reveal { opacity:0; transform:translateY(32px); transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
@@ -635,7 +629,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em;
   </svg>
 </div>
 <footer>
-  <p class="footer-names">Yul &amp; Elyza</p>
+  <div class="footer-names">Yul &amp; Elyza</div>
   <p>8 · 8 · 26 &nbsp;·&nbsp; Cebu City, Philippines</p>
 </footer>
 
