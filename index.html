@@ -71,29 +71,7 @@ html { scroll-behavior: smooth; }
 body { background: var(--ivory); color: var(--text); font-family: 'Lato', sans-serif; font-weight: 300; overflow-x: hidden; }
 
 /* ── PAGE CURTAIN ── */
-#curtain {
-  position: fixed; inset: 0; z-index: 99999;
-  background: var(--ivory);
-  display: flex; align-items: center; justify-content: center;
-  pointer-events: none;
-  animation: curtainLift 0.7s cubic-bezier(0.76,0,0.24,1) 1.8s forwards;
-}
-#curtain-monogram {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(3rem, 8vw, 5rem);
-  color: var(--blue-dark);
-  opacity: 0;
-  animation: curtainName 1.4s ease 0.2s forwards;
-}
-@keyframes curtainName {
-  0%   { opacity: 0; transform: translateY(12px); }
-  40%  { opacity: 1; transform: translateY(0); }
-  80%  { opacity: 1; }
-  100% { opacity: 0; }
-}
-@keyframes curtainLift {
-  to { transform: translateY(-100%); }
-}
+
 
 /* ── NAV ── */
 nav {
@@ -102,7 +80,7 @@ nav {
   background: rgba(245,240,232,0.96); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   opacity: 0;
-  animation: fadeIn 0.6s ease 2.3s forwards;
+  animation: fadeIn 0.6s ease 0.1s forwards;
 }
 nav a { text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); transition: color 0.3s; white-space: nowrap; }
 nav a:hover { color: var(--blue-dark); }
@@ -129,10 +107,10 @@ nav a:hover { color: var(--blue-dark); }
   transform-origin: bottom left;
   filter: drop-shadow(0 2px 8px rgba(120,60,60,0.10));
 }
-.floral-corner.tl img { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 2.1s forwards; }
-.floral-corner.tr img { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 2.25s forwards; }
-.floral-corner.bl img { animation: bloomTL 1.2s cubic-bezier(0.34,1.56,0.64,1) 2.4s forwards; }
-.floral-corner.br img { animation: bloomTL 1.2s cubic-bezier(0.34,1.56,0.64,1) 2.5s forwards; }
+.floral-corner.tl img { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 0.1s forwards; }
+.floral-corner.tr img { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 0.2s forwards; }
+.floral-corner.bl img { animation: bloomTL 1.2s cubic-bezier(0.34,1.56,0.64,1) 0.3s forwards; }
+.floral-corner.br img { animation: bloomTL 1.2s cubic-bezier(0.34,1.56,0.64,1) 0.4s forwards; }
 
 @keyframes bloomTL {
   0%   { opacity: 0; transform: scale(0.6) rotate(-8deg); }
@@ -141,15 +119,15 @@ nav a:hover { color: var(--blue-dark); }
 }
 
 /* Hero text */
-.monogram        { font-family:'Cinzel',serif; font-size:clamp(1rem,3.5vw,2.1rem); color:var(--blue-dark); letter-spacing:0.18em; margin-bottom:0.6rem; opacity:0; animation:fadeUp 0.9s ease 2.2s forwards; }
-.hero-date-big   { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4.5vw,2.6rem); font-weight:500; color:var(--blue-dark); letter-spacing:0.25em; margin-bottom:0.3rem; opacity:0; animation:fadeUp 0.9s ease 2.35s forwards; }
-.save-label      { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.4vw,0.75rem); letter-spacing:0.42em; text-transform:uppercase; color:var(--blue); margin-bottom:0.7rem; opacity:0; animation:fadeUp 0.9s ease 2.5s forwards; }
-h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13vw,10rem); line-height:1.0; color:var(--blue-dark); opacity:0; animation:heroName 1.4s cubic-bezier(0.16,1,0.3,1) 2.6s forwards; margin-bottom:0.2rem; }
-.hero-divider    { display:flex; align-items:center; gap:0.8rem; margin:0.8rem auto; width:min(280px,72vw); opacity:0; animation:fadeUp 0.9s ease 3s forwards; }
+.monogram        { font-family:'Cinzel',serif; font-size:clamp(1rem,3.5vw,2.1rem); color:var(--blue-dark); letter-spacing:0.18em; margin-bottom:0.6rem; opacity:0; animation:fadeUp 0.9s ease 0.1s forwards; }
+.hero-date-big   { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4.5vw,2.6rem); font-weight:500; color:var(--blue-dark); letter-spacing:0.25em; margin-bottom:0.3rem; opacity:0; animation:fadeUp 0.9s ease 0.2s forwards; }
+.save-label      { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.4vw,0.75rem); letter-spacing:0.42em; text-transform:uppercase; color:var(--blue); margin-bottom:0.7rem; opacity:0; animation:fadeUp 0.9s ease 0.3s forwards; }
+h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13vw,10rem); line-height:1.0; color:var(--blue-dark); opacity:0; animation:heroName 1.4s cubic-bezier(0.16,1,0.3,1) 0.4s forwards; margin-bottom:0.2rem; }
+.hero-divider    { display:flex; align-items:center; gap:0.8rem; margin:0.8rem auto; width:min(280px,72vw); opacity:0; animation:fadeUp 0.9s ease 0.7s forwards; }
 .hero-divider::before,.hero-divider::after { content:''; flex:1; height:1px; background:linear-gradient(to right,transparent,var(--blue-light)); }
 .hero-divider::after { background:linear-gradient(to left,transparent,var(--blue-light)); }
 .hero-divider-gem { width:7px; height:7px; background:var(--blue-light); transform:rotate(45deg); }
-.hero-location   { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.3vw,0.72rem); letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); line-height:2; opacity:0; animation:fadeUp 0.9s ease 3.1s forwards; }
+.hero-location   { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.3vw,0.72rem); letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); line-height:2; opacity:0; animation:fadeUp 0.9s ease 0.8s forwards; }
 
 @keyframes fadeUp  { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
 @keyframes heroName { from{opacity:0;transform:translateY(30px) scale(0.94)} to{opacity:1;transform:none} }
@@ -157,7 +135,7 @@ h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13v
 /* ── COUNTDOWN ── */
 .hero-countdown {
   display:flex; align-items:flex-start; justify-content:center; gap:0.15rem;
-  margin-bottom:0.3rem; opacity:0; animation:fadeUp 0.9s ease 2.8s forwards;
+  margin-bottom:0.3rem; opacity:0; animation:fadeUp 0.9s ease 0.6s forwards;
 }
 .countdown-unit { display:flex; flex-direction:column; align-items:center; min-width:2.8rem; }
 .countdown-num { font-family:'Cinzel',serif; font-size:clamp(0.95rem,2.5vw,1.4rem); font-weight:500; color:var(--blue-dark); letter-spacing:0.04em; line-height:1.2; }
@@ -305,7 +283,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 </div>
 
 <!-- PAGE CURTAIN -->
-<div id="curtain"><span id="curtain-monogram">Yul &amp; Elyza</span></div>
+
 
 <!-- NAV -->
 <nav>
