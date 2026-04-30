@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Entourage · Yul & Elyza · 8.8.26</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ivory:      #f5f0e8;
+  --ivory-dark: #ede5d6;
+  --blue:       #4a6580;
+  --blue-dark:  #304d65;
+  --blue-light: #7a9ab5;
+  --blue-pale:  #d6e4ef;
+  --sage:       #8aaa8a;
+  --blush:      #e8c4b8;
+  --rose:       #c9847a;
+  --text:       #304050;
+  --mid:        #6a7f8a;
+  --light:      #9aafba;
+  --border:     rgba(74,101,128,0.18);
+  --section-bg: #eee8da;
+}
+
+html { scroll-behavior: smooth; }
+
+/* ── GALLERY BANNER ── */
+.gallery-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  background: #304d65;
+  border-bottom: 1px solid rgba(214,228,239,0.25);
+}
+.gallery-banner a {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #d6e4ef;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  animation: bannerBlink 2s ease-in-out infinite;
+}
+.gallery-banner a:hover { color: #fff; }
+.gallery-banner-gem {
+  width: 5px; height: 5px;
+  border: 1px solid #d6e4ef;
+  transform: rotate(45deg);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+@keyframes bannerBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+@media (max-width: 600px) {
+  .gallery-banner a { font-size: 0.6rem; letter-spacing: 0.14em; }
+}
+
+body { background: var(--ivory); color: var(--text); font-family: 'Lato', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+/* ── PAGE CURTAIN ── */
+#curtain {
+  position: fixed; inset: 0; z-index: 99999;
+  background: var(--ivory);
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+  animation: curtainLift 0.7s cubic-bezier(0.76,0,0.24,1) 1.8s forwards;
+}
+#curtain-monogram {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(3rem, 8vw, 5rem);
+  color: var(--blue-dark);
+  opacity: 0;
+  animation: curtainName 1.4s ease 0.2s forwards;
+}
+@keyframes curtainName {
+  0%   { opacity: 0; transform: translateY(12px); }
+  40%  { opacity: 1; transform: translateY(0); }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes curtainLift {
+  to { transform: translateY(-100%); }
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 28px; left: 0; right: 0; z-index: 200;
+  display: flex; justify-content: center; gap: 2rem; padding: 1rem 2rem;
+  background: rgba(245,240,232,0.96); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  animation: fadeIn 0.6s ease 2.3s forwards;
+}
+nav a { text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue); transition: color 0.3s; }
+nav a:hover, nav a.active { color: var(--blue-dark); }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ── HERO (page header) ── */
+#hero {
+  min-height: 52svh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 8rem 2rem 3rem;
+  position: relative; overflow: hidden; background: var(--ivory);
+}
+
+/* Floral corners */
+.floral-corner { position: absolute; pointer-events: none; }
+.floral-corner.tl { top: 52px; left: -8px; width: 280px; height: 280px; }
+.floral-corner.tr { top: 52px; right: -8px; width: 280px; height: 280px; transform: scaleX(-1); }
+.floral-corner.bl { bottom: -8px; left: -8px; width: 240px; height: 240px; transform: scaleY(-1); }
+.floral-corner.br { bottom: -8px; right: -8px; width: 240px; height: 240px; transform: scale(-1,-1); }
+.floral-corner img {
+  width: 100%; height: 100%;
+  opacity: 0;
+  transform-origin: bottom left;
+  filter: drop-shadow(0 2px 8px rgba(120,60,60,0.10));
+}
+.floral-corner.tl img { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 2.1s forwards; }
+.floral-corner.tr img { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 2.25s forwards; }
+.floral-corner.bl img { animation: bloomTL 1.2s cubic-bezier(0.34,1.56,0.64,1) 2.4s forwards; }
+.floral-corner.br img { animation: bloomTL 1.2s cubic-bezier(0.34,1.56,0.64,1) 2.5s forwards; }
+@keyframes bloomTL {
+  0%   { opacity: 0; transform: scale(0.6) rotate(-8deg); }
+  60%  { opacity: 1; transform: scale(1.04) rotate(1deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Hero text */
+.monogram        { font-family:'Cinzel',serif; font-size:clamp(1rem,3.5vw,2.1rem); color:var(--blue-dark); letter-spacing:0.18em; margin-bottom:0.6rem; opacity:0; animation:fadeUp 0.9s ease 2.2s forwards; }
+.page-eyebrow    { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.4vw,0.75rem); letter-spacing:0.42em; text-transform:uppercase; color:var(--blue); margin-bottom:0.7rem; opacity:0; animation:fadeUp 0.9s ease 2.35s forwards; }
+h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13vw,8rem); line-height:1.0; color:var(--blue-dark); opacity:0; animation:heroName 1.4s cubic-bezier(0.16,1,0.3,1) 2.5s forwards; margin-bottom:0.2rem; }
+.hero-divider    { display:flex; align-items:center; gap:0.8rem; margin:0.8rem auto; width:min(280px,72vw); opacity:0; animation:fadeUp 0.9s ease 2.9s forwards; }
+.hero-divider::before,.hero-divider::after { content:''; flex:1; height:1px; background:linear-gradient(to right,transparent,var(--blue-light)); }
+.hero-divider::after { background:linear-gradient(to left,transparent,var(--blue-light)); }
+.hero-divider-gem { width:7px; height:7px; background:var(--blue-light); transform:rotate(45deg); }
+.hero-sub        { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.3vw,0.72rem); letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); line-height:2; opacity:0; animation:fadeUp 0.9s ease 3s forwards; }
+
+@keyframes fadeUp  { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+@keyframes heroName { from{opacity:0;transform:translateY(30px) scale(0.94)} to{opacity:1;transform:none} }
+
+/* ── SECTION DIVIDER ── */
+.sprig-divider {
+  height: 90px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.sprig-divider.to-warm { background: linear-gradient(to bottom, var(--ivory), var(--section-bg)); }
+.sprig-divider.to-cool { background: linear-gradient(to bottom, var(--section-bg), var(--ivory)); }
+.sprig-divider svg { width: 320px; height: 60px; opacity: 0.75; }
+
+/* ── SECTIONS ── */
+section { padding: 5.5rem 2rem; }
+.section-inner { max-width: 700px; margin: 0 auto; }
+.section-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.42em; text-transform:uppercase; color:var(--blue-light); margin-bottom:0.8rem; }
+.section-title { font-family:'Great Vibes',cursive; font-size:clamp(2.6rem,6vw,3.8rem); color:var(--blue-dark); line-height:1.1; }
+.thin-rule { display:flex; align-items:center; gap:0.7rem; margin:1.2rem 0 2rem; }
+.thin-rule::before,.thin-rule::after { content:''; flex:0 0 28px; height:1px; background:var(--blue-light); }
+.thin-rule-dot { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
+.section-body { font-size:0.9rem; line-height:2.1; color:var(--mid); }
+
+/* ── ENTOURAGE GROUPS ── */
+#principal-sponsors { background: var(--ivory); }
+#secondary-sponsors { background: var(--section-bg); }
+#wedding-party      { background: var(--ivory); }
+#secondary-party    { background: var(--section-bg); }
+
+/* Group heading */
+.group-heading {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin: 2.5rem 0 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.group-heading::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--blue-pale), transparent);
+}
+
+/* Entourage grid: couples side-by-side, singles centered */
+.entourage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.4rem;
+  margin-top: 0.5rem;
+}
+.entourage-grid.centered {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+/* Couple card */
+.couple-card {
+  border: 1px solid var(--border);
+  padding: 1.6rem 1.2rem 1.4rem;
+  text-align: center;
+  background: rgba(214,228,239,0.08);
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.couple-card:hover {
+  border-color: var(--blue-light);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(74,101,128,0.10);
+}
+.couple-names {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.45rem;
+  color: var(--blue-dark);
+  line-height: 1.55;
+  margin-bottom: 0.5rem;
+}
+.couple-names .amp {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.1rem;
+  color: var(--blue-light);
+  display: block;
+  line-height: 1;
+}
+.couple-role {
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blue-light);
+}
+
+/* Single card */
+.single-card {
+  border: 1px solid var(--border);
+  padding: 1.4rem 1rem 1.2rem;
+  text-align: center;
+  background: rgba(214,228,239,0.08);
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.single-card:hover {
+  border-color: var(--blue-light);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(74,101,128,0.10);
+}
+.single-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.55rem;
+  color: var(--blue-dark);
+  line-height: 1.3;
+  margin-bottom: 0.45rem;
+}
+.single-role {
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--blue-light);
+}
+.single-sub {
+  font-size: 0.7rem;
+  color: var(--light);
+  margin-top: 0.2rem;
+}
+
+/* ── FOOTER ── */
+footer { padding:2rem 2rem; text-align:center; background:var(--blue-dark); }
+.footer-names { font-family:'Great Vibes',cursive; font-size:3.2rem; color:var(--blue-pale); margin-bottom:0.6rem; }
+footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em; color:var(--blue-pale); opacity:0.6; }
+
+/* ── REVEAL ON SCROLL ── */
+.reveal { opacity:0; transform:translateY(32px); transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity:1; transform:none; }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+@media (max-width:600px) {
+  nav { top: 28px; gap:0.8rem; flex-wrap:wrap; padding:0.8rem 0.8rem; }
+  nav a { font-size:0.5rem; }
+  .floral-corner.tl, .floral-corner.tr { width:150px; height:150px; }
+  .floral-corner.bl, .floral-corner.br { width:130px; height:130px; }
+  .entourage-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE CURTAIN -->
+<div id="curtain"><span id="curtain-monogram">Yul &amp; Elyza</span></div>
+
+<!-- GALLERY BANNER -->
+<div class="gallery-banner">
+  <a href="https://yul46legaspi.github.io/YulandElyzaWedding2026/carousel" target="_blank">
+    <span class="gallery-banner-gem"></span>
+    Click Here for Photo Carousel
+    <span class="gallery-banner-gem"></span>
+  </a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">Details</a>
+  <a href="index.html#schedule">Schedule</a>
+  <a href="index.html#dresscode">Attire</a>
+  <a href="index.html#gifts">Gifts</a>
+  <a href="index.html#rsvp">RSVP</a>
+  <a href="entourage.html" class="active">Entourage</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="floral-corner tl">
+    <img src="anemone-flower-400x320.svg" style="width:100%;height:100%;" alt="" aria-hidden="true"/>
+  </div>
+  <div class="floral-corner tr">
+    <img src="anemone-flower-400x320.svg" style="width:100%;height:100%;" alt="" aria-hidden="true"/>
+  </div>
+  <div class="floral-corner bl">
+    <img src="anemone-flower-400x320.svg" style="width:100%;height:100%;" alt="" aria-hidden="true"/>
+  </div>
+  <div class="floral-corner br">
+    <img src="anemone-flower-400x320.svg" style="width:100%;height:100%;" alt="" aria-hidden="true"/>
+  </div>
+
+  <p class="monogram">Y &amp; E</p>
+  <p class="page-eyebrow">8 · 8 · 26 &nbsp;·&nbsp; Cebu City</p>
+  <h1>Our Entourage</h1>
+  <div class="hero-divider"><div class="hero-divider-gem"></div></div>
+  <p class="hero-sub">The beloved family &amp; friends who stand beside us</p>
+</section>
+
+<!-- SPRIG DIVIDER -->
+<div class="sprig-divider to-warm">
+  <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <image href="anemone-flower-400x320.svg" x="130" y="-5" width="60" height="70" preserveAspectRatio="xMidYMid meet" opacity="0.8"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.6" opacity="0.22"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- PRINCIPAL SPONSORS -->
+<section id="principal-sponsors">
+  <div class="section-inner reveal">
+    <p class="section-label">Principal Sponsors</p>
+    <h2 class="section-title">Ninong &amp; Ninang</h2>
+    <div class="thin-rule"><div class="thin-rule-dot"></div></div>
+    <p class="section-body">The esteemed couples who have guided and blessed Yul and Elyza on their journey to this day.</p>
+
+    <p class="group-heading">Couples</p>
+    <div class="entourage-grid">
+      <div class="couple-card reveal reveal-delay-1">
+        <div class="couple-names">Sponsor Name<span class="amp">&amp;</span>Sponsor Name</div>
+        <p class="couple-role">Principal Sponsor</p>
+      </div>
+      <div class="couple-card reveal reveal-delay-2">
+        <div class="couple-names">Sponsor Name<span class="amp">&amp;</span>Sponsor Name</div>
+        <p class="couple-role">Principal Sponsor</p>
+      </div>
+      <div class="couple-card reveal reveal-delay-3">
+        <div class="couple-names">Sponsor Name<span class="amp">&amp;</span>Sponsor Name</div>
+        <p class="couple-role">Principal Sponsor</p>
+      </div>
+      <div class="couple-card reveal reveal-delay-4">
+        <div class="couple-names">Sponsor Name<span class="amp">&amp;</span>Sponsor Name</div>
+        <p class="couple-role">Principal Sponsor</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPRIG DIVIDER -->
+<div class="sprig-divider to-cool">
+  <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <image href="anemone-flower-400x320.svg" x="130" y="-5" width="60" height="70" preserveAspectRatio="xMidYMid meet" opacity="0.8"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.6" opacity="0.22"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- SECONDARY SPONSORS -->
+<section id="secondary-sponsors">
+  <div class="section-inner reveal">
+    <p class="section-label">Secondary Sponsors</p>
+    <h2 class="section-title">Special Roles</h2>
+    <div class="thin-rule"><div class="thin-rule-dot"></div></div>
+
+    <p class="group-heading">Candle</p>
+    <div class="entourage-grid centered">
+      <div class="couple-card reveal reveal-delay-1">
+        <div class="couple-names">Sponsor Name<span class="amp">&amp;</span>Sponsor Name</div>
+        <p class="couple-role">Candle Sponsors</p>
+      </div>
+    </div>
+
+    <p class="group-heading">Veil</p>
+    <div class="entourage-grid centered">
+      <div class="couple-card reveal reveal-delay-1">
+        <div class="couple-names">Sponsor Name<span class="amp">&amp;</span>Sponsor Name</div>
+        <p class="couple-role">Veil Sponsors</p>
+      </div>
+    </div>
+
+    <p class="group-heading">Cord</p>
+    <div class="entourage-grid centered">
+      <div class="couple-card reveal reveal-delay-1">
+        <div class="couple-names">Sponsor Name<span class="amp">&amp;</span>Sponsor Name</div>
+        <p class="couple-role">Cord Sponsors</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPRIG DIVIDER -->
+<div class="sprig-divider to-warm">
+  <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <image href="anemone-flower-400x320.svg" x="130" y="-5" width="60" height="70" preserveAspectRatio="xMidYMid meet" opacity="0.8"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.6" opacity="0.22"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- WEDDING PARTY -->
+<section id="wedding-party">
+  <div class="section-inner reveal">
+    <p class="section-label">Wedding Party</p>
+    <h2 class="section-title">The Bridal Party</h2>
+    <div class="thin-rule"><div class="thin-rule-dot"></div></div>
+
+    <p class="group-heading">Best Man &amp; Maid of Honor</p>
+    <div class="entourage-grid centered">
+      <div class="single-card reveal reveal-delay-1">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Best Man</p>
+      </div>
+      <div class="single-card reveal reveal-delay-2">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Maid of Honor</p>
+      </div>
+    </div>
+
+    <p class="group-heading">Groomsmen</p>
+    <div class="entourage-grid centered">
+      <div class="single-card reveal reveal-delay-1">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Groomsman</p>
+      </div>
+      <div class="single-card reveal reveal-delay-2">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Groomsman</p>
+      </div>
+      <div class="single-card reveal reveal-delay-3">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Groomsman</p>
+      </div>
+    </div>
+
+    <p class="group-heading">Bridesmaids</p>
+    <div class="entourage-grid centered">
+      <div class="single-card reveal reveal-delay-1">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Bridesmaid</p>
+      </div>
+      <div class="single-card reveal reveal-delay-2">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Bridesmaid</p>
+      </div>
+      <div class="single-card reveal reveal-delay-3">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Bridesmaid</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPRIG DIVIDER -->
+<div class="sprig-divider to-cool">
+  <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <image href="anemone-flower-400x320.svg" x="130" y="-5" width="60" height="70" preserveAspectRatio="xMidYMid meet" opacity="0.8"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.6" opacity="0.22"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- SECONDARY PARTY -->
+<section id="secondary-party">
+  <div class="section-inner reveal">
+    <p class="section-label">Special Roles</p>
+    <h2 class="section-title">Little Ones &amp; More</h2>
+    <div class="thin-rule"><div class="thin-rule-dot"></div></div>
+
+    <p class="group-heading">Flower Girls</p>
+    <div class="entourage-grid centered">
+      <div class="single-card reveal reveal-delay-1">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Flower Girl</p>
+      </div>
+      <div class="single-card reveal reveal-delay-2">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Flower Girl</p>
+      </div>
+    </div>
+
+    <p class="group-heading">Ring Bearer &amp; Bible Bearer</p>
+    <div class="entourage-grid centered">
+      <div class="single-card reveal reveal-delay-1">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Ring Bearer</p>
+      </div>
+      <div class="single-card reveal reveal-delay-2">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Bible Bearer</p>
+      </div>
+    </div>
+
+    <p class="group-heading">Coin Bearer &amp; Coin Bearer</p>
+    <div class="entourage-grid centered">
+      <div class="single-card reveal reveal-delay-1">
+        <div class="single-name">Name Here</div>
+        <p class="single-role">Coin Bearer</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPRIG DIVIDER -->
+<div class="sprig-divider to-warm">
+  <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <image href="anemone-flower-400x320.svg" x="130" y="-5" width="60" height="70" preserveAspectRatio="xMidYMid meet" opacity="0.8"/>
+    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
+    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 75 30)"/>
+    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.6" opacity="0.22"/>
+    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 247 30)"/>
+    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-names">Yul &amp; Elyza</div>
+  <p>8 · 8 · 26 &nbsp;·&nbsp; Cebu City, Philippines</p>
+</footer>
+
+<script>
+  // Scroll reveals
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
