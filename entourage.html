@@ -70,29 +70,7 @@ html { scroll-behavior: smooth; }
 body { background: var(--ivory); color: var(--text); font-family: 'Lato', sans-serif; font-weight: 300; overflow-x: hidden; }
 
 /* ── PAGE CURTAIN ── */
-#curtain {
-  position: fixed; inset: 0; z-index: 99999;
-  background: var(--ivory);
-  display: flex; align-items: center; justify-content: center;
-  pointer-events: none;
-  animation: curtainLift 0.7s cubic-bezier(0.76,0,0.24,1) 1.8s forwards;
-}
-#curtain-monogram {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(3rem, 8vw, 5rem);
-  color: var(--blue-dark);
-  opacity: 0;
-  animation: curtainName 1.4s ease 0.2s forwards;
-}
-@keyframes curtainName {
-  0%   { opacity: 0; transform: translateY(12px); }
-  40%  { opacity: 1; transform: translateY(0); }
-  80%  { opacity: 1; }
-  100% { opacity: 0; }
-}
-@keyframes curtainLift {
-  to { transform: translateY(-100%); }
-}
+
 
 /* ── NAV ── */
 nav {
@@ -101,7 +79,7 @@ nav {
   background: rgba(245,240,232,0.96); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   opacity: 0;
-  animation: fadeIn 0.6s ease 2.3s forwards;
+  animation: fadeIn 0.6s ease 0.1s forwards;
 }
 nav a { text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue); transition: color 0.3s; }
 nav a:hover, nav a.active { color: var(--blue-dark); }
@@ -127,10 +105,10 @@ nav a:hover, nav a.active { color: var(--blue-dark); }
   transform-origin: bottom left;
   filter: drop-shadow(0 2px 8px rgba(120,60,60,0.10));
 }
-.floral-corner.tl img { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 2.1s forwards; }
-.floral-corner.tr img { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 2.25s forwards; }
-.floral-corner.bl img { animation: bloomTL 1.2s cubic-bezier(0.34,1.56,0.64,1) 2.4s forwards; }
-.floral-corner.br img { animation: bloomTL 1.2s cubic-bezier(0.34,1.56,0.64,1) 2.5s forwards; }
+.floral-corner.tl img { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 0.1s forwards; }
+.floral-corner.tr img { animation: bloomTL 1.4s cubic-bezier(0.34,1.56,0.64,1) 0.2s forwards; }
+.floral-corner.bl img { animation: bloomTL 1.2s cubic-bezier(0.34,1.56,0.64,1) 0.3s forwards; }
+.floral-corner.br img { animation: bloomTL 1.2s cubic-bezier(0.34,1.56,0.64,1) 0.4s forwards; }
 @keyframes bloomTL {
   0%   { opacity: 0; transform: scale(0.6) rotate(-8deg); }
   60%  { opacity: 1; transform: scale(1.04) rotate(1deg); }
@@ -138,14 +116,14 @@ nav a:hover, nav a.active { color: var(--blue-dark); }
 }
 
 /* Hero text */
-.monogram        { font-family:'Cinzel',serif; font-size:clamp(1rem,3.5vw,2.1rem); color:var(--blue-dark); letter-spacing:0.18em; margin-bottom:0.6rem; opacity:0; animation:fadeUp 0.9s ease 2.2s forwards; }
-.page-eyebrow    { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.4vw,0.75rem); letter-spacing:0.42em; text-transform:uppercase; color:var(--blue); margin-bottom:0.7rem; opacity:0; animation:fadeUp 0.9s ease 2.35s forwards; }
-h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13vw,8rem); line-height:1.0; color:var(--blue-dark); opacity:0; animation:heroName 1.4s cubic-bezier(0.16,1,0.3,1) 2.5s forwards; margin-bottom:0.2rem; }
-.hero-divider    { display:flex; align-items:center; gap:0.8rem; margin:0.8rem auto; width:min(280px,72vw); opacity:0; animation:fadeUp 0.9s ease 2.9s forwards; }
+.monogram        { font-family:'Cinzel',serif; font-size:clamp(1rem,3.5vw,2.1rem); color:var(--blue-dark); letter-spacing:0.18em; margin-bottom:0.6rem; opacity:0; animation:fadeUp 0.9s ease 0.1s forwards; }
+.page-eyebrow    { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.4vw,0.75rem); letter-spacing:0.42em; text-transform:uppercase; color:var(--blue); margin-bottom:0.7rem; opacity:0; animation:fadeUp 0.9s ease 0.2s forwards; }
+h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13vw,8rem); line-height:1.0; color:var(--blue-dark); opacity:0; animation:heroName 1.4s cubic-bezier(0.16,1,0.3,1) 0.3s forwards; margin-bottom:0.2rem; }
+.hero-divider    { display:flex; align-items:center; gap:0.8rem; margin:0.8rem auto; width:min(280px,72vw); opacity:0; animation:fadeUp 0.9s ease 0.6s forwards; }
 .hero-divider::before,.hero-divider::after { content:''; flex:1; height:1px; background:linear-gradient(to right,transparent,var(--blue-light)); }
 .hero-divider::after { background:linear-gradient(to left,transparent,var(--blue-light)); }
 .hero-divider-gem { width:7px; height:7px; background:var(--blue-light); transform:rotate(45deg); }
-.hero-sub        { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.3vw,0.72rem); letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); line-height:2; opacity:0; animation:fadeUp 0.9s ease 3s forwards; }
+.hero-sub        { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.3vw,0.72rem); letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); line-height:2; opacity:0; animation:fadeUp 0.9s ease 0.7s forwards; }
 
 @keyframes fadeUp  { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
 @keyframes heroName { from{opacity:0;transform:translateY(30px) scale(0.94)} to{opacity:1;transform:none} }
@@ -298,14 +276,14 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 .parent-names .amp { font-family:'Great Vibes',cursive; font-size:1.2rem; color:var(--blue-light); display:block; line-height:1; }
 
 /* ── HERO TAGLINE ── */
-.hero-tagline { font-family:'Cinzel',serif; font-size:clamp(0.56rem,1.5vw,0.78rem); letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); line-height:1.9; max-width:480px; opacity:0; animation:fadeUp 0.9s ease 3.1s forwards; }
+.hero-tagline { font-family:'Cinzel',serif; font-size:clamp(0.56rem,1.5vw,0.78rem); letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); line-height:1.9; max-width:480px; opacity:0; animation:fadeUp 0.9s ease 0.8s forwards; }
 
 @media (max-width:600px) {
   nav { top: 28px; gap:0.8rem; flex-wrap:nowrap; padding:0.8rem 0.8rem; }
   nav a { font-size:0.5rem; letter-spacing:0.14em; white-space:nowrap; }
   #hero { min-height: 100svh; padding: 7rem 1.5rem 3rem; }
-  .floral-corner.tl, .floral-corner.tr { width: 150px; height: 150px; top: 36px; }
-  .floral-corner.bl, .floral-corner.br { width: 130px; height: 130px; }
+  .floral-corner.tl, .floral-corner.tr { width: 110px; height: 110px; top: 36px; }
+  .floral-corner.bl, .floral-corner.br { width: 90px; height: 90px; }
   h1 { font-size: clamp(2.8rem, 14vw, 4.5rem); }
   .monogram { font-size: clamp(0.8rem, 3.5vw, 1rem); }
   .page-eyebrow { font-size: 0.52rem; letter-spacing: 0.22em; }
@@ -318,7 +296,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 <body>
 
 <!-- PAGE CURTAIN -->
-<div id="curtain"><span id="curtain-monogram">Yul &amp; Elyza</span></div>
+
 
 <!-- GALLERY BANNER -->
 <div class="gallery-banner">
