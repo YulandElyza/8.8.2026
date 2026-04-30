@@ -372,10 +372,49 @@
     .swiper-slide-active .slide-caption-text { animation: none; }
   }
 
+  /* ── PAGE CURTAIN ── */
+  #curtain {
+    position: fixed; inset: 0; z-index: 99999;
+    background: var(--ivory);
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+    animation: curtainLift 0.7s cubic-bezier(0.76,0,0.24,1) 1.8s forwards;
+  }
+  #curtain-monogram {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(3rem, 8vw, 5rem);
+    color: var(--blue-dark);
+    opacity: 0;
+    animation: curtainName 1.4s ease 0.2s forwards;
+  }
+  @keyframes curtainName {
+    0%   { opacity: 0; transform: translateY(12px); }
+    40%  { opacity: 1; transform: translateY(0); }
+    80%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  @keyframes curtainLift { to { transform: translateY(-100%); } }
+
+  /* ── NAV FADE-IN ── */
+  nav {
+    opacity: 0;
+    animation: fadeIn 0.6s ease 2.3s forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  /* ── REVEAL ON SCROLL ── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
+
+<!-- PAGE CURTAIN -->
+<div id="curtain"><span id="curtain-monogram">Yul &amp; Elyza</span></div>
 
 <nav>
   <a href="index.html">Home</a>
@@ -384,7 +423,7 @@
 </nav>
 
 <section id="gallery">
-  <div class="section-inner">
+  <div class="section-inner reveal">
     <div class="section-label">Wedding Memories</div>
     <h2 class="section-title">Your memories, live</h2>
     <div class="thin-rule"><div class="thin-rule-dot"></div></div>
@@ -432,6 +471,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+  // ── Scroll reveals ─────────────────────────────────────────
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
   // ── Lightbox ───────────────────────────────────────────────
   const lightbox     = document.getElementById('lightbox');
   const lightboxImg  = document.getElementById('lightboxImg');

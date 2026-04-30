@@ -38,25 +38,25 @@
   nav a:hover { color: var(--blue-dark); }
 
   /* SECTIONS */
-  section { padding: 5rem 2rem; }
+  section { padding: 3rem 2rem; }
   .section-inner { max-width: 700px; margin: 0 auto; }
-  .section-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 0.7rem; }
+  .section-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 0.4rem; }
   .section-title { font-family: 'Great Vibes', cursive; font-size: clamp(2.4rem,5.5vw,3.4rem); color: var(--blue-dark); line-height: 1.1; }
-  .thin-rule { display: flex; align-items: center; gap: 0.7rem; margin: 1.2rem 0 1.8rem; }
+  .thin-rule { display: flex; align-items: center; gap: 0.7rem; margin: 0.8rem 0 1.2rem; }
   .thin-rule::before, .thin-rule::after { content: ''; flex: 0 0 28px; height: 1px; background: var(--blue-light); }
   .thin-rule-dot { width: 5px; height: 5px; border: 1px solid var(--blue-light); transform: rotate(45deg); }
   .section-body { font-size: 0.9rem; line-height: 2; color: var(--mid); }
 
   /* UPLOAD SECTION */
-  #photo { padding: 4rem 2rem 4rem; background: var(--section-bg); }
+  #photo { padding: 3rem 2rem; background: var(--section-bg); }
 
-  .upload-form { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.8rem; }
+  .upload-form { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.2rem; }
 
   /* Drop zone */
   .drop-zone {
     border: 1.5px dashed var(--blue-light);
     background: rgba(214,228,239,0.18);
-    padding: 3rem 2rem;
+    padding: 2rem 2rem;
     text-align: center;
     cursor: pointer;
     transition: background 0.3s, border-color 0.3s;
@@ -64,7 +64,7 @@
   }
   .drop-zone:hover, .drop-zone.dragover { background: rgba(214,228,239,0.38); border-color: var(--blue); }
   .drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-  .drop-zone-icon { margin: 0 auto 1rem; opacity: 0.4; }
+  .drop-zone-icon { margin: 0 auto 0.6rem; opacity: 0.4; }
   .drop-zone-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.4rem; }
   .drop-zone-sub { font-size: 0.78rem; color: var(--light); }
 
@@ -90,7 +90,7 @@
   .message-label span { font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0; text-transform: none; color: var(--light); margin-left: 0.5rem; }
   .message-textarea {
     width: 100%;
-    min-height: 110px;
+    min-height: 85px;
     resize: vertical;
     background: rgba(214,228,239,0.12);
     border: 1px solid var(--border);
@@ -141,9 +141,45 @@
   .status-msg.show { display: block; }
 
   /* FOOTER */
-  footer { padding: 3rem 2rem; text-align: center; background: var(--blue-dark); }
-  .footer-names { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--blue-pale); margin-bottom: 0.5rem; }
-  footer p { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--blue-pale); opacity: 0.65; }
+  footer { padding: 2rem 2rem; text-align: center; background: var(--blue-dark); }
+  .footer-names { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--blue-pale); margin-bottom: 0.6rem; }
+  footer p { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.24em; color: var(--blue-pale); opacity: 0.6; }
+
+  /* ── PAGE CURTAIN ── */
+  #curtain {
+    position: fixed; inset: 0; z-index: 99999;
+    background: var(--ivory);
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+    animation: curtainLift 0.7s cubic-bezier(0.76,0,0.24,1) 1.8s forwards;
+  }
+  #curtain-monogram {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(3rem, 8vw, 5rem);
+    color: var(--blue-dark);
+    opacity: 0;
+    animation: curtainName 1.4s ease 0.2s forwards;
+  }
+  @keyframes curtainName {
+    0%   { opacity: 0; transform: translateY(12px); }
+    40%  { opacity: 1; transform: translateY(0); }
+    80%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  @keyframes curtainLift { to { transform: translateY(-100%); } }
+
+  /* ── NAV FADE-IN ── */
+  nav {
+    opacity: 0;
+    animation: fadeIn 0.6s ease 2.3s forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  /* ── REVEAL ON SCROLL ── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
 
   /* ANIMATIONS */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -158,6 +194,9 @@
 </head>
 <body>
 
+<!-- PAGE CURTAIN -->
+<div id="curtain"><span id="curtain-monogram">Yul &amp; Elyza</span></div>
+
 <nav>
   <a href="index.html">Home</a>
   <a href="upload.html">Upload</a>
@@ -165,7 +204,7 @@
 </nav>
 
 <section id="photo">
-  <div class="page">
+  <div class="section-inner reveal">
     <div class="section-label">Share Your Memories</div>
     <h2 class="section-title">Upload Photos</h2>
     <div class="thin-rule"><div class="thin-rule-dot"></div></div>
@@ -220,6 +259,12 @@
 </footer>
 
 <script>
+  // Scroll reveals
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
   const fileInput   = document.getElementById('fileInput');
   const dropZone    = document.getElementById('dropZone');
   const previewGrid = document.getElementById('previewGrid');
