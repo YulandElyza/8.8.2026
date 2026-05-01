@@ -164,6 +164,16 @@
   /* ANIMATIONS */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+  /* ── GLITTER CANVAS ── */
+  #glitter-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 100;
+  }
+</style>
+
   @media (max-width: 600px) {
     nav { gap: 1rem; flex-wrap: wrap; padding: 0.8rem 1rem; }
     nav a { font-size: 0.52rem; }
@@ -177,9 +187,17 @@
 <!-- PAGE CURTAIN -->
 
 
+<!-- GLITTER CANVAS -->
+<canvas id="glitter-canvas" aria-hidden="true"></canvas>
+
 <nav>
   <a href="index.html">Home</a>
-  <a href="upload.html">Upload</a>
+  <a href="index.html#schedule">Schedule</a>
+  <a href="index.html#dresscode">Attire</a>
+  <a href="index.html#gifts">Gifts</a>
+  <a href="index.html#rsvp">RSVP</a>
+  <a href="entourage.html">Entourage</a>
+  <a href="upload.html" class="active">Upload</a>
   <a href="carousel.html">Gallery</a>
 </nav>
 
@@ -239,6 +257,104 @@
 </footer>
 
 <script>
+  // ── GLITTER EFFECT ──────────────────────────────────────────────────────────
+  (function () {
+    const canvas = document.getElementById('glitter-canvas');
+    const ctx    = canvas.getContext('2d');
+
+    const COLORS = [
+      [255, 255, 255],
+      [255, 245, 180],
+      [214, 228, 239],
+      [255, 220, 180],
+      [232, 196, 184],
+      [180, 210, 255],
+      [255, 255, 210],
+    ];
+
+    let W, H;
+    const sparkles = [];
+    const MAX = 80;
+    let frame = 0;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function randRGB() { return COLORS[Math.floor(Math.random() * COLORS.length)]; }
+
+    function spawn() {
+      let x, y;
+      const side = Math.floor(Math.random() * 4);
+      if (side === 0) { x = Math.random() * W * 0.22; y = Math.random() * H; }
+      else if (side === 1) { x = W - Math.random() * W * 0.22; y = Math.random() * H; }
+      else if (side === 2) { x = Math.random() * W; y = Math.random() * H * 0.18; }
+      else { x = Math.random() * W; y = H - Math.random() * H * 0.18; }
+
+      const size   = 0.8 + Math.random() * 2.2;
+      const life   = 80 + Math.random() * 120;
+      const shape  = Math.random() < 0.5 ? 'star' : 'dot';
+      const drift  = (Math.random() - 0.5) * 0.3;
+      const rise   = -0.15 - Math.random() * 0.3;
+      const rgb    = randRGB();
+      const rotate = Math.random() * Math.PI;
+      sparkles.push({ x, y, size, life, maxLife: life, shape, drift, rise, rgb, rotate });
+    }
+
+    function drawStar(cx, cy, r, rot) {
+      ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot);
+      ctx.beginPath();
+      for (let i = 0; i < 4; i++) {
+        const a = (i / 4) * Math.PI * 2;
+        ctx.moveTo(0, 0); ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+      }
+      ctx.stroke();
+      ctx.beginPath(); ctx.arc(0, 0, r * 0.18, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+
+    for (let i = 0; i < 25; i++) spawn();
+
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      frame++;
+      if (frame % 4 === 0 && sparkles.length < MAX) spawn();
+
+      for (let i = sparkles.length - 1; i >= 0; i--) {
+        const s = sparkles[i];
+        s.life--;
+        if (s.life <= 0) { sparkles.splice(i, 1); continue; }
+
+        const prog  = s.life / s.maxLife;
+        const alpha = (prog < 0.15 ? prog / 0.15 : prog > 0.75 ? (1 - prog) / 0.25 : 1) * 0.45;
+
+        s.x += s.drift; s.y += s.rise; s.rotate += 0.015;
+
+        const [r, g, b] = s.rgb;
+        const col = `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
+
+        ctx.save();
+        ctx.globalAlpha  = alpha;
+        ctx.shadowColor  = `rgb(${r},${g},${b})`;
+        ctx.shadowBlur   = s.size * 2;
+        ctx.strokeStyle  = col;
+        ctx.fillStyle    = col;
+        ctx.lineWidth    = Math.max(0.8, s.size * 0.3);
+
+        if (s.shape === 'dot') {
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.size * 0.5, 0, Math.PI * 2); ctx.fill();
+        } else { drawStar(s.x, s.y, s.size, s.rotate); }
+        ctx.restore();
+      }
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+  // ── END GLITTER ──────────────────────────────────────────────────────────────
+
   // Scroll reveals
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
