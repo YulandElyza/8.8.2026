@@ -246,6 +246,22 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 
+/* ── GLITTER CANVAS ── */
+#glitter-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 100;
+}
+.sprig-divider { position: relative; }
+.sprig-glitter {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
 @media (max-width:600px) {
   nav { top: 28px; gap:0.8rem; flex-wrap:nowrap; padding:0.8rem 0.8rem; }
   nav a { font-size:0.5rem; letter-spacing:0.14em; white-space:nowrap; }
@@ -270,6 +286,9 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 </style>
 </head>
 <body>
+<!-- GLITTER CANVAS (overlays floral corners) -->
+<canvas id="glitter-canvas" aria-hidden="true"></canvas>
+
 <!-- PAGE VIGNETTE -->
 <div id="page-vignette"></div>
 
@@ -613,6 +632,130 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 </footer>
 
 <script>
+// ── GLITTER EFFECT ──────────────────────────────────────────────────────────
+(function () {
+  const canvas = document.getElementById('glitter-canvas');
+  const ctx    = canvas.getContext('2d');
+
+  // Palette: ivory whites, dusty blue, soft rose, gold
+  const COLORS = [
+    'rgba(255,255,255,{a})',
+    'rgba(214,228,239,{a})',
+    'rgba(232,196,184,{a})',
+    'rgba(255,248,220,{a})',
+    'rgba(200,220,235,{a})',
+  ];
+
+  // Regions where glitter should be dense = around the four floral corners
+  // We'll sample positions from those corner elements + add random drift
+  let W, H;
+  const sparkles = [];
+  const MAX = 120; // total live sparkles
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Get the bounding rect of each floral corner so we spawn near them
+  function cornerRects() {
+    return Array.from(document.querySelectorAll('.floral-corner')).map(el => {
+      const r = el.getBoundingClientRect();
+      return { x: r.left, y: r.top, w: r.width, h: r.height };
+    });
+  }
+
+  function randColor(alpha) {
+    const c = COLORS[Math.floor(Math.random() * COLORS.length)];
+    return c.replace('{a}', alpha.toFixed(2));
+  }
+
+  function spawn() {
+    const rects = cornerRects();
+    // 70% chance spawn near a floral corner, 30% anywhere on page
+    let x, y;
+    if (rects.length && Math.random() < 0.70) {
+      const r = rects[Math.floor(Math.random() * rects.length)];
+      x = r.x + Math.random() * r.w * 1.1 - r.w * 0.05;
+      y = r.y + Math.random() * r.h * 1.1 - r.h * 0.05;
+    } else {
+      x = Math.random() * W;
+      y = Math.random() * H;
+    }
+
+    const size   = 0.8 + Math.random() * 2.2;
+    const life   = 60 + Math.random() * 90;   // frames
+    const shape  = Math.random() < 0.5 ? 'star' : 'dot';
+    const drift  = (Math.random() - 0.5) * 0.4;
+    const rise   = -0.3 - Math.random() * 0.5;
+
+    sparkles.push({ x, y, size, life, maxLife: life,
+                    shape, drift, rise,
+                    color: randColor(0) });
+  }
+
+  function drawStar(ctx, x, y, r) {
+    ctx.beginPath();
+    for (let i = 0; i < 4; i++) {
+      const a = (i / 4) * Math.PI * 2;
+      const b = a + Math.PI / 4;
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r);
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + Math.cos(b) * r * 0.45, y + Math.sin(b) * r * 0.45);
+    }
+    ctx.stroke();
+  }
+
+  let frame = 0;
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Spawn new sparkles gradually
+    frame++;
+    if (frame % 3 === 0 && sparkles.length < MAX) spawn();
+
+    for (let i = sparkles.length - 1; i >= 0; i--) {
+      const s = sparkles[i];
+      s.life--;
+      if (s.life <= 0) { sparkles.splice(i, 1); continue; }
+
+      // Fade in & out
+      const prog  = s.life / s.maxLife;        // 1→0 as life drains
+      const alpha = prog < 0.2
+        ? prog / 0.2                           // fade in
+        : prog > 0.8
+          ? (1 - prog) / 0.2                   // fade out
+          : 1;
+
+      s.x += s.drift;
+      s.y += s.rise;
+
+      ctx.save();
+      ctx.globalAlpha = alpha * 0.85;
+      ctx.strokeStyle = randColor(1);
+      ctx.fillStyle   = randColor(1);
+      ctx.lineWidth   = s.size * 0.35;
+
+      if (s.shape === 'dot') {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size * 0.6, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        drawStar(ctx, s.x, s.y, s.size);
+      }
+      ctx.restore();
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+})();
+// ── END GLITTER ──────────────────────────────────────────────────────────────
+
   // Countdown
   (function() {
     const wedding = new Date('2026-08-08T10:00:00+08:00');
