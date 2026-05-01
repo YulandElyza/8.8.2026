@@ -500,7 +500,8 @@
 
   let W, H;
   const sparkles = [];
-  const MAX = 320;
+  const MAX = 80;   // far fewer sparkles
+  let frame = 0;
 
   function resize() {
     W = canvas.width  = window.innerWidth;
@@ -513,27 +514,20 @@
     return COLORS[Math.floor(Math.random() * COLORS.length)];
   }
 
-  // No floral corners on this page — spawn across the full viewport,
-  // with a slight bias toward the edges where corners would naturally be
+  // Spawn only along the page edges so photos stay unobstructed
   function spawn() {
     let x, y;
-    const edge = Math.random() < 0.55; // bias toward screen edges
-    if (edge) {
-      const side = Math.floor(Math.random() * 4);
-      if (side === 0) { x = Math.random() * W * 0.35; y = Math.random() * H * 0.35; }           // top-left
-      else if (side === 1) { x = W - Math.random() * W * 0.35; y = Math.random() * H * 0.35; }  // top-right
-      else if (side === 2) { x = Math.random() * W * 0.35; y = H - Math.random() * H * 0.35; }  // bottom-left
-      else { x = W - Math.random() * W * 0.35; y = H - Math.random() * H * 0.35; }              // bottom-right
-    } else {
-      x = Math.random() * W;
-      y = Math.random() * H;
-    }
+    const side = Math.floor(Math.random() * 4);
+    if (side === 0) { x = Math.random() * W * 0.22; y = Math.random() * H; }           // left strip
+    else if (side === 1) { x = W - Math.random() * W * 0.22; y = Math.random() * H; }  // right strip
+    else if (side === 2) { x = Math.random() * W; y = Math.random() * H * 0.18; }      // top strip
+    else { x = Math.random() * W; y = H - Math.random() * H * 0.18; }                  // bottom strip
 
-    const size   = 1.5 + Math.random() * 4.5;
-    const life   = 50 + Math.random() * 80;
-    const shape  = Math.random() < 0.6 ? 'star' : 'dot';
-    const drift  = (Math.random() - 0.5) * 0.7;
-    const rise   = -0.4 - Math.random() * 0.8;
+    const size   = 0.8 + Math.random() * 2.2;    // smaller
+    const life   = 80 + Math.random() * 120;      // longer life, gentle lingering
+    const shape  = Math.random() < 0.5 ? 'star' : 'dot';
+    const drift  = (Math.random() - 0.5) * 0.3;  // slower drift
+    const rise   = -0.15 - Math.random() * 0.3;  // slower rise
     const rgb    = randRGB();
     const rotate = Math.random() * Math.PI;
 
@@ -557,12 +551,14 @@
     ctx.restore();
   }
 
-  for (let i = 0; i < 80; i++) spawn();
+  for (let i = 0; i < 25; i++) spawn();  // gentle initial population
 
   function tick() {
     ctx.clearRect(0, 0, W, H);
 
-    if (sparkles.length < MAX) { spawn(); if (sparkles.length < MAX) spawn(); }
+    // One new sparkle every 4 frames — slow, calm rate
+    frame++;
+    if (frame % 4 === 0 && sparkles.length < MAX) spawn();
 
     for (let i = sparkles.length - 1; i >= 0; i--) {
       const s = sparkles[i];
@@ -570,15 +566,16 @@
       if (s.life <= 0) { sparkles.splice(i, 1); continue; }
 
       const prog  = s.life / s.maxLife;
-      const alpha = prog < 0.15
+      // Cap at 45% opacity so they never overpower the photos
+      const alpha = (prog < 0.15
         ? prog / 0.15
         : prog > 0.75
           ? (1 - prog) / 0.25
-          : 1;
+          : 1) * 0.45;
 
       s.x += s.drift;
       s.y += s.rise;
-      s.rotate += 0.03;
+      s.rotate += 0.015;  // slower rotation
 
       const [r, g, b] = s.rgb;
       const col = `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
@@ -586,14 +583,14 @@
       ctx.save();
       ctx.globalAlpha = alpha;
       ctx.shadowColor  = `rgb(${r},${g},${b})`;
-      ctx.shadowBlur   = s.size * 3.5;
+      ctx.shadowBlur   = s.size * 2;   // softer glow
       ctx.strokeStyle = col;
       ctx.fillStyle   = col;
-      ctx.lineWidth   = Math.max(1.2, s.size * 0.4);
+      ctx.lineWidth   = Math.max(0.8, s.size * 0.3);
 
       if (s.shape === 'dot') {
         ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size * 0.7, 0, Math.PI * 2);
+        ctx.arc(s.x, s.y, s.size * 0.5, 0, Math.PI * 2);
         ctx.fill();
       } else {
         drawStar(s.x, s.y, s.size, s.rotate);
