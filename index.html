@@ -637,20 +637,20 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
   const canvas = document.getElementById('glitter-canvas');
   const ctx    = canvas.getContext('2d');
 
-  // Palette: ivory whites, dusty blue, soft rose, gold
+  // Palette: bright whites, golds, blue shimmer, rose — more vivid now
   const COLORS = [
-    'rgba(255,255,255,{a})',
-    'rgba(214,228,239,{a})',
-    'rgba(232,196,184,{a})',
-    'rgba(255,248,220,{a})',
-    'rgba(200,220,235,{a})',
+    [255, 255, 255],   // pure white
+    [255, 245, 180],   // warm gold
+    [214, 228, 239],   // dusty blue
+    [255, 220, 180],   // peach gold
+    [232, 196, 184],   // soft rose
+    [180, 210, 255],   // icy blue
+    [255, 255, 210],   // champagne
   ];
 
-  // Regions where glitter should be dense = around the four floral corners
-  // We'll sample positions from those corner elements + add random drift
   let W, H;
   const sparkles = [];
-  const MAX = 120; // total live sparkles
+  const MAX = 320; // many more sparkles
 
   function resize() {
     W = canvas.width  = window.innerWidth;
@@ -659,7 +659,6 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
   resize();
   window.addEventListener('resize', resize);
 
-  // Get the bounding rect of each floral corner so we spawn near them
   function cornerRects() {
     return Array.from(document.querySelectorAll('.floral-corner')).map(el => {
       const r = el.getBoundingClientRect();
@@ -667,85 +666,103 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
     });
   }
 
-  function randColor(alpha) {
-    const c = COLORS[Math.floor(Math.random() * COLORS.length)];
-    return c.replace('{a}', alpha.toFixed(2));
+  function randRGB() {
+    return COLORS[Math.floor(Math.random() * COLORS.length)];
   }
 
   function spawn() {
     const rects = cornerRects();
-    // 70% chance spawn near a floral corner, 30% anywhere on page
     let x, y;
-    if (rects.length && Math.random() < 0.70) {
+    if (rects.length && Math.random() < 0.80) {
       const r = rects[Math.floor(Math.random() * rects.length)];
-      x = r.x + Math.random() * r.w * 1.1 - r.w * 0.05;
-      y = r.y + Math.random() * r.h * 1.1 - r.h * 0.05;
+      // spread a bit beyond the corner bounds for a halo effect
+      x = r.x + (Math.random() - 0.1) * r.w * 1.3;
+      y = r.y + (Math.random() - 0.1) * r.h * 1.3;
     } else {
       x = Math.random() * W;
       y = Math.random() * H;
     }
 
-    const size   = 0.8 + Math.random() * 2.2;
-    const life   = 60 + Math.random() * 90;   // frames
-    const shape  = Math.random() < 0.5 ? 'star' : 'dot';
-    const drift  = (Math.random() - 0.5) * 0.4;
-    const rise   = -0.3 - Math.random() * 0.5;
+    const size   = 1.5 + Math.random() * 4.5;   // bigger sparkles
+    const life   = 50 + Math.random() * 80;
+    const shape  = Math.random() < 0.6 ? 'star' : 'dot';
+    const drift  = (Math.random() - 0.5) * 0.7;
+    const rise   = -0.4 - Math.random() * 0.8;
+    const rgb    = randRGB();
+    const rotate = Math.random() * Math.PI;
 
-    sparkles.push({ x, y, size, life, maxLife: life,
-                    shape, drift, rise,
-                    color: randColor(0) });
+    sparkles.push({ x, y, size, life, maxLife: life, shape, drift, rise, rgb, rotate });
   }
 
-  function drawStar(ctx, x, y, r) {
+  function drawStar(cx, cy, r, rot) {
+    // 4-point sparkle / cross star
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rot);
     ctx.beginPath();
     for (let i = 0; i < 4; i++) {
       const a = (i / 4) * Math.PI * 2;
-      const b = a + Math.PI / 4;
-      ctx.moveTo(x, y);
-      ctx.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r);
-      ctx.moveTo(x, y);
-      ctx.lineTo(x + Math.cos(b) * r * 0.45, y + Math.sin(b) * r * 0.45);
+      ctx.moveTo(0, 0);
+      ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
     }
     ctx.stroke();
+    // inner bright dot
+    ctx.beginPath();
+    ctx.arc(0, 0, r * 0.18, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
   }
+
+  // Pre-populate with a burst of sparkles so they appear immediately
+  for (let i = 0; i < 80; i++) spawn();
 
   let frame = 0;
   function tick() {
     ctx.clearRect(0, 0, W, H);
 
-    // Spawn new sparkles gradually
+    // Spawn new sparkles every frame (2 at a time for density)
     frame++;
-    if (frame % 3 === 0 && sparkles.length < MAX) spawn();
+    if (sparkles.length < MAX) { spawn(); if (sparkles.length < MAX) spawn(); }
 
     for (let i = sparkles.length - 1; i >= 0; i--) {
       const s = sparkles[i];
       s.life--;
       if (s.life <= 0) { sparkles.splice(i, 1); continue; }
 
-      // Fade in & out
-      const prog  = s.life / s.maxLife;        // 1→0 as life drains
-      const alpha = prog < 0.2
-        ? prog / 0.2                           // fade in
-        : prog > 0.8
-          ? (1 - prog) / 0.2                   // fade out
+      const prog  = s.life / s.maxLife;
+      // sharp fade-in, longer hold, quick fade-out
+      const alpha = prog < 0.15
+        ? prog / 0.15
+        : prog > 0.75
+          ? (1 - prog) / 0.25
           : 1;
 
       s.x += s.drift;
       s.y += s.rise;
+      s.rotate += 0.03;
+
+      const [r, g, b] = s.rgb;
+      const col = `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
 
       ctx.save();
-      ctx.globalAlpha = alpha * 0.85;
-      ctx.strokeStyle = randColor(1);
-      ctx.fillStyle   = randColor(1);
-      ctx.lineWidth   = s.size * 0.35;
+      ctx.globalAlpha = alpha;
+
+      // Glow halo — makes sparkles pop
+      ctx.shadowColor  = `rgb(${r},${g},${b})`;
+      ctx.shadowBlur   = s.size * 3.5;
+
+      ctx.strokeStyle = col;
+      ctx.fillStyle   = col;
+      ctx.lineWidth   = Math.max(1.2, s.size * 0.4);
 
       if (s.shape === 'dot') {
         ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size * 0.6, 0, Math.PI * 2);
+        ctx.arc(s.x, s.y, s.size * 0.7, 0, Math.PI * 2);
         ctx.fill();
       } else {
-        drawStar(ctx, s.x, s.y, s.size);
+        drawStar(s.x, s.y, s.size, s.rotate);
       }
+
       ctx.restore();
     }
 
