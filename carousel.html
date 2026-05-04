@@ -225,46 +225,92 @@
     animation: kenBurnsRomance 8s ease-out both;
   }
 
-  /* ── CAPTION ── */
+  /* ── CAPTION — overlaid on photo bottom ── */
   .slide-caption {
-    width: 100%; padding: 1rem 0.5rem 0;
-    text-align: center; min-height: 2rem;
+    /* sits inside the photo frame, pinned to bottom */
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 10;
+    pointer-events: none;
+    padding: 0;
+    min-height: 0;
   }
-  .slide-caption-divider {
-    display: flex; align-items: center; gap: 0.6rem;
-    margin: 0 auto 0.75rem; width: fit-content;
+  /* gradient scrim behind the text */
+  .slide-caption::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 110%;
+    background: linear-gradient(
+      to top,
+      rgba(30,40,50,0.72) 0%,
+      rgba(30,40,50,0.38) 45%,
+      transparent 100%
+    );
+    border-radius: 0 0 6px 6px;
+    pointer-events: none;
   }
-  .slide-caption-divider::before,
-  .slide-caption-divider::after {
-    content: ''; display: block; width: 22px; height: 1px;
-    background: var(--blue-light); opacity: 0.5;
+  .slide-caption-inner {
+    position: relative;
+    z-index: 2;
+    padding: 1.4rem 1.6rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
   }
-  .slide-caption-gem {
+  /* small decorative rule above text */
+  .slide-caption-rule {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.2rem;
+  }
+  .slide-caption-rule::before {
+    content: '';
+    display: block;
+    width: 18px; height: 1px;
+    background: rgba(214,228,239,0.55);
+  }
+  .slide-caption-rule-gem {
     width: 4px; height: 4px;
-    border: 1px solid var(--blue-light);
-    transform: rotate(45deg); opacity: 0.55;
+    border: 1px solid rgba(214,228,239,0.6);
+    transform: rotate(45deg);
+    flex-shrink: 0;
   }
   .slide-caption-text {
-    display: inline-block; max-width: 56ch;
-    padding: 0.9rem 1.3rem;
-    font-family: 'Lato', sans-serif;
-    font-size: 0.9rem; font-weight: 300;
-    font-style: italic; color: var(--mid);
-    line-height: 1.85;
-    background: rgba(245,240,232,0.75);
-    border: 1px solid rgba(74,101,128,0.14);
-    border-radius: 6px;
-    box-shadow: 0 8px 28px rgba(48,64,80,0.08);
-    backdrop-filter: blur(12px);
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(1.15rem, 2.8vw, 1.55rem);
+    font-weight: 400;
+    font-style: normal;
+    color: rgba(255,255,255,0.93);
+    line-height: 1.45;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.45);
+    max-width: 52ch;
+    letter-spacing: 0.01em;
+  }
+  /* sender attribution */
+  .slide-caption-sender {
+    font-family: 'Cinzel', serif;
+    font-size: 0.48rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(214,228,239,0.65);
+    margin-top: 0.1rem;
   }
 
   /* Caption reveal on slide change */
   @keyframes captionReveal {
-    from { opacity: 0; transform: translateY(14px); filter: blur(2px); }
-    to   { opacity: 1; transform: none; filter: blur(0); }
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
   }
-  .swiper-slide-active .slide-caption-text {
-    animation: captionReveal 1s cubic-bezier(.16,1,.3,1) 0.3s both;
+  .swiper-slide-active .slide-caption {
+    animation: captionReveal 1s cubic-bezier(.16,1,.3,1) 0.5s both;
+  }
+
+  @media (max-width: 600px) {
+    .slide-caption-inner { padding: 1rem 1.1rem 0.85rem; }
+    .slide-caption-text { font-size: clamp(1rem, 4vw, 1.25rem); }
   }
 
   /* ── NAV BUTTONS ── */
@@ -700,12 +746,14 @@
       slide.innerHTML = `
         <div class="slide-photo-frame">
           <img src="${img.url}" alt="Wedding photo" loading="lazy" />
+          ${img.message ? `
+          <div class="slide-caption">
+            <div class="slide-caption-inner">
+              <div class="slide-caption-rule"><span class="slide-caption-rule-gem"></span></div>
+              <p class="slide-caption-text">${escapeHtml(img.message)}</p>
+            </div>
+          </div>` : ''}
         </div>
-        ${img.message ? `
-        <div class="slide-caption">
-          <div class="slide-caption-divider"><span class="slide-caption-gem"></span></div>
-          <p class="slide-caption-text">${escapeHtml(img.message)}</p>
-        </div>` : '<div class="slide-caption"></div>'}
       `;
       wrapper.appendChild(slide);
     });
@@ -805,7 +853,7 @@ function renderCarousel(images) {
           slideChangeTransitionStart() {
             const active = this.slides[this.activeIndex];
             if (!active) return;
-            const cap = active.querySelector('.slide-caption-text');
+            const cap = active.querySelector('.slide-caption');
             if (cap) {
               cap.style.animation = 'none';
               void cap.offsetWidth;
