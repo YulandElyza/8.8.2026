@@ -258,6 +258,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.3rem;
+    pointer-events: all;
   }
   /* small decorative rule above text */
   .slide-caption-rule {
@@ -288,6 +289,38 @@
     text-shadow: 0 1px 8px rgba(0,0,0,0.45);
     max-width: 52ch;
     letter-spacing: 0.01em;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.16,1,0.3,1);
+    max-height: calc(1.45em * 3 + 0.1em);
+  }
+  .slide-caption-text.expanded {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+    max-height: 40vh;
+  }
+  /* read more toggle */
+  .slide-caption-toggle {
+    font-family: 'Cinzel', serif;
+    font-size: 0.46rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(214,228,239,0.7);
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(214,228,239,0.35);
+    padding: 0 0 1px;
+    margin-top: 0.4rem;
+    cursor: pointer;
+    pointer-events: all;
+    transition: color 0.2s, border-color 0.2s;
+    display: none;
+  }
+  .slide-caption-toggle:hover {
+    color: rgba(214,228,239,1);
+    border-color: rgba(214,228,239,0.7);
   }
   /* sender attribution */
   .slide-caption-sender {
@@ -751,11 +784,33 @@
             <div class="slide-caption-inner">
               <div class="slide-caption-rule"><span class="slide-caption-rule-gem"></span></div>
               <p class="slide-caption-text">${escapeHtml(img.message)}</p>
+              <button class="slide-caption-toggle" aria-label="Read more">Read more</button>
             </div>
           </div>` : ''}
         </div>
       `;
       wrapper.appendChild(slide);
+    });
+  }
+
+  function initCaptionToggles() {
+    document.querySelectorAll('.slide-caption-text').forEach(el => {
+      const toggle = el.nextElementSibling;
+      if (!toggle || !toggle.classList.contains('slide-caption-toggle')) return;
+      // reset state
+      el.classList.remove('expanded');
+      toggle.textContent = 'Read more';
+      toggle.style.display = 'none';
+      // check if text overflows 3 lines
+      requestAnimationFrame(() => {
+        if (el.scrollHeight > el.clientHeight + 4) {
+          toggle.style.display = 'inline-block';
+        }
+        toggle.onclick = () => {
+          const expanded = el.classList.toggle('expanded');
+          toggle.textContent = expanded ? 'Read less' : 'Read more';
+        };
+      });
     });
   }
 
@@ -821,6 +876,7 @@ function renderCarousel(images) {
     if (n !== lastPhotoCount) {
       buildSlides(images);
       buildThumbs(images);
+      requestAnimationFrame(initCaptionToggles);
       if (swiperInstance) { swiperInstance.destroy(true, true); swiperInstance = null; }
       swiperInstance = new Swiper('#swiperEl', {
         loop: n > 1,
