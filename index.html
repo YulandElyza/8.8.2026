@@ -34,11 +34,12 @@ html { scroll-behavior: smooth; }
   z-index: 0;
   pointer-events: none;
   overflow: visible;
+  will-change: transform;
 }
 #bg-photo img {
   width: 100%; height: 100vh;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 15%;
   opacity: 0.3;
   filter: grayscale(15%) contrast(0.9);
   display: block;
@@ -854,17 +855,35 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 (function() {
   var bg = document.getElementById('bg-photo');
   var img = bg.querySelector('img');
-  function updateBg() {
-    // Move div with scroll so it stays viewport-locked
-    bg.style.top = window.scrollY + 'px';
-    // Stretch height to always fill full viewport
+
+  // Measure the banner + nav offset once (and on resize)
+  var offset = 0;
+  function measureOffset() {
+    var banner = document.querySelector('.gallery-banner');
+    var nav    = document.querySelector('nav');
+    offset = (banner ? banner.offsetHeight : 0) + (nav ? nav.offsetHeight : 0);
     var vh = window.innerHeight;
     bg.style.height = vh + 'px';
     img.style.height = vh + 'px';
+    update();
   }
-  window.addEventListener('scroll', updateBg, { passive: true });
-  window.addEventListener('resize', updateBg, { passive: true });
-  updateBg();
+
+  function update() {
+    // Use transform instead of top — runs on compositor thread, zero lag
+    bg.style.transform = 'translateY(' + (window.scrollY) + 'px)';
+    // Shift image down by offset so top of photo clears the nav
+    img.style.objectPosition = 'center calc(15% + ' + offset + 'px)';
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', measureOffset, { passive: true });
+
+  // Run after layout is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', measureOffset);
+  } else {
+    measureOffset();
+  }
 })();
 </script>
 </body>
