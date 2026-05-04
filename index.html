@@ -38,9 +38,16 @@ html { scroll-behavior: smooth; }
 #bg-photo img {
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center top;
+  /* Desktop: show head-to-waist centered — shift down so figures are framed mid-frame */
+  object-position: center 18%;
   opacity: 0.30;
   display: block;
+}
+@media (max-width: 768px) {
+  #bg-photo img {
+    /* Mobile: center the full figure */
+    object-position: center 10%;
+  }
 }
 /* ensure all content sits above bg */
 .gallery-banner, nav, section, #photo, footer, .sprig-divider {
@@ -854,19 +861,44 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 // ── BG PHOTO SCROLL LOCK ──
 (function() {
   var bg = document.getElementById('bg-photo');
+  var img = bg.querySelector('img');
   var ticking = false;
+  var lastY = 0;
+
   function update() {
-    var bannerH = (document.querySelector('.gallery-banner') || {offsetHeight:0}).offsetHeight || 0;
-    var navH    = (document.querySelector('nav') || {offsetHeight:0}).offsetHeight || 0;
-    bg.style.height = window.innerHeight + 'px';
-    bg.style.transform = 'translateY(' + window.scrollY + 'px)';
+    var y = window.scrollY;
+    var vh = window.innerHeight;
+    bg.style.height = vh + 'px';
+    bg.style.transform = 'translateY(' + y + 'px)';
     ticking = false;
+    lastY = y;
   }
-  window.addEventListener('scroll', function() {
-    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+
+  // Use both scroll event AND a rAF loop for mobile (mobile often skips scroll events mid-gesture)
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+
+  // rAF loop as fallback for mobile momentum scrolling
+  function loop() {
+    var y = window.scrollY;
+    if (y !== lastY) {
+      bg.style.transform = 'translateY(' + y + 'px)';
+      lastY = y;
+    }
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function() {
+    bg.style.height = window.innerHeight + 'px';
   }, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
+
   update();
+  requestAnimationFrame(loop); // continuous loop catches all mobile scroll frames
 })();
 
 </script>
