@@ -49,7 +49,7 @@
 
   /* ── GALLERY SECTION ── */
   #gallery {
-    padding: 4rem 2rem 2.5rem;
+    padding: 3rem 2rem 1rem;
     background: var(--section-bg);
     position: relative;
   }
@@ -147,7 +147,7 @@
   }
 
   /* ── SWIPER ── */
-  .swiper { width: 100%; padding-bottom: 2.5rem !important; }
+  .swiper { width: 100%; padding-bottom: 0.5rem !important; }
   .swiper-slide {
     display: flex; flex-direction: column; align-items: center;
     background: transparent;
@@ -156,7 +156,7 @@
   /* ── PHOTO FRAME ── */
   .slide-photo-frame {
     width: 100%;
-    max-height: 580px;
+    max-height: clamp(300px, 52vh, 520px);
     overflow: hidden;
     position: relative;
     background: var(--ivory-dark);
@@ -210,7 +210,7 @@
 
   .slide-photo-frame img {
     width: 100%; height: 100%;
-    max-height: 580px;
+    max-height: clamp(300px, 52vh, 520px);
     object-fit: contain; display: block;
     transform-origin: center center;
     cursor: zoom-in;
@@ -289,15 +289,50 @@
   .swiper-button-next::after,
   .swiper-button-prev::after { font-size: 0.95rem !important; font-weight: 600 !important; }
 
-  /* ── PAGINATION ── */
-  .swiper-pagination-bullet {
-    background: var(--blue-light) !important;
-    opacity: 0.35;
-    transition: transform 0.25s, opacity 0.25s;
+  /* ── THUMBNAIL STRIP ── */
+  .swiper-pagination { display: none !important; }
+
+  .thumb-strip-wrap {
+    width: 100%;
+    margin-top: 0.75rem;
+    overflow: hidden;
   }
-  .swiper-pagination-bullet-active {
-    opacity: 1 !important;
-    transform: scale(1.5);
+  .thumb-strip {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 4px 2px 6px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .thumb-strip::-webkit-scrollbar { display: none; }
+  .thumb-item {
+    flex: 0 0 52px;
+    height: 38px;
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    opacity: 0.45;
+    transition: opacity 0.25s, border-color 0.25s, transform 0.25s;
+  }
+  .thumb-item img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    pointer-events: none;
+  }
+  .thumb-item:hover { opacity: 0.75; transform: translateY(-1px); }
+  .thumb-item.active {
+    border-color: var(--blue-light);
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px var(--shadow-med);
+  }
+  @media (max-width: 600px) {
+    .thumb-item { flex: 0 0 42px; height: 32px; }
   }
 
   /* ── EMPTY STATE ── */
@@ -464,6 +499,9 @@
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
         <div class="swiper-pagination"></div>
+        <div class="thumb-strip-wrap">
+          <div class="thumb-strip" id="thumbStrip"></div>
+        </div>
       </div>
     </div>
 
@@ -673,6 +711,37 @@
     });
   }
 
+  function buildThumbs(images) {
+    const strip = document.getElementById('thumbStrip');
+    if (!strip) return;
+    strip.innerHTML = '';
+    images.forEach((img, i) => {
+      const item = document.createElement('div');
+      item.className = 'thumb-item' + (i === 0 ? ' active' : '');
+      item.dataset.index = i;
+      const t = document.createElement('img');
+      t.src = img.url;
+      t.alt = '';
+      t.loading = 'lazy';
+      item.appendChild(t);
+      item.addEventListener('click', () => {
+        if (swiperInstance) swiperInstance.slideToLoop(i);
+      });
+      strip.appendChild(item);
+    });
+  }
+
+  function syncThumbs(index) {
+    const strip = document.getElementById('thumbStrip');
+    if (!strip) return;
+    const items = strip.querySelectorAll('.thumb-item');
+    items.forEach((el, i) => el.classList.toggle('active', i === index));
+    // scroll active thumb into view
+    if (items[index]) {
+      items[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+
   function escapeHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
@@ -703,6 +772,7 @@ function renderCarousel(images) {
 
     if (n !== lastPhotoCount) {
       buildSlides(images);
+      buildThumbs(images);
       if (swiperInstance) { swiperInstance.destroy(true, true); swiperInstance = null; }
       swiperInstance = new Swiper('#swiperEl', {
         loop: n > 1,
@@ -738,10 +808,10 @@ function renderCarousel(images) {
             const cap = active.querySelector('.slide-caption-text');
             if (cap) {
               cap.style.animation = 'none';
-              // restart animation
               void cap.offsetWidth;
               cap.style.animation = '';
             }
+            syncThumbs(this.realIndex);
           }
         }
       });
