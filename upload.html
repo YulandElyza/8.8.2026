@@ -199,7 +199,7 @@
     <div class="section-label">Share Your Memories</div>
     <h2 class="section-title">Upload Photos</h2>
     <div class="thin-rule"><div class="thin-rule-dot"></div></div>
-    <p class="section-body">Select up to <strong>5 photos</strong> from the celebration, then add an optional message — your note will appear alongside your photos in our live gallery.</p>
+    <p class="section-body">Select up to <strong>10 photos</strong> from the celebration (JPEG, PNG or HEIC · max 10MB each), then add an optional message — your note will appear alongside your photos in our live gallery.</p>
 
     <form id="uploadForm" class="upload-form">
 
@@ -210,7 +210,7 @@
           <path d="M6 26h24v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4z" stroke="#7a9ab5" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
         <div class="drop-zone-label">Tap or drag photos here</div>
-        <div class="drop-zone-sub">JPEG, PNG, HEIC · up to 5 photos</div>
+        <div class="drop-zone-sub">JPEG, PNG, HEIC · up to 10 photos · 10MB each</div>
         <input type="file" id="fileInput" name="images" accept="image/*" multiple />
       </div>
 
@@ -376,15 +376,26 @@
 
   fileInput.addEventListener('change', () => handleFiles(fileInput.files));
 
+  const MAX_PHOTOS     = 10;
+  const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10 MB
+
   function handleFiles(newFiles) {
     const combined = [...selectedFiles];
+    const skipped  = [];
     for (const f of newFiles) {
-      if (combined.length >= 5) break;
-      if (!f.type.startsWith('image/')) continue;
+      if (combined.length >= MAX_PHOTOS)  { skipped.push(`${f.name} (limit reached)`); continue; }
+      if (!f.type.startsWith('image/'))   { skipped.push(`${f.name} (not an image)`);  continue; }
+      if (f.size > MAX_FILE_BYTES)        { skipped.push(`${f.name} (over 10 MB)`);    continue; }
       combined.push(f);
     }
     selectedFiles = combined;
     renderPreviews();
+    if (skipped.length) {
+      statusMsg.textContent = `Skipped: ${skipped.join(', ')}`;
+      statusMsg.className   = 'status-msg error show';
+    } else {
+      statusMsg.className = 'status-msg';
+    }
   }
 
   function renderPreviews() {
