@@ -157,22 +157,12 @@ h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13v
 
 /* ── PHOTO GALLERY ── */
 #photo { padding: 4rem 2rem 5rem; background: var(--section-bg); }
-.photo-section-header { max-width: 700px; margin: 0 auto 2.5rem; text-align: center; }
 .photo-gallery { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.4rem; }
 .photo-main { width: 100%; }
 .photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
 .photo-slot-wrap { position: relative; }
-.photo-slot-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 5px;
-  border: 1px solid rgba(74,101,128,0.22);
-  pointer-events: none;
-  z-index: 2;
-}
 .photo-slot {
   position: relative;
-  border: 1px solid rgba(74,101,128,0.35);
   overflow: hidden;
   box-shadow: 0 4px 18px rgba(74,101,128,0.10);
   transition: box-shadow 0.4s, transform 0.4s;
@@ -188,7 +178,6 @@ h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13v
 .photo-placeholder svg { opacity:0.6; }
 .photo-actual { width:100%; height:100%; object-fit:cover; display:block; }
 .photo-slot input[type="file"] { display:none; }
-.photo-caption { text-align: center; font-family:'Great Vibes',cursive; font-size:1.35rem; color:var(--blue); margin-top:0.55rem; opacity:0.82; }
 
 /* ── SECTIONS ── */
 section { padding: 5.5rem 2rem; }
@@ -409,14 +398,9 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 
 <!-- PHOTO GALLERY -->
 <section id="photo">
-  <div class="photo-section-header reveal">
-    <p class="section-label">A Glimpse</p>
-    <h2 class="section-title">Yul &amp; Elyza</h2>
-    <div class="thin-rule"><div class="thin-rule-dot"></div></div>
-  </div>
   <div class="photo-gallery">
     <div class="photo-main">
-      <div class="photo-slot-wrap reveal">
+      <div class="photo-slot-wrap">
         <div class="photo-slot" onclick="triggerUpload('photo-upload-1')">
           <div class="photo-placeholder" id="photo-drop-1" style="display:none;">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
@@ -428,11 +412,10 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
           <img id="photo-actual-1" class="photo-actual" style="display:block;" src="https://raw.githubusercontent.com/YulandElyza/8.8.2026/7005ad798a859292cbd442e96976284d8b0f2da1/FeaturedPhoto.jpg" alt="Yul & Elyza" />
           <input type="file" id="photo-upload-1" accept="image/*" onchange="handlePhotoUpload(event,'1')" />
         </div>
-        <p class="photo-caption">Together</p>
       </div>
     </div>
     <div class="photo-row">
-      <div class="photo-slot-wrap reveal reveal-delay-1">
+      <div class="photo-slot-wrap">
         <div class="photo-slot" onclick="triggerUpload('photo-upload-2')">
           <div class="photo-placeholder" id="photo-drop-2" style="display:none;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
@@ -444,9 +427,8 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
           <img id="photo-actual-2" class="photo-actual" style="display:block;" src="https://raw.githubusercontent.com/YulandElyza/8.8.2026/7005ad798a859292cbd442e96976284d8b0f2da1/Photo2.jpg" alt="Yul & Elyza" />
           <input type="file" id="photo-upload-2" accept="image/*" onchange="handlePhotoUpload(event,'2')" />
         </div>
-        <p class="photo-caption">Always</p>
       </div>
-      <div class="photo-slot-wrap reveal reveal-delay-2">
+      <div class="photo-slot-wrap">
         <div class="photo-slot" onclick="triggerUpload('photo-upload-3')">
           <div class="photo-placeholder" id="photo-drop-3" style="display:none;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
@@ -458,7 +440,6 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
           <img id="photo-actual-3" class="photo-actual" style="display:block;" src="https://raw.githubusercontent.com/YulandElyza/8.8.2026/7005ad798a859292cbd442e96976284d8b0f2da1/Photo3.jpg" alt="Yul & Elyza" />
           <input type="file" id="photo-upload-3" accept="image/*" onchange="handlePhotoUpload(event,'3')" />
         </div>
-        <p class="photo-caption">Forever</p>
       </div>
     </div>
   </div>
