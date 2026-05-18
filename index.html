@@ -392,14 +392,14 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
   <div class="photo-gallery">
     <div class="photo-main">
       <div class="photo-slot" onclick="triggerUpload('photo-upload-1')">
-        <div class="photo-placeholder" id="photo-drop-1">
+        <div class="photo-placeholder" id="photo-drop-1" style="display:none;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
             <rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/>
           </svg>
           <span>Featured Photo</span>
           <span style="font-size:0.55rem;opacity:0.6">Click to upload</span>
         </div>
-        <img id="photo-actual-1" class="photo-actual" style="display:none;" alt="Yul & Elyza" />
+        <img id="photo-actual-1" class="photo-actual" style="display:block;" src="https://raw.githubusercontent.com/YulandElyza/8.8.2026/7005ad798a859292cbd442e96976284d8b0f2da1/FeaturedPhoto.jpg" alt="Yul & Elyza" />
         <input type="file" id="photo-upload-1" accept="image/*" onchange="handlePhotoUpload(event,'1')" />
       </div>
     </div>
@@ -412,7 +412,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
           <span>Photo 2</span>
           <span style="font-size:0.52rem;opacity:0.6">Click to upload</span>
         </div>
-        <img id="photo-actual-2" class="photo-actual" style="display:none;" alt="Yul & Elyza" />
+        <img id="photo-actual-2" class="photo-actual" style="display:block;" src="https://raw.githubusercontent.com/YulandElyza/8.8.2026/7005ad798a859292cbd442e96976284d8b0f2da1/Photo2.jpg" alt="Yul & Elyza" />
         <input type="file" id="photo-upload-2" accept="image/*" onchange="handlePhotoUpload(event,'2')" />
       </div>
       <div class="photo-slot" onclick="triggerUpload('photo-upload-3')">
@@ -423,7 +423,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
           <span>Photo 3</span>
           <span style="font-size:0.52rem;opacity:0.6">Click to upload</span>
         </div>
-        <img id="photo-actual-3" class="photo-actual" style="display:none;" alt="Yul & Elyza" />
+        <img id="photo-actual-3" class="photo-actual" style="display:block;" src="https://raw.githubusercontent.com/YulandElyza/8.8.2026/7005ad798a859292cbd442e96976284d8b0f2da1/Photo3.jpg" alt="Yul & Elyza" />
         <input type="file" id="photo-upload-3" accept="image/*" onchange="handlePhotoUpload(event,'3')" />
       </div>
     </div>
