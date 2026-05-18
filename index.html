@@ -171,6 +171,7 @@ h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13v
   aspect-ratio: 3/2;
   overflow: hidden;
   background: var(--ivory-dark);
+  cursor: zoom-in;
 }
 .carousel-slide {
   position: absolute;
@@ -183,6 +184,13 @@ h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13v
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.9s ease;
+  filter: brightness(1.0) saturate(1.02);
+  transform-origin: center center;
+}
+.carousel-track:hover .carousel-slide.active img {
+  transform: scale(1.04);
+  filter: brightness(1.02) saturate(1.06);
 }
 /* Dot indicators */
 .carousel-dots {
@@ -202,6 +210,49 @@ h1               { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13v
 .carousel-dot.active {
   background: var(--blue-light);
 }
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 16, 12, 0.92);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  cursor: zoom-out;
+}
+.lightbox.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.lightbox img {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  display: block;
+  transform: scale(0.94);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+}
+.lightbox.open img {
+  transform: scale(1);
+}
+.lightbox-close {
+  position: absolute;
+  top: 1.4rem; right: 1.6rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(214,228,239,0.7);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.lightbox-close:hover { color: #fff; }
 
 /* ── SECTIONS ── */
 section { padding: 5.5rem 2rem; }
@@ -418,6 +469,12 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
     <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 247 30)"/>
     <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
   </svg>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">Close</span>
+  <img id="lightbox-img" src="" alt="Yul & Elyza" />
 </div>
 
 <!-- PHOTO CAROUSEL -->
@@ -814,10 +871,14 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
-  // Carousel
+  // Carousel + Lightbox
   (function() {
     const slides = document.querySelectorAll('.carousel-slide');
     const dots   = document.querySelectorAll('.carousel-dot');
+    const track  = document.querySelector('.carousel-track');
+    const lb     = document.getElementById('lightbox');
+    const lbImg  = document.getElementById('lightbox-img');
+    const lbClose = document.getElementById('lightbox-close');
     let current  = 0;
     let timer;
 
@@ -832,19 +893,37 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
     window.goToSlide = goToSlide;
 
     function next() { goToSlide(current + 1); }
-
     function startTimer() { timer = setInterval(next, 3000); }
     function resetTimer()  { clearInterval(timer); startTimer(); }
 
     // Pause on hover
-    const track = document.querySelector('.carousel-track');
     track.addEventListener('mouseenter', () => clearInterval(timer));
-    track.addEventListener('mouseleave', startTimer);
+    track.addEventListener('mouseleave', () => { if (!lb.classList.contains('open')) startTimer(); });
 
     // Dots reset the timer
     dots.forEach((dot, i) => {
       dot.addEventListener('click', () => { goToSlide(i); resetTimer(); });
     });
+
+    // Open lightbox on tap/click
+    track.addEventListener('click', () => {
+      const src = slides[current].querySelector('img').src;
+      lbImg.src = src;
+      lb.classList.add('open');
+      clearInterval(timer);
+    });
+
+    // Close lightbox
+    function closeLightbox() {
+      lb.classList.remove('open');
+      startTimer();
+    }
+    lb.addEventListener('click', closeLightbox);
+    lbClose.addEventListener('click', closeLightbox);
+    lbImg.addEventListener('click', e => e.stopPropagation()); // clicking image itself doesn't close
+
+    // Close on Escape
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
     startTimer();
   })();
