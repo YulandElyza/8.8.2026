@@ -379,64 +379,64 @@ function buildDB(rows) {
 }
 
 // Inline fallback — mirrors your CSV so the page works even if GitHub is unreachable
-const FALLBACK_CSV = `Guest Name,Role,No. of Guests Allowed,Expected Guest,RSVP Status
-Enrique Alfeche Jr.,Father of the Bride,0,,
-Cristina Tan Alfeche,Mother of the Bride,5,,
-Dulcilita Legaspi,Mother of the Groom,0,,
-Ronald Alfeche,Principal Sponsor,0,,
-Suzanne Alfeche,Principal Sponsor,0,,
-Cirilo Lofranco,Principal Sponsor,0,,
-Lolita Lofranco,Principal Sponsor,0,,
-Rene Ponce,Principal Sponsor,0,,
-Maria Clarissa Ponce,Principal Sponsor,3,"Rene Ponce, Rencliff Ponce, Jasper Ponce",
-Erwin Seno,Principal Sponsor,0,,
-Maria Charo Seno,Principal Sponsor,3,"Eon Seno, Ethan Seno, Erwin Seno",
-Yddaz Legaspi Lofranco,Secondary Sponsors: Bind/Cord,2,"Abril Caesar Lofranco, Yara Abrielle Lofranco",
-Abril Caesar Lofranco,Secondary Sponsors: Bind/Cord,0,,
-Salvacion Sotto Pesiao,Secondary Sponsors: Veil,0,,
-Yvan Legaspi,Secondary Sponsors: Veil,0,,
-James Gabriel Suico,Secondary Sponsors: Candles,0,,
-Sister Marylynn Alfeche,Secondary Sponsors: Candles,0,,
-Wilfred Vincent Zuñiga,Bestman,2,"Gemma Lhen Zuñiga, Julia Khaleesi Zuñiga, Ryker Zuñiga",
-Ariel Badilles,Groomsman,2,,
-Johnrel Encorporado,Groomsman,2,,
-Joshua Tajanlangit,Groomsman,0,,
-Elisha Alfeche Tajanlangit,Matron of Honor,1,Joshua Tahanlangit,
-Rechelle Flores,Bridesmaid,0,,
-Maria Glorietta Thea Catibud,Bridesmaid,1,James Gabriel Suico,
-Sheena Ross Rivera,Bridesmaid,1,Louise Carlhaille Rivera Cortes,
-Rencliff Ponce,Ring-bearer,0,,
-Eon Seno,Coin-bearer,0,,
-Ethan Seno,Bible-bearer,0,,
-Yara Abrielle Lofranco,Flower Girl,0,,
-Louise Carlhaille Rivera Cortes,Flower Girl,0,,
-Julia Khaleesi Zuñiga,Flower Girl,0,,
-Ydith Legaspi,Guest,0,,
-Joecel Estrebello,Guest,0,,
-Cielo Lofranco,Guest,0,,
-Alex Coleen Escalona,Guest,1,Elias Hubert Escalona,
-Elias Hubert Escalona,Guest,0,,
-Gemma Lhen Zuñiga,Guest,0,,
-Ryker Zuñiga,Guest,0,,
-Janeth Badilles,Guest,0,,
-Zyk Badilles,Guest,0,,
-Olive Encorporado,Guest,0,,
-Anya Encorporado,Guest,0,,
-Clare Limsuan,Guest,2,"Jesse Kit Limsuan, Caron Jethro Limsuan",
-Jesse Kit Limsuan,Guest,0,,
-Caron Jethro Limsuan,Guest,0,,
-Mommy Teresa Gerona,Guest,0,,
-Mommy Crisina Relative 1,Guest,0,,
-Mommy Crisina Relative 2,Guest,0,,
-Mommy Crisina Relative 3,Guest,0,,
-Mommy Crisina Relative 4,Guest,0,,
-Mommy Crisina Relative 5,Guest,0,,
-Mommy Crisina Friend C,Guest,0,,
-Mommy Crisina Friend C Partner,Guest,0,,
-Mommy Crisina Friend D,Guest,0,,
-Mommy Crisina Friend D Partner,Guest,0,,
-Mommy Crisina Friend E,Guest,0,,
-Mommy Crisina Friend E Partner,Guest,0,,`;
+const FALLBACK_CSV = `Guest Name	Role	No. of Guests Allowed	Expected Guest	RSVP Status
+Enrique Alfeche Jr.	Father of the Bride	0		
+Cristina Tan Alfeche	Mother of the Bride	5		
+Dulcilita Legaspi	Mother of the Groom	0		
+Ronald Alfeche	Principal Sponsor	0		
+Suzanne Alfeche	Principal Sponsor	0		
+Cirilo Lofranco	Principal Sponsor	0		
+Lolita Lofranco	Principal Sponsor	0		
+Rene Ponce	Principal Sponsor	0		
+Maria Clarissa Ponce	Principal Sponsor	3	Rene Ponce, Rencliff Ponce, Jasper Ponce	
+Erwin Seno	Principal Sponsor	0		
+Maria Charo Seno	Principal Sponsor	3	Eon Seno, Ethan Seno, Erwin Seno	
+Yddaz Legaspi Lofranco	Secondary Sponsors: Bind/Cord	2	Abril Caesar Lofranco, Yara Abrielle Lofranco	
+Abril Caesar Lofranco	Secondary Sponsors: Bind/Cord	0		
+Salvacion Sotto Pesiao	Secondary Sponsors: Veil	0		
+Yvan Legaspi	Secondary Sponsors: Veil	0		
+James Gabriel Suico	Secondary Sponsors: Candles	0		
+Sister Marylynn Alfeche	Secondary Sponsors: Candles	0		
+Wilfred Vincent Zuñiga	Bestman	2	Gemma Lhen Zuñiga, Julia Khaleesi Zuñiga, Ryker Zuñiga	
+Ariel Badilles	Groomsman	2		
+Johnrel Encorporado	Groomsman	2		
+Joshua Tajanlangit	Groomsman	0		
+Elisha Alfeche Tajanlangit	Matron of Honor	1	Joshua Tahanlangit	
+Rechelle Flores	Bridesmaid	0		
+Maria Glorietta Thea Catibud	Bridesmaid	1	James Gabriel Suico	
+Sheena Ross Rivera	Bridesmaid	1	Louise Carlhaille Rivera Cortes	
+Rencliff Ponce	Ring-bearer	0		
+Eon Seno	Coin-bearer	0		
+Ethan Seno	Bible-bearer	0		
+Yara Abrielle Lofranco	Flower Girl	0		
+Louise Carlhaille Rivera Cortes	Flower Girl	0		
+Julia Khaleesi Zuñiga	Flower Girl	0		
+Ydith Legaspi	Guest	0		
+Joecel Estrebello	Guest	0		
+Cielo Lofranco	Guest	0		
+Alex Coleen Escalona	Guest	1	Elias Hubert Escalona	
+Elias Hubert Escalona	Guest	0		
+Gemma Lhen Zuñiga	Guest	0		
+Ryker Zuñiga	Guest	0		
+Janeth Badilles	Guest	0		
+Zyk Badilles	Guest	0		
+Olive Encorporado	Guest	0		
+Anya Encorporado	Guest	0		
+Clare Limsuan	Guest	2	Jesse Kit Limsuan, Caron Jethro Limsuan	
+Jesse Kit Limsuan	Guest	0		
+Caron Jethro Limsuan	Guest	0		
+Mommy Teresa Gerona	Guest	0		
+Mommy Crisina Relative 1	Guest	0		
+Mommy Crisina Relative 2	Guest	0		
+Mommy Crisina Relative 3	Guest	0		
+Mommy Crisina Relative 4	Guest	0		
+Mommy Crisina Relative 5	Guest	0		
+Mommy Crisina Friend C	Guest	0		
+Mommy Crisina Friend C Partner	Guest	0		
+Mommy Crisina Friend D	Guest	0		
+Mommy Crisina Friend D Partner	Guest	0		
+Mommy Crisina Friend E	Guest	0		
+Mommy Crisina Friend E Partner	Guest	0		`;
 
 async function loadCSV() {
   const proxies = [
@@ -522,20 +522,36 @@ function hideInput(){ inputArea.style.display='none'; }
 function showInput(){ inputArea.style.display='flex'; }
 
 // ── CHECKBOX FLOW ─────────────────────────────────────────────────────────────
+function clearActionArea() {
+  const aa = document.getElementById('actionArea');
+  if (aa) aa.remove();
+}
+
+function insertActionArea(html) {
+  clearActionArea();
+  // Insert action area between chatArea and inputArea inside rsvpCard
+  const div = document.createElement('div');
+  div.className = 'btn-row'; div.id = 'actionArea';
+  div.innerHTML = html;
+  const card = document.getElementById('rsvpCard');
+  const ia = document.getElementById('inputArea');
+  card.insertBefore(div, ia);
+  // Scroll chat into view
+  setTimeout(() => { div.scrollIntoView({ behavior:'smooth', block:'nearest' }); }, 100);
+}
+
 function showGuestCheckboxes(guest) {
   hideInput();
-  // Look up role for each expected guest
-  const items = guest.expectedGuests.map(name => {
-    const db = guestDB.find(g => g.name.toLowerCase()===name.toLowerCase());
+  // Look up role for each expected guest from DB
+  const items = guest.expectedGuests.map((name, i) => {
+    const db = guestDB.find(g => g.name.toLowerCase() === name.toLowerCase());
     return { name, role: db ? db.role : 'Guest' };
   });
 
-  const div = document.createElement('div');
-  div.className='btn-row'; div.id='actionArea';
-  div.innerHTML = `
+  insertActionArea(`
     <p class="checkbox-note">Please confirm who will be joining you:</p>
     <div class="checkbox-list">
-      ${items.map((g,i)=>`
+      ${items.map((g,i) => `
         <label class="checkbox-item">
           <input type="checkbox" id="gc_${i}" value="${g.name}" checked/>
           <span class="checkbox-label">
@@ -545,12 +561,10 @@ function showGuestCheckboxes(guest) {
         </label>`).join('')}
     </div>
     <button class="rsvp-btn confirm-style" id="confirmBtn" style="margin-top:14px">✦ &nbsp; Confirm Attendance &nbsp; ✦</button>
-    <button class="rsvp-btn decline-style" id="declineBtn">✦ &nbsp; Decline Invitation &nbsp; ✦</button>`;
-  document.getElementById('rsvpCard').appendChild(div);
-  chatArea.scrollTop = chatArea.scrollHeight;
+    <button class="rsvp-btn decline-style" id="declineBtn">✦ &nbsp; Decline Invitation &nbsp; ✦</button>`);
 
   document.getElementById('confirmBtn').onclick = () => {
-    const checked = [...document.querySelectorAll('.checkbox-item input:checked')].map(c=>c.value);
+    const checked = [...document.querySelectorAll('#actionArea .checkbox-item input:checked')].map(c => c.value);
     handleConfirm(guest, checked);
   };
   document.getElementById('declineBtn').onclick = () => showDeclineInput(guest);
@@ -558,29 +572,21 @@ function showGuestCheckboxes(guest) {
 
 function showSoloButtons(guest) {
   hideInput();
-  const div = document.createElement('div');
-  div.className='btn-row'; div.id='actionArea';
-  div.innerHTML=`
+  insertActionArea(`
     <button class="rsvp-btn confirm-style" id="confirmBtn" style="margin-top:6px">✦ &nbsp; Confirm Attendance &nbsp; ✦</button>
-    <button class="rsvp-btn decline-style" id="declineBtn">✦ &nbsp; Decline Invitation &nbsp; ✦</button>`;
-  document.getElementById('rsvpCard').appendChild(div);
+    <button class="rsvp-btn decline-style" id="declineBtn">✦ &nbsp; Decline Invitation &nbsp; ✦</button>`);
   document.getElementById('confirmBtn').onclick = () => handleConfirm(guest, []);
   document.getElementById('declineBtn').onclick = () => showDeclineInput(guest);
 }
 
 function showDeclineInput(guest) {
-  const aa = document.getElementById('actionArea');
-  if(aa) aa.remove();
-  const div = document.createElement('div');
-  div.className='btn-row'; div.id='actionArea';
-  div.innerHTML=`
+  insertActionArea(`
     <p style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-light);margin-bottom:4px;">Leave a note (optional)</p>
     <textarea class="decline-ta" id="declineTa" placeholder="e.g. Unfortunately I will be abroad that week…"></textarea>
-    <button class="rsvp-btn decline-style" id="submitDecline" style="margin-top:8px">✦ &nbsp; Submit &nbsp; ✦</button>`;
-  document.getElementById('rsvpCard').appendChild(div);
+    <button class="rsvp-btn decline-style" id="submitDecline" style="margin-top:8px">✦ &nbsp; Submit &nbsp; ✦</button>`);
   document.getElementById('submitDecline').onclick = () => {
-    const comment=(document.getElementById('declineTa')||{value:''}).value.trim();
-    handleDecline(guest,comment);
+    const comment = (document.getElementById('declineTa') || {value:''}).value.trim();
+    handleDecline(guest, comment);
   };
 }
 
