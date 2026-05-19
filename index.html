@@ -657,7 +657,8 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
   </div>
 </section>
 
-<!-- RSVP -->
+<!-- RSVP — hidden automatically on and after August 8, 2026 (PHT, UTC+8) -->
+<div id="rsvp-block">
 <div class="sprig-divider to-cool">
   <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Anemone flower centre -->
@@ -678,9 +679,24 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
     <p class="section-body" style="margin-bottom:1rem;">Please register your attendance by <strong style="color:var(--blue-dark);font-weight:400;">July 1, 2026</strong>. We look forward to celebrating with you.</p>
     <p class="section-body" style="margin-bottom:2.5rem;">Click the button below to confirm your attendance. It only takes a minute!</p>
     <a href="https://yulandelyza.github.io/8.8.2026/rsvp" target="_blank" class="rsvp-google-btn">✦ &nbsp; Confirm Your Attendance &nbsp; ✦</a>
-    <p style="margin-top:1.8rem;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.18em;color:var(--light);">Opens in Google Forms · Responses go directly to the couple</p>
   </div>
 </section>
+</div>
+<script>
+  // Hide the entire RSVP block on and after August 8, 2026 (midnight PHT, UTC+8)
+  (function(){
+    const weddingDay = new Date('2026-08-08T00:00:00+08:00');
+    if(new Date() >= weddingDay){
+      var block = document.getElementById('rsvp-block');
+      if(block) block.style.display = 'none';
+      // Also hide the RSVP link in the nav
+      var navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(function(a){
+        if(a.getAttribute('href') === '#rsvp') a.style.display = 'none';
+      });
+    }
+  })();
+</script>
 
 <!-- FOOTER -->
 <div class="sprig-divider to-warm">
