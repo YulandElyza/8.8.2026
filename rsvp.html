@@ -672,7 +672,7 @@ function renderAdmin(){
       const rsvp=loadRSVP(g.name);
       return { name:g.name, role:g.role, maxGuests:g.maxGuests, expectedGuests:g.expectedGuests,
                status:rsvp?rsvp.status:'pending', attending:rsvp?(rsvp.attending||[]):[],
-               comment:rsvp?(rsvp.comment||')':'', at:rsvp?rsvp.at:null };
+               comment:rsvp?(rsvp.comment||''):'', at:rsvp?rsvp.at:null };
     });
 
   const conf=rows.filter(r=>r.status==='confirmed');
