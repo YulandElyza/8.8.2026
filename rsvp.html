@@ -42,38 +42,40 @@ nav a:hover { color:var(--blue-dark); } nav a.active { color:var(--blue-dark); }
 @keyframes fadeIn { to{opacity:1;} }
 @keyframes fadeUp { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:none;} }
 
-/* HERO */
-#hero { min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:5rem 2rem 2.5rem; position:relative; overflow:hidden; background:var(--ivory); z-index:1; }
-.floral-corner { position:absolute; pointer-events:none; }
-.floral-corner.tl { top:52px; left:-8px; width:280px; height:280px; }
-.floral-corner.tr { top:52px; right:-8px; width:280px; height:280px; transform:scaleX(-1); }
-.floral-corner.bl { bottom:-8px; left:-8px; width:240px; height:240px; transform:scaleY(-1); }
-.floral-corner.br { bottom:-8px; right:-8px; width:240px; height:240px; transform:scale(-1,-1); }
-.floral-corner img { width:100%; height:100%; opacity:0; filter:drop-shadow(0 2px 8px rgba(120,60,60,0.10)); }
-.floral-corner.tl img { animation:bloom 1.4s cubic-bezier(0.34,1.56,0.64,1) 0.1s forwards; }
-.floral-corner.tr img { animation:bloom 1.4s cubic-bezier(0.34,1.56,0.64,1) 0.2s forwards; }
-.floral-corner.bl img { animation:bloom 1.2s cubic-bezier(0.34,1.56,0.64,1) 0.3s forwards; }
-.floral-corner.br img { animation:bloom 1.2s cubic-bezier(0.34,1.56,0.64,1) 0.4s forwards; }
-@keyframes bloom { 0%{opacity:0;transform:scale(0.6) rotate(-8deg);} 60%{opacity:1;transform:scale(1.04) rotate(1deg);} 100%{opacity:1;transform:scale(1) rotate(0deg);} }
-.monogram      { font-family:'Cinzel',serif; font-size:clamp(1rem,3.5vw,2.1rem); color:var(--blue-dark); letter-spacing:0.18em; margin-bottom:0.6rem; opacity:0; animation:fadeUp 0.9s ease 0.1s forwards; }
-.hero-date-big { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4.5vw,2.6rem); font-weight:500; color:var(--blue-dark); letter-spacing:0.25em; margin-bottom:0.3rem; opacity:0; animation:fadeUp 0.9s ease 0.2s forwards; }
-.save-label    { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.4vw,0.75rem); letter-spacing:0.42em; text-transform:uppercase; color:var(--blue); margin-bottom:0.7rem; opacity:0; animation:fadeUp 0.9s ease 0.3s forwards; }
-h1             { font-family:'Great Vibes',cursive; font-size:clamp(3.6rem,13vw,10rem); line-height:1.0; color:var(--blue-dark); opacity:0; animation:heroName 1.4s cubic-bezier(0.16,1,0.3,1) 0.4s forwards; margin-bottom:0.2rem; }
-.hero-divider  { display:flex; align-items:center; gap:0.8rem; margin:0.8rem auto; width:min(280px,72vw); opacity:0; animation:fadeUp 0.9s ease 0.7s forwards; }
-.hero-divider::before,.hero-divider::after { content:''; flex:1; height:1px; }
-.hero-divider::before { background:linear-gradient(to right,transparent,var(--blue-light)); }
-.hero-divider::after  { background:linear-gradient(to left,transparent,var(--blue-light)); }
-.hero-divider-gem { width:7px; height:7px; background:var(--blue-light); transform:rotate(45deg); }
-.hero-location { font-family:'Cinzel',serif; font-size:clamp(0.52rem,1.3vw,0.72rem); letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); line-height:2; opacity:0; animation:fadeUp 0.9s ease 0.8s forwards; }
-@keyframes heroName { from{opacity:0;transform:translateY(30px) scale(0.94)} to{opacity:1;transform:none} }
-.hero-scroll-hint { position:absolute; bottom:2rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem; opacity:0; animation:fadeUp 0.9s ease 1.2s forwards; }
-.hero-scroll-hint span { font-family:'Cinzel',serif; font-size:0.46rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--blue-light); }
-.scroll-gem { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); animation:gemBob 1.8s ease-in-out infinite; }
-@keyframes gemBob { 0%,100%{transform:rotate(45deg) translateY(0);} 50%{transform:rotate(45deg) translateY(4px);} }
-
-/* SPRIG */
-.sprig-divider { height:90px; overflow:hidden; display:flex; align-items:center; justify-content:center; position:relative; z-index:1; background:linear-gradient(to bottom,var(--ivory),var(--section-bg)); }
-.sprig-divider svg { width:320px; height:60px; opacity:0.75; }
+/* PAGE HEADER (replaces full-screen hero) */
+.page-header {
+  padding: 5.5rem 2rem 2rem;
+  text-align: center;
+  background: var(--ivory);
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid var(--border);
+}
+.page-header-monogram {
+  font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.32em;
+  text-transform:uppercase; color:var(--blue-light);
+  margin-bottom:0.5rem;
+  opacity:0; animation:fadeUp 0.7s ease 0.1s forwards;
+}
+.page-header-names {
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(2.8rem,8vw,4.8rem);
+  line-height:1.0; color:var(--blue-dark);
+  margin-bottom:0.3rem;
+  opacity:0; animation:fadeUp 0.9s ease 0.2s forwards;
+}
+.page-header-rule {
+  display:flex; align-items:center; gap:0.7rem;
+  margin:0.7rem auto 0.6rem; width:min(220px,60vw);
+  opacity:0; animation:fadeUp 0.7s ease 0.35s forwards;
+}
+.page-header-rule::before,.page-header-rule::after { content:''; flex:1; height:1px; background:var(--blue-light); opacity:0.5; }
+.page-header-rule-gem { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
+.page-header-date {
+  font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.28em;
+  text-transform:uppercase; color:var(--mid);
+  opacity:0; animation:fadeUp 0.7s ease 0.45s forwards;
+}
 
 /* SECTIONS */
 section { padding:5.5rem 2rem; position:relative; z-index:1; }
@@ -241,32 +243,14 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 
 <nav>
   <a href="https://tinyurl.com/YulandElyzaAug82026" target="_blank">Home</a>
-  <a href="#" class="active" onclick="switchTab('guest');return false;">RSVP</a>
   <a href="#" onclick="switchTab('admin');return false;">Admin</a>
 </nav>
 
-<section id="hero">
-  <div class="floral-corner tl"><img src="https://raw.githubusercontent.com/YulandElyza/8.8.2026/7005ad798a859292cbd442e96976284d8b0f2da1/anemone-flower-400x320.svg" alt="" aria-hidden="true"/></div>
-  <div class="floral-corner tr"><img src="https://raw.githubusercontent.com/YulandElyza/8.8.2026/7005ad798a859292cbd442e96976284d8b0f2da1/anemone-flower-400x320.svg" alt="" aria-hidden="true"/></div>
-  <div class="floral-corner bl"><img src="https://raw.githubusercontent.com/YulandElyza/8.8.2026/7005ad798a859292cbd442e96976284d8b0f2da1/anemone-flower-400x320.svg" alt="" aria-hidden="true"/></div>
-  <div class="floral-corner br"><img src="https://raw.githubusercontent.com/YulandElyza/8.8.2026/7005ad798a859292cbd442e96976284d8b0f2da1/anemone-flower-400x320.svg" alt="" aria-hidden="true"/></div>
-  <p class="monogram">Y &amp; E</p>
-  <p class="hero-date-big">8 · 8 · 26</p>
-  <p class="save-label">Kindly Reply</p>
-  <h1>Yul &amp; Elyza</h1>
-  <div class="hero-divider"><div class="hero-divider-gem"></div></div>
-  <p class="hero-location">Saturday, the Eighth of August, 2026<br/>Cebu City, Philippines</p>
-  <div class="hero-scroll-hint"><span>RSVP below</span><div class="scroll-gem"></div></div>
-</section>
-
-<div class="sprig-divider">
-  <svg viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
-    <path d="M56 30 L70 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
-    <rect x="72" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 75 30)"/>
-    <path d="M78 30 L242 30" stroke="#7a9ab5" stroke-width="0.6" opacity="0.22"/>
-    <rect x="244" y="27" width="6" height="6" fill="none" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4" transform="rotate(45 247 30)"/>
-    <path d="M250 30 L264 30" stroke="#7a9ab5" stroke-width="0.8" opacity="0.4"/>
-  </svg>
+<div class="page-header">
+  <p class="page-header-monogram">Y &amp; E &nbsp;·&nbsp; 8.8.26</p>
+  <div class="page-header-names">Yul &amp; Elyza</div>
+  <div class="page-header-rule"><div class="page-header-rule-gem"></div></div>
+  <p class="page-header-date">Saturday, August 8, 2026 &nbsp;·&nbsp; Cebu City, Philippines</p>
 </div>
 
 <div class="tab-bar">
