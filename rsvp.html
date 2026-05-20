@@ -443,20 +443,40 @@ async function loadCSV() {
 function findGuest(input) {
   const q = input.trim().toLowerCase();
   if (!q || q.length < 2) return null;
+
   // 1. Exact match
   let m = guestDB.find(g => g.name.toLowerCase() === q);
   if (m) return m;
-  // 2. Starts with query
+
+  // 2. Name starts with the full query string
   m = guestDB.find(g => g.name.toLowerCase().startsWith(q));
   if (m) return m;
-  // 3. Any word in name starts with query (e.g. "elyza" finds "Yul Elyza")
-  m = guestDB.find(g => g.name.toLowerCase().split(/\s+/).some(w => w.startsWith(q)));
-  if (m) return m;
-  // 4. Name contains query (min 3 chars)
+
+  // 3. Name contains the full query string (min 3 chars)
   if (q.length >= 3) {
     m = guestDB.find(g => g.name.toLowerCase().includes(q));
     if (m) return m;
   }
+
+  // 4. All words in the query appear somewhere in the name
+  //    e.g. "cristina tan"     -> ["cristina","tan"]     both in "Cristina Tan Alfeche"
+  //    e.g. "cristina alfeche" -> ["cristina","alfeche"] both in "Cristina Tan Alfeche"
+  //    e.g. "charo seno"       -> ["charo","seno"]       both in "Maria Charo Seno"
+  const qWords = q.split(/\s+/).filter(Boolean);
+  if (qWords.length > 1) {
+    m = guestDB.find(g => {
+      const nw = g.name.toLowerCase().split(/\s+/);
+      return qWords.every(qw => nw.some(nword => nword.startsWith(qw)));
+    });
+    if (m) return m;
+  }
+
+  // 5. Single word — matches start of any word in the name (e.g. "elyza" -> "Yul Elyza")
+  if (qWords.length === 1 && q.length >= 3) {
+    m = guestDB.find(g => g.name.toLowerCase().split(/\s+/).some(w => w.startsWith(q)));
+    if (m) return m;
+  }
+
   return null;
 }
 
