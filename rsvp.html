@@ -586,10 +586,59 @@ function showDeclineInput(guest) {
 }
 
 // ── CONFIRM / DECLINE ─────────────────────────────────────────────────────────
-function handleConfirm(guest, additionalNames) {
+async function handleConfirm(guest, additionalNames) {
   const attending = [guest.name, ...additionalNames];
   saveRSVP({ name:guest.name, role:guest.role, status:'confirmed', attending, comment:'', at:new Date().toISOString() });
-  showEndScreen('confirmed', guest, attending);
+
+  const isGuest = guest.role.toLowerCase() === 'guest';
+
+  if (isGuest) {
+    // Show dress code reminder for regular guests
+    clearActionArea();
+    await showTyping(700);
+    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed. We'd love to remind you of the dress code for the wedding:<br><br>
+      <strong>Motif:</strong> Dusty Blue &amp; Ivory<br>
+      <strong>Attire:</strong> Formal / Black Tie<br><br>
+      <em>Gentlemen</em> — suits or barong in dusty blue or ivory tones are highly encouraged.<br>
+      <em>Ladies</em> — formal gowns or cocktail dresses in dusty blue, ivory, or complementary muted tones.<br><br>
+      Please avoid wearing white, as it is reserved for the bride. We look forward to seeing you beautifully dressed! ${gem()}`);
+    await showTyping(600);
+    showEndScreen('confirmed', guest, attending);
+  } else {
+    // Entourage / role members — ask about attire source
+    clearActionArea();
+    await showTyping(700);
+    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed as <strong>${guest.role}</strong>.<br><br>Regarding your attire — will you be sourcing your own clothes, or would you like to rent from <strong>Griffin's Boutique</strong> (part of Yul &amp; Elyza's package)?`);
+    showAttireChoiceButtons(guest, attending);
+  }
+}
+
+function showAttireChoiceButtons(guest, attending) {
+  hideInput();
+  insertActionArea(`
+    <button class="rsvp-btn confirm-style" id="ownClothesBtn" style="margin-top:6px">✦ &nbsp; I will source my own clothes &nbsp; ✦</button>
+    <button class="rsvp-btn" id="rentGriffinsBtn" style="margin-top:8px">✦ &nbsp; I will rent from Griffin's &nbsp; ✦</button>`);
+
+  document.getElementById('ownClothesBtn').onclick = async () => {
+    clearActionArea();
+    await showTyping(600);
+    await addMsg('ai', `Wonderful! ${gem()} Please coordinate with Yul &amp; Elyza for the style and color details. We cannot wait to celebrate with you on August 8th!`);
+    await showTyping(500);
+    showEndScreen('confirmed', guest, attending);
+  };
+
+  document.getElementById('rentGriffinsBtn').onclick = async () => {
+    clearActionArea();
+    await showTyping(600);
+    await addMsg('ai', `Great choice! ${gem()} Here are the details for <strong>Griffin's Boutique</strong>:<br><br>
+      <strong>GMO Collection</strong><br>
+      8WR6+WW9, Gov. M. Cuenco Ave<br>
+      Cebu City, 6000 Cebu, Philippines<br>
+      <em>Right beside Banilad Town Center</em><br><br>
+      Please coordinate your visit with Yul &amp; Elyza so they can arrange everything through the package. We look forward to seeing you on August 8th!`);
+    await showTyping(500);
+    showEndScreen('confirmed', guest, attending);
+  };
 }
 
 function handleDecline(guest, comment) {
