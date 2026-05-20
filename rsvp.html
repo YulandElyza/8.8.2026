@@ -82,7 +82,7 @@ section { padding:5.5rem 2rem; position:relative; z-index:1; }
 .thin-rule::before,.thin-rule::after { content:''; flex:0 0 28px; height:1px; background:var(--blue-light); }
 .thin-rule-dot { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
 .section-body { font-size:0.9rem; line-height:2.1; color:var(--mid); }
-.reveal { opacity:0; transform:translateY(32px); transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal { opacity:0; transform:translateY(10px); transition:opacity 0.55s ease,transform 0.55s ease; }
 .reveal.visible { opacity:1; transform:none; }
 
 /* CHAT */
@@ -227,7 +227,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 
 <canvas id="glitter-canvas" aria-hidden="true"></canvas>
 
-<nav>
+<nav class="reveal">
   <a href="https://tinyurl.com/YulandElyzaAug82026" target="_blank">Home</a>
   <a href="#" onclick="switchTab('admin');return false;">Admin</a>
 </nav>
@@ -247,7 +247,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
       <h2 class="section-title">Kindly Reply</h2>
       <div class="thin-rule"><div class="thin-rule-dot"></div></div>
       <p class="section-body" style="margin-bottom:2rem;">Please register your attendance by <strong style="color:var(--blue-dark);font-weight:400;">July 1, 2026</strong>. Enter your name below and our assistant will guide you through the process.</p>
-      <div class="chat-card" id="rsvpCard">
+      <div class="chat-card reveal" id="rsvpCard">
         <div class="chat-area" id="chatArea"></div>
         <div class="input-area" id="inputArea">
           <input type="text" id="userInput" placeholder="Enter your name as it appears on your invitation…" />
@@ -861,8 +861,11 @@ function switchTab(t){
 }
 
 // ── SCROLL REVEALS ────────────────────────────────────────────────────────────
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.08});
-document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.05});
+document.querySelectorAll('.reveal').forEach((r,i) => {
+  r.style.transitionDelay = (i * 0.07) + 's';
+  obs.observe(r);
+});
 
 // ── GLITTER ───────────────────────────────────────────────────────────────────
 (function(){
