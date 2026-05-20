@@ -149,8 +149,7 @@
     overflow: hidden;
     position: relative;
     /* fade edges */
-    mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+
   }
 
   .credits-track {
@@ -603,43 +602,58 @@
       track.appendChild(card);
     });
 
-    // Wait for images to load so we know real heights, then start scroll
-    requestAnimationFrame(() => startScroll(track, viewport));
+    // Start scroll after build
+    startScroll(track, viewport);
   }
 
   function startScroll(track, viewport) {
-    // Cancel previous animation
     if (scrollAnim) cancelAnimationFrame(scrollAnim);
 
-    // Clone the track contents for seamless looping
-    const clone = track.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    track.parentNode.appendChild(clone);
+    // Remove any old clone first
+    const old = viewport.querySelector('.credits-clone');
+    if (old) old.remove();
 
-    const totalH = track.scrollHeight + 32; // +gap
-    let pos = 0;
-    const PX_PER_SEC = 60; // speed — lower = slower
-    let last = null;
+    // Position the track at the top of the viewport container
+    track.style.position = 'absolute';
+    track.style.top      = '0';
+    track.style.left     = '0';
+    track.style.width    = '100%';
+    viewport.style.position = 'relative';
 
-    function step(ts) {
-      if (!last) last = ts;
-      const dt = (ts - last) / 1000;
-      last = ts;
+    // Wait for images to actually render before measuring
+    setTimeout(() => {
+      const totalH = track.offsetHeight + 32;
 
-      pos += PX_PER_SEC * dt;
-      if (pos >= totalH) pos -= totalH;
+      // Clone sits directly below the original track
+      const clone = track.cloneNode(true);
+      clone.classList.add('credits-clone');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.style.position = 'absolute';
+      clone.style.top      = `${totalH}px`;
+      clone.style.left     = '0';
+      clone.style.width    = '100%';
+      viewport.appendChild(clone);
 
-      track.style.transform       = `translateY(-${pos}px)`;
-      clone.style.transform       = `translateY(-${pos}px)`;
-      clone.style.position        = 'absolute';
-      clone.style.top             = `${totalH}px`;
-      clone.style.left            = '0';
-      clone.style.width           = '100%';
+      let pos = 0;
+      const PX_PER_SEC = 50;
+      let last = null;
+
+      function step(ts) {
+        if (!last) last = ts;
+        const dt = (ts - last) / 1000;
+        last = ts;
+
+        pos += PX_PER_SEC * dt;
+        if (pos >= totalH) pos -= totalH;
+
+        track.style.transform = `translateY(-${pos}px)`;
+        clone.style.transform = `translateY(-${pos}px)`;
+
+        scrollAnim = requestAnimationFrame(step);
+      }
 
       scrollAnim = requestAnimationFrame(step);
-    }
-
-    scrollAnim = requestAnimationFrame(step);
+    }, 600); // give images time to load and lay out
   }
 
   function escapeHtml(str) {
