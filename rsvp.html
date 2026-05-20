@@ -699,8 +699,6 @@ function showAlreadyScreen(rsvp) {
   div.style.cssText = 'border-top:1px solid var(--border);padding:1.6rem 1.2rem 1.4rem;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;';
   div.innerHTML=`
     <div class="end-gem"></div>
-    <p style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--blue-light);">Already Responded</p>
-    <p class="end-title">${isConf?`You're all set, ${fn}!`:`We'll miss you, ${fn}.`}</p>
     <div class="summary-box">
       <span class="lbl">Your Response</span>
       <span style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.08em;color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span>
@@ -733,7 +731,14 @@ async function processMsg(text) {
     // ① Already RSVP'd — just tell them, no action needed
     const existing = loadRSVP(found.name);
     if (existing) {
-      await addMsg('ai', `I found you, <strong>${found.name}</strong>. ${gem()} Your RSVP has already been submitted — your name is already on the guest list. No further action is needed!`);
+      const isConf = existing.status === 'confirmed';
+      const date = new Date(existing.at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+      const others = (existing.attending||[]).slice(1);
+      await addMsg('ai', `I found you, <strong>${found.name}</strong>. ${gem()} Your RSVP has already been submitted —
+        <span style="color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span>
+        <span style="font-size:0.8em;color:var(--light);"> · ${date}</span>
+        ${others.length?`<br><span style="font-size:0.85em;color:var(--mid);">With: ${others.join(', ')}</span>`:''}
+        <br><em style="font-size:0.85em;">Your name is already on the guest list. No further action is needed!</em>`);
       await showTyping(700);
       showAlreadyScreen(existing);
       return;
