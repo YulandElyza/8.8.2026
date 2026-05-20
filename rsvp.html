@@ -16,12 +16,10 @@
 html { scroll-behavior:smooth; }
 body { background:var(--ivory); color:var(--text); font-family:'Lato',sans-serif; font-weight:300; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
 
-/* GLITTER */
-#glitter-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
 
 /* LOADING OVERLAY */
 #loadingOverlay { position:fixed; inset:0; background:var(--ivory); z-index:5000; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.2rem; transition:opacity 0.6s; }
-#loadingOverlay.hidden { opacity:0; pointer-events:none; }
+#loadingOverlay.hidden { pointer-events:none; }
 .loading-title { font-family:'Great Vibes',cursive; font-size:3rem; color:var(--blue-dark); }
 .loading-sub { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--blue-light); }
 .loading-gems { display:flex; gap:10px; }
@@ -77,8 +75,9 @@ section { padding:5.5rem 2rem; position:relative; z-index:1; }
 .thin-rule::before,.thin-rule::after { content:''; flex:0 0 28px; height:1px; background:var(--blue-light); }
 .thin-rule-dot { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
 .section-body { font-size:0.9rem; line-height:2.1; color:var(--mid); }
-.reveal { opacity:0; transform:translateY(6px); transition:opacity 0.5s ease,transform 0.5s ease; }
-.reveal.visible { opacity:1; transform:none; }
+@keyframes carouselReveal { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.reveal { opacity:0; }
+.reveal.visible { animation: carouselReveal 1.2s cubic-bezier(.16,1,.3,1) forwards; }
 
 /* CHAT */
 #rsvp { background:var(--ivory); }
@@ -221,7 +220,6 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
   </div>
 </div>
 
-<canvas id="glitter-canvas" aria-hidden="true"></canvas>
 
 <nav>
   <a href="https://tinyurl.com/YulandElyzaAug82026" target="_blank">Home</a>
@@ -858,37 +856,10 @@ function switchTab(t){
 
 // ── SCROLL REVEALS ────────────────────────────────────────────────────────────
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.05});
-document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
-
-// ── GLITTER ───────────────────────────────────────────────────────────────────
-(function(){
-  const canvas=document.getElementById('glitter-canvas'),ctx=canvas.getContext('2d');
-  const COLORS=[[255,255,255],[255,245,180],[214,228,239],[255,220,180],[232,196,184],[180,210,255]];
-  let W,H; const sp=[];
-  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
-  resize(); window.addEventListener('resize',resize);
-  function spawn(){sp.push({x:Math.random()*W,y:Math.random()*H,size:1.5+Math.random()*4,life:50+Math.random()*80,maxLife:0,shape:Math.random()<0.6?'star':'dot',drift:(Math.random()-0.5)*0.7,rise:-0.4-Math.random()*0.8,rgb:COLORS[Math.floor(Math.random()*COLORS.length)],rot:Math.random()*Math.PI});sp[sp.length-1].maxLife=sp[sp.length-1].life;}
-  function star(cx,cy,r,rot){ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.beginPath();for(let i=0;i<4;i++){const a=(i/4)*Math.PI*2;ctx.moveTo(0,0);ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);}ctx.stroke();ctx.beginPath();ctx.arc(0,0,r*0.18,0,Math.PI*2);ctx.fill();ctx.restore();}
-  for(let i=0;i<60;i++)spawn();
-  function tick(){
-    ctx.clearRect(0,0,W,H);
-    if(sp.length<260){spawn();if(sp.length<260)spawn();}
-    for(let i=sp.length-1;i>=0;i--){
-      const s=sp[i];s.life--;
-      if(s.life<=0){sp.splice(i,1);continue;}
-      const p=s.life/s.maxLife,alpha=p<0.15?p/0.15:p>0.75?(1-p)/0.25:1;
-      s.x+=s.drift;s.y+=s.rise;s.rot+=0.03;
-      const[r,g,b]=s.rgb;
-      ctx.save();ctx.globalAlpha=alpha;ctx.shadowColor=`rgb(${r},${g},${b})`;ctx.shadowBlur=s.size*3.5;
-      ctx.strokeStyle=ctx.fillStyle=`rgba(${r},${g},${b},${alpha.toFixed(2)})`;ctx.lineWidth=Math.max(1.2,s.size*0.4);
-      if(s.shape==='dot'){ctx.beginPath();ctx.arc(s.x,s.y,s.size*0.7,0,Math.PI*2);ctx.fill();}
-      else{star(s.x,s.y,s.size,s.rot);}
-      ctx.restore();
-    }
-    requestAnimationFrame(tick);
-  }
-  tick();
-})();
+document.querySelectorAll('.reveal').forEach((r, i) => {
+  r.style.animationDelay = (i * 0.12) + 's';
+  obs.observe(r);
+});
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 (async function boot(){
