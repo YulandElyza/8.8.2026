@@ -367,12 +367,12 @@ Rene Ponce	Principal Sponsor	0
 Maria Clarissa Ponce	Principal Sponsor	3	Rene Ponce, Rencliff Ponce, Jasper Ponce	
 Erwin Seno	Principal Sponsor	0		
 Maria Charo Seno	Principal Sponsor	3	Eon Seno, Ethan Seno, Erwin Seno	
-Yddaz Legaspi Lofranco	Secondary Sponsor: Bind/Cord	2	Abril Caesar Lofranco, Yara Abrielle Lofranco	
-Abril Caesar Lofranco	Secondary Sponsor: Bind/Cord	0		
-Salvacion Sotto Pesiao	Secondary Sponsos: Veil	0		
-Yvan Legaspi	Secondary Sponsor: Veil	0		
-James Gabriel Suico	Secondary Sponsor: Candles	0		
-Sister Marylynn Alfeche	Secondary Sponsor: Candles	0		
+Yddaz Legaspi Lofranco	Secondary Sponsors: Bind/Cord	2	Abril Caesar Lofranco, Yara Abrielle Lofranco	
+Abril Caesar Lofranco	Secondary Sponsors: Bind/Cord	0		
+Salvacion Sotto Pesiao	Secondary Sponsors: Veil	0		
+Yvan Legaspi	Secondary Sponsors: Veil	0		
+James Gabriel Suico	Secondary Sponsors: Candles	0		
+Sister Marylynn Alfeche	Secondary Sponsors: Candles	0		
 Wilfred Vincent Zuñiga	Bestman	2	Gemma Lhen Zuñiga, Julia Khaleesi Zuñiga, Ryker Zuñiga	
 Ariel Badilles	Groomsman	2		
 Johnrel Encorporado	Groomsman	2		
@@ -402,17 +402,17 @@ Clare Limsuan	Guest	2	Jesse Kit Limsuan, Caron Jethro Limsuan
 Jesse Kit Limsuan	Guest	0		
 Caron Jethro Limsuan	Guest	0		
 Mommy Teresa Gerona	Guest	0		
-Mommy Cristina Relative 1	Guest	0		
-Mommy Cristina Relative 2	Guest	0		
-Mommy Cristina Relative 3	Guest	0		
-Mommy Cristina Relative 4	Guest	0		
-Mommy Cristina Relative 5	Guest	0		
-Mommy Cristina Friend C	Guest	0		
-Mommy Cristina Friend C Partner	Guest	0		
-Mommy Cristina Friend D	Guest	0		
-Mommy Cristina Friend D Partner	Guest	0		
-Mommy Cristina Friend E	Guest	0		
-Mommy Cristina Friend E Partner	Guest	0		`;
+Mommy Crisina Relative 1	Guest	0		
+Mommy Crisina Relative 2	Guest	0		
+Mommy Crisina Relative 3	Guest	0		
+Mommy Crisina Relative 4	Guest	0		
+Mommy Crisina Relative 5	Guest	0		
+Mommy Crisina Friend C	Guest	0		
+Mommy Crisina Friend C Partner	Guest	0		
+Mommy Crisina Friend D	Guest	0		
+Mommy Crisina Friend D Partner	Guest	0		
+Mommy Crisina Friend E	Guest	0		
+Mommy Crisina Friend E Partner	Guest	0		`;
 
 async function loadCSV() {
   const proxies = [
@@ -672,12 +672,18 @@ async function processMsg(text) {
     await addMsg('ai', `Welcome, <strong>${found.name}</strong>! ${gem()} We have you listed as <strong>${found.role}</strong>.`);
     await showTyping(500);
 
-    // ③ Has expected guests → checkboxes
+    // ③ Has expected guests listed → checkboxes
     if (found.maxGuests > 0 && found.expectedGuests.length > 0) {
       await addMsg('ai', `You are welcome to bring the following guest${found.expectedGuests.length>1?'s':''} with you. Please confirm who will be attending:`);
       showGuestCheckboxes(found);
+    // ④ Allowed guests but none pre-listed → ask them to type names
+    } else if (found.maxGuests > 0 && found.expectedGuests.length === 0) {
+      await addMsg('ai', `You are welcome to bring up to <strong>${found.maxGuests} guest${found.maxGuests>1?'s':''}</strong> with you. Please enter their name${found.maxGuests>1?'s':''} below${found.maxGuests>1?' (separate multiple names with a comma)':''}, or type <em>none</em> if you will be attending solo.`);
+      S.step = 'ask_guest_names';
+      showInput();
+      setEnabled(true);
     } else {
-      // Solo
+      // Solo — no guests allowed
       await addMsg('ai', `Please confirm your attendance below.`);
       showSoloButtons(found);
     }
@@ -692,6 +698,67 @@ async function processMsg(text) {
     }
   }
 }
+
+// Handle ask_guest_names step separately so it intercepts the same input box
+const _origProcessMsg = processMsg;
+processMsg = async function(text) {
+  if (S.step === 'ask_guest_names') {
+    setEnabled(false);
+    await addMsg('user', text);
+    await showTyping(700);
+
+    const lower = text.trim().toLowerCase();
+    if (['none','no','just me','solo','only me'].includes(lower)) {
+      S.step = 'ask_name';
+      hideInput();
+      await addMsg('ai', `Of course — just you then. ${gem()} Please confirm your attendance below.`);
+      showSoloButtons(S.guest);
+      return;
+    }
+
+    const names = text.split(',').map(n => n.trim()).filter(Boolean);
+    const max   = S.guest.maxGuests;
+
+    if (names.length > max) {
+      await addMsg('ai', `You are welcome to bring up to <strong>${max} guest${max>1?'s':''}</strong>. You entered ${names.length} — please re-enter up to ${max} name${max>1?'s':''}.`);
+      setEnabled(true);
+      return;
+    }
+
+    S.step = 'ask_name';
+    hideInput();
+    // Show entered names as a confirmation checkbox list
+    const div = document.createElement('div');
+    div.className = 'btn-row'; div.id = 'actionArea';
+    div.innerHTML = `
+      <p class="checkbox-note">Please confirm who will be joining you:</p>
+      <div class="checkbox-list">
+        <label class="checkbox-item">
+          <input type="checkbox" checked disabled/>
+          <span class="checkbox-label">${S.guest.name}<span class="checkbox-sub">${S.guest.role}</span></span>
+        </label>
+        ${names.map((n,i) => `
+          <label class="checkbox-item">
+            <input type="checkbox" id="fgc_${i}" value="${n}" checked/>
+            <span class="checkbox-label">${n}<span class="checkbox-sub">Guest</span></span>
+          </label>`).join('')}
+      </div>
+      <button class="rsvp-btn confirm-style" id="confirmBtn" style="margin-top:14px">✦ &nbsp; Confirm Attendance &nbsp; ✦</button>
+      <button class="rsvp-btn decline-style" id="declineBtn">✦ &nbsp; Decline Invitation &nbsp; ✦</button>`;
+    const card = document.getElementById('rsvpCard');
+    const ia   = document.getElementById('inputArea');
+    card.insertBefore(div, ia);
+    setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
+
+    document.getElementById('confirmBtn').onclick = () => {
+      const checked = [...document.querySelectorAll('#actionArea .checkbox-item input:checked:not([disabled])')].map(c => c.value);
+      handleConfirm(S.guest, checked);
+    };
+    document.getElementById('declineBtn').onclick = () => showDeclineInput(S.guest);
+    return;
+  }
+  return _origProcessMsg(text);
+};
 
 sendBtn.addEventListener('click', ()=>{ const v=userInput.value.trim(); if(v){userInput.value='';processMsg(v);} });
 userInput.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();const v=userInput.value.trim();if(v){userInput.value='';processMsg(v);}} });
