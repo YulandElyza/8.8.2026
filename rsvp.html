@@ -692,28 +692,31 @@ function showAlreadyScreen(rsvp) {
   const isConf = rsvp.status==='confirmed';
   const date = new Date(rsvp.at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   const others = (rsvp.attending||[]).slice(1);
-  const si = document.getElementById('rsvp').querySelector('.section-inner');
-  si.innerHTML=`
-    <p class="section-label">Attendance</p><h2 class="section-title">Kindly Reply</h2>
-    <div class="thin-rule"><div class="thin-rule-dot"></div></div>
-    <div class="end-wrap">
-      <div class="end-gem"></div>
-      <p style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--blue-light);">Already Responded</p>
-      <p class="end-title">${isConf?`You're all set, ${fn}!`:`We'll miss you, ${fn}.`}</p>
-      <div class="summary-box">
-        <span class="lbl">Your Response</span>
-        <span style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.08em;color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span>
-        <span style="font-size:0.74rem;color:var(--light);"> &nbsp;·&nbsp; ${date}</span><br>
-        <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue-light);">${rsvp.role}</span><br>
-        ${others.length?`<span style="font-size:0.74rem;color:var(--mid);">With: ${others.join(', ')}</span><br>`:''}
-        ${rsvp.comment?`<span style="font-size:0.74rem;font-style:italic;color:var(--mid);">"${rsvp.comment}"</span>`:''}
-      </div>
-      <p class="end-sub">${isConf?'Your attendance is already confirmed — we cannot wait to see you on August 8th!':'Your response has been noted. Thank you for letting us know.'}</p>
-      <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
-      ${websiteCTA(isConf?'Check venue details, schedule & more':'You can still follow along our journey')}
-      <div class="end-gem"></div>
-      <button onclick="clearRSVP('${rsvp.name}')" style="margin-top:6px;font-family:'Cinzel',serif;font-size:0.46rem;letter-spacing:0.2em;text-transform:uppercase;background:none;border:none;color:var(--light);cursor:pointer;opacity:0.5;padding:4px 8px;" title="Dev use only">↺ &nbsp; Clear RSVP (testing)</button>
-    </div>`;
+  const card = document.getElementById('rsvpCard');
+  const ia   = document.getElementById('inputArea');
+
+  const div = document.createElement('div');
+  div.style.cssText = 'border-top:1px solid var(--border);padding:1.6rem 1.2rem 1.4rem;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;';
+  div.innerHTML=`
+    <div class="end-gem"></div>
+    <p style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--blue-light);">Already Responded</p>
+    <p class="end-title">${isConf?`You're all set, ${fn}!`:`We'll miss you, ${fn}.`}</p>
+    <div class="summary-box">
+      <span class="lbl">Your Response</span>
+      <span style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.08em;color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span>
+      <span style="font-size:0.74rem;color:var(--light);"> &nbsp;·&nbsp; ${date}</span><br>
+      <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue-light);">${rsvp.role}</span><br>
+      ${others.length?`<span style="font-size:0.74rem;color:var(--mid);">With: ${others.join(', ')}</span><br>`:''}
+      ${rsvp.comment?`<span style="font-size:0.74rem;font-style:italic;color:var(--mid);">"${rsvp.comment}"</span>`:''}
+    </div>
+    <p class="end-sub">${isConf?'Your attendance is already confirmed — we cannot wait to see you on August 8th!':'Your response has been noted. Thank you for letting us know.'}</p>
+    <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
+    ${websiteCTA(isConf?'Check venue details, schedule & more':'You can still follow along our journey')}
+    <div class="end-gem"></div>
+    <button onclick="clearRSVP('${rsvp.name}')" style="margin-top:6px;font-family:'Cinzel',serif;font-size:0.46rem;letter-spacing:0.2em;text-transform:uppercase;background:none;border:none;color:var(--light);cursor:pointer;opacity:0.5;padding:4px 8px;" title="Dev use only">↺ &nbsp; Clear RSVP (testing)</button>`;
+
+  card.insertBefore(div, ia);
+  setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
 }
 
 // ── MAIN FLOW ─────────────────────────────────────────────────────────────────
