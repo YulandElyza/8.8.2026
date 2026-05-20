@@ -32,11 +32,10 @@ body { background:var(--ivory); color:var(--text); font-family:'Lato',sans-serif
 
 
 /* NAV */
-nav { position:static; top:auto; left:auto; right:auto; z-index:200; display:flex; justify-content:center; flex-wrap:nowrap; gap:1.4rem; padding:1rem 1.2rem; background:rgba(245,240,232,0.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); opacity:0; animation:fadeIn 0.4s ease forwards; }
+nav { position:static; top:auto; left:auto; right:auto; z-index:200; display:flex; justify-content:center; flex-wrap:nowrap; gap:1.4rem; padding:1rem 1.2rem; background:rgba(245,240,232,0.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border);  }
 nav a { text-decoration:none; font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--blue); transition:color 0.3s; white-space:nowrap; }
 nav a:hover { color:var(--blue-dark); } nav a.active { color:var(--blue-dark); }
-@keyframes fadeIn { to{opacity:1;} }
-@keyframes fadeUp { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:none;} }
+
 
 /* PAGE HEADER (replaces full-screen hero) */
 .page-header {
@@ -51,26 +50,22 @@ nav a:hover { color:var(--blue-dark); } nav a.active { color:var(--blue-dark); }
   font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.32em;
   text-transform:uppercase; color:var(--blue-light);
   margin-bottom:0.5rem;
-  opacity:0; animation:fadeUp 0.5s ease 0.05s forwards;
 }
 .page-header-names {
   font-family:'Great Vibes',cursive;
   font-size:clamp(2.8rem,8vw,4.8rem);
   line-height:1.0; color:var(--blue-dark);
   margin-bottom:0.3rem;
-  opacity:0; animation:fadeUp 0.5s ease 0.1s forwards;
 }
 .page-header-rule {
   display:flex; align-items:center; gap:0.7rem;
   margin:0.7rem auto 0.6rem; width:min(220px,60vw);
-  opacity:0; animation:fadeUp 0.5s ease 0.15s forwards;
 }
 .page-header-rule::before,.page-header-rule::after { content:''; flex:1; height:1px; background:var(--blue-light); opacity:0.5; }
 .page-header-rule-gem { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
 .page-header-date {
   font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.28em;
   text-transform:uppercase; color:var(--mid);
-  opacity:0; animation:fadeUp 0.5s ease 0.2s forwards;
 }
 
 /* SECTIONS */
@@ -82,14 +77,14 @@ section { padding:5.5rem 2rem; position:relative; z-index:1; }
 .thin-rule::before,.thin-rule::after { content:''; flex:0 0 28px; height:1px; background:var(--blue-light); }
 .thin-rule-dot { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
 .section-body { font-size:0.9rem; line-height:2.1; color:var(--mid); }
-.reveal { opacity:0; transform:translateY(10px); transition:opacity 0.55s ease,transform 0.55s ease; }
+.reveal { opacity:0; transform:translateY(6px); transition:opacity 0.5s ease,transform 0.5s ease; }
 .reveal.visible { opacity:1; transform:none; }
 
 /* CHAT */
 #rsvp { background:var(--ivory); }
 .chat-card { max-width:580px; margin:0 auto; border:1px solid var(--border); background:rgba(214,228,239,0.07); }
 .chat-area { padding:1.8rem 1.8rem 0; min-height:220px; display:flex; flex-direction:column; gap:14px; }
-.msg { display:flex; gap:10px; max-width:90%; animation:fadeUp 0.4s ease forwards; opacity:0; }
+.msg { display:flex; gap:10px; max-width:90%; animation:msgFadeUp 0.4s ease forwards; opacity:0; }
 .msg.ai  { align-self:flex-start; }
 .msg.user{ align-self:flex-end; flex-direction:row-reverse; }
 .av { width:26px; height:26px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Cinzel',serif; font-size:0.48rem; color:var(--blue-light); background:var(--ivory); margin-top:2px; }
@@ -100,6 +95,7 @@ section { padding:5.5rem 2rem; position:relative; z-index:1; }
 .typing-indicator { display:flex; gap:5px; align-items:center; padding:12px 14px; }
 .dot { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); animation:gemPulse 1.4s infinite; }
 .dot:nth-child(2){ animation-delay:0.22s; } .dot:nth-child(3){ animation-delay:0.44s; }
+@keyframes msgFadeUp { from{opacity:0;transform:translateY(5px);} to{opacity:1;transform:none;} }
 @keyframes gemPulse { 0%,100%{opacity:0.2;transform:rotate(45deg) scale(0.8);} 50%{opacity:1;transform:rotate(45deg) scale(1.1);} }
 
 /* INPUT */
@@ -227,12 +223,12 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 
 <canvas id="glitter-canvas" aria-hidden="true"></canvas>
 
-<nav class="reveal">
+<nav>
   <a href="https://tinyurl.com/YulandElyzaAug82026" target="_blank">Home</a>
   <a href="#" onclick="switchTab('admin');return false;">Admin</a>
 </nav>
 
-<div class="page-header">
+<div class="page-header reveal">
   <p class="page-header-monogram">Y &amp; E &nbsp;·&nbsp; 8.8.26</p>
   <div class="page-header-names">Yul &amp; Elyza</div>
   <div class="page-header-rule"><div class="page-header-rule-gem"></div></div>
@@ -247,7 +243,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
       <h2 class="section-title">Kindly Reply</h2>
       <div class="thin-rule"><div class="thin-rule-dot"></div></div>
       <p class="section-body" style="margin-bottom:2rem;">Please register your attendance by <strong style="color:var(--blue-dark);font-weight:400;">July 1, 2026</strong>. Enter your name below and our assistant will guide you through the process.</p>
-      <div class="chat-card reveal" id="rsvpCard">
+      <div class="chat-card" id="rsvpCard">
         <div class="chat-area" id="chatArea"></div>
         <div class="input-area" id="inputArea">
           <input type="text" id="userInput" placeholder="Enter your name as it appears on your invitation…" />
@@ -862,10 +858,7 @@ function switchTab(t){
 
 // ── SCROLL REVEALS ────────────────────────────────────────────────────────────
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.05});
-document.querySelectorAll('.reveal').forEach((r,i) => {
-  r.style.transitionDelay = (i * 0.07) + 's';
-  obs.observe(r);
-});
+document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
 // ── GLITTER ───────────────────────────────────────────────────────────────────
 (function(){
