@@ -602,7 +602,7 @@ async function handleConfirm(guest, additionalNames) {
       <em>Gentlemen</em> — suits or barong in dusty blue or ivory tones are highly encouraged.<br>
       <em>Ladies</em> — formal gowns or cocktail dresses in dusty blue, ivory, or complementary muted tones.<br><br>
       Please avoid wearing white, as it is reserved for the bride. We look forward to seeing you beautifully dressed! ${gem()}`);
-    await showTyping(600);
+    await showTyping(1400);
     showEndScreen('confirmed', guest, attending);
   } else {
     // Entourage / role members — ask about attire source
@@ -623,7 +623,7 @@ function showAttireChoiceButtons(guest, attending) {
     clearActionArea();
     await showTyping(600);
     await addMsg('ai', `Wonderful! ${gem()} Please coordinate with Yul &amp; Elyza for the style and color details. We cannot wait to celebrate with you on August 8th!`);
-    await showTyping(500);
+    await showTyping(1400);
     showEndScreen('confirmed', guest, attending);
   };
 
@@ -636,7 +636,7 @@ function showAttireChoiceButtons(guest, attending) {
       Cebu City, 6000 Cebu, Philippines<br>
       <em>Right beside Banilad Town Center</em><br><br>
       Please coordinate your visit with Yul &amp; Elyza so they can arrange everything through the package. We look forward to seeing you on August 8th!`);
-    await showTyping(500);
+    await showTyping(1400);
     showEndScreen('confirmed', guest, attending);
   };
 }
@@ -657,35 +657,36 @@ function websiteCTA(msg){
 function showEndScreen(status, guest, attending, comment='') {
   const others = attending.slice(1);
   const fn = guest.name.split(' ')[0];
-  const si = document.getElementById('rsvp').querySelector('.section-inner');
+  const card = document.getElementById('rsvpCard');
+  const ia = document.getElementById('inputArea');
+
+  const div = document.createElement('div');
+  div.style.cssText = 'border-top:1px solid var(--border);padding:1.6rem 1.2rem 1.4rem;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;';
+
   if (status==='confirmed') {
-    si.innerHTML=`
-      <p class="section-label">Attendance</p><h2 class="section-title">Kindly Reply</h2>
-      <div class="thin-rule"><div class="thin-rule-dot"></div></div>
-      <div class="end-wrap">
-        <div class="end-gem"></div>
-        <p class="end-title">We'll see you there!</p>
-        <p class="end-sub">We have confirmed <strong style="color:var(--blue-dark);font-weight:400;">${guest.name}</strong>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--blue-light);"> (${guest.role})</span>
-          ${others.length?` and <strong style="color:var(--blue-dark);font-weight:400;">${others.join(', ')}</strong>`:''}.
-          <br>We cannot wait to celebrate with you on August 8th.</p>
-        <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
-        ${websiteCTA('In the meantime, explore venue, schedule & more')}
-        <div class="end-gem"></div>
-      </div>`;
+    div.innerHTML=`
+      <div class="end-gem"></div>
+      <p class="end-title">We'll see you there!</p>
+      <p class="end-sub">We have confirmed <strong style="color:var(--blue-dark);font-weight:400;">${guest.name}</strong>
+        <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--blue-light);"> (${guest.role})</span>
+        ${others.length?` and <strong style="color:var(--blue-dark);font-weight:400;">${others.join(', ')}</strong>`:''}.
+        <br>We cannot wait to celebrate with you on August 8th.</p>
+      <p style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.18em;color:var(--mid);line-height:2;max-width:340px;">Should anything change, kindly inform <strong style="color:var(--blue-dark);font-weight:400;">Yul or Elyza</strong> directly so they can update your RSVP accordingly.</p>
+      <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
+      ${websiteCTA('In the meantime, explore venue, schedule & more')}
+      <div class="end-gem"></div>`;
   } else {
-    si.innerHTML=`
-      <p class="section-label">Attendance</p><h2 class="section-title">Kindly Reply</h2>
-      <div class="thin-rule"><div class="thin-rule-dot"></div></div>
-      <div class="end-wrap">
-        <div class="end-gem"></div>
-        <p class="end-title">We'll miss you, ${fn}.</p>
-        <p class="end-sub">Thank you for letting us know. We hope to celebrate with you another time — you are always in our hearts.</p>
-        <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
-        ${websiteCTA('You can still follow along our journey')}
-        <div class="end-gem"></div>
-      </div>`;
+    div.innerHTML=`
+      <div class="end-gem"></div>
+      <p class="end-title">We'll miss you, ${fn}.</p>
+      <p class="end-sub">Thank you for letting us know. We hope to celebrate with you another time — you are always in our hearts.</p>
+      <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
+      ${websiteCTA('You can still follow along our journey')}
+      <div class="end-gem"></div>`;
   }
+
+  card.insertBefore(div, ia);
+  setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
 }
 
 function showAlreadyScreen(rsvp) {
