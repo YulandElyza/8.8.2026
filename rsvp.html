@@ -608,7 +608,7 @@ async function handleConfirm(guest, additionalNames) {
     // Entourage / role members — ask about attire source
     clearActionArea();
     await showTyping(700);
-    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed as <strong>${guest.role}</strong>.<br><br>Regarding your attire — will you be sourcing your own clothes, or would you like to rent from <strong>Griffin's Boutique</strong> (part of Yul &amp; Elyza's package)?`);
+    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed as <strong>${guest.role}</strong>.<br><br>Regarding your attire — will you be sourcing your own clothes, or would you like to rent from <strong>GMO Collections</strong> (part of Yul &amp; Elyza's package)?`);
     showAttireChoiceButtons(guest, attending);
   }
 }
@@ -617,7 +617,7 @@ function showAttireChoiceButtons(guest, attending) {
   hideInput();
   insertActionArea(`
     <button class="rsvp-btn confirm-style" id="ownClothesBtn" style="margin-top:6px">✦ &nbsp; I will source my own clothes &nbsp; ✦</button>
-    <button class="rsvp-btn" id="rentGriffinsBtn" style="margin-top:8px">✦ &nbsp; I will rent from Griffin's &nbsp; ✦</button>`);
+    <button class="rsvp-btn" id="rentGriffinsBtn" style="margin-top:8px">✦ &nbsp; I will rent from GMO Collections &nbsp; ✦</button>`);
 
   document.getElementById('ownClothesBtn').onclick = async () => {
     clearActionArea();
@@ -630,7 +630,7 @@ function showAttireChoiceButtons(guest, attending) {
   document.getElementById('rentGriffinsBtn').onclick = async () => {
     clearActionArea();
     await showTyping(600);
-    await addMsg('ai', `Great choice! ${gem()} Here are the details for <strong>Griffin's Boutique</strong>:<br><br>
+    await addMsg('ai', `Great choice! ${gem()} Here are the details for <strong>GMO Collections</strong>:<br><br>
       <strong>GMO Collection</strong><br>
       8WR6+WW9, Gov. M. Cuenco Ave<br>
       Cebu City, 6000 Cebu, Philippines<br>
