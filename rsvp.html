@@ -76,8 +76,7 @@ section { padding:5.5rem 2rem; position:relative; z-index:1; }
 .thin-rule-dot { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
 .section-body { font-size:0.9rem; line-height:2.1; color:var(--mid); }
 @keyframes carouselReveal { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-.reveal { opacity:0; }
-.reveal.visible { animation: carouselReveal 1.2s cubic-bezier(.16,1,.3,1) forwards; }
+.reveal { opacity:0; animation: carouselReveal 1.2s cubic-bezier(.16,1,.3,1) forwards; }
 
 /* CHAT */
 #rsvp { background:var(--ivory); }
@@ -226,7 +225,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
   <a href="#" onclick="switchTab('admin');return false;">Admin</a>
 </nav>
 
-<div class="page-header reveal">
+<div class="page-header reveal" style="animation-delay:0s;">
   <p class="page-header-monogram">Y &amp; E &nbsp;·&nbsp; 8.8.26</p>
   <div class="page-header-names">Yul &amp; Elyza</div>
   <div class="page-header-rule"><div class="page-header-rule-gem"></div></div>
@@ -236,7 +235,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 
 <div class="page active" id="page-guest">
   <section id="rsvp">
-    <div class="section-inner reveal">
+    <div class="section-inner reveal" style="animation-delay:0.15s;">
       <p class="section-label">Attendance</p>
       <h2 class="section-title">Kindly Reply</h2>
       <div class="thin-rule"><div class="thin-rule-dot"></div></div>
@@ -254,7 +253,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 
 <div class="page" id="page-admin">
   <div id="admin-page">
-    <div class="section-inner reveal">
+    <div class="section-inner reveal" style="animation-delay:0.15s;">
       <p class="section-label">Management</p>
       <h2 class="section-title">Guest List</h2>
       <div class="thin-rule"><div class="thin-rule-dot"></div></div>
@@ -855,11 +854,7 @@ function switchTab(t){
 }
 
 // ── SCROLL REVEALS ────────────────────────────────────────────────────────────
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.05});
-document.querySelectorAll('.reveal').forEach((r, i) => {
-  r.style.animationDelay = (i * 0.12) + 's';
-  obs.observe(r);
-});
+// reveal animations fire automatically via CSS animation on page load
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 (async function boot(){
