@@ -29,22 +29,18 @@ body { background:var(--ivory); color:var(--text); font-family:'Lato',sans-serif
 .loading-gem:nth-child(2){ animation-delay:0.3s; } .loading-gem:nth-child(3){ animation-delay:0.6s; }
 
 /* BANNER */
-.gallery-banner { position:fixed; top:0; left:0; right:0; z-index:9999; display:flex; align-items:center; justify-content:center; padding:0.5rem 1rem; background:#304d65; border-bottom:1px solid rgba(214,228,239,0.25); }
-.gallery-banner a { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; color:#d6e4ef; text-decoration:none; display:inline-flex; align-items:center; gap:0.55rem; animation:bannerBlink 2s ease-in-out infinite; }
-.gallery-banner a:hover { color:#fff; }
-.banner-gem { width:5px; height:5px; border:1px solid #d6e4ef; transform:rotate(45deg); opacity:0.7; flex-shrink:0; }
-@keyframes bannerBlink { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
 
 /* NAV */
-nav { position:fixed; top:28px; left:0; right:0; z-index:200; display:flex; justify-content:center; flex-wrap:nowrap; gap:1.4rem; padding:1rem 1.2rem; background:rgba(245,240,232,0.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); opacity:0; animation:fadeIn 0.6s ease 0.1s forwards; }
+nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; justify-content:center; flex-wrap:nowrap; gap:1.4rem; padding:1rem 1.2rem; background:rgba(245,240,232,0.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); opacity:0; animation:fadeIn 0.4s ease forwards; }
 nav a { text-decoration:none; font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--blue); transition:color 0.3s; white-space:nowrap; }
 nav a:hover { color:var(--blue-dark); } nav a.active { color:var(--blue-dark); }
 @keyframes fadeIn { to{opacity:1;} }
-@keyframes fadeUp { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:none;} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:none;} }
 
 /* PAGE HEADER (replaces full-screen hero) */
 .page-header {
-  padding: 5.5rem 2rem 2rem;
+  padding: 4.5rem 2rem 2rem;
   text-align: center;
   background: var(--ivory);
   position: relative;
@@ -55,26 +51,26 @@ nav a:hover { color:var(--blue-dark); } nav a.active { color:var(--blue-dark); }
   font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.32em;
   text-transform:uppercase; color:var(--blue-light);
   margin-bottom:0.5rem;
-  opacity:0; animation:fadeUp 0.7s ease 0.1s forwards;
+  opacity:0; animation:fadeUp 0.5s ease 0.05s forwards;
 }
 .page-header-names {
   font-family:'Great Vibes',cursive;
   font-size:clamp(2.8rem,8vw,4.8rem);
   line-height:1.0; color:var(--blue-dark);
   margin-bottom:0.3rem;
-  opacity:0; animation:fadeUp 0.9s ease 0.2s forwards;
+  opacity:0; animation:fadeUp 0.5s ease 0.1s forwards;
 }
 .page-header-rule {
   display:flex; align-items:center; gap:0.7rem;
   margin:0.7rem auto 0.6rem; width:min(220px,60vw);
-  opacity:0; animation:fadeUp 0.7s ease 0.35s forwards;
+  opacity:0; animation:fadeUp 0.5s ease 0.15s forwards;
 }
 .page-header-rule::before,.page-header-rule::after { content:''; flex:1; height:1px; background:var(--blue-light); opacity:0.5; }
 .page-header-rule-gem { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
 .page-header-date {
   font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.28em;
   text-transform:uppercase; color:var(--mid);
-  opacity:0; animation:fadeUp 0.7s ease 0.45s forwards;
+  opacity:0; animation:fadeUp 0.5s ease 0.2s forwards;
 }
 
 /* SECTIONS */
@@ -230,12 +226,6 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 </div>
 
 <canvas id="glitter-canvas" aria-hidden="true"></canvas>
-
-<div class="gallery-banner">
-  <a href="https://tinyurl.com/YulandElyzaAug82026" target="_blank">
-    <span class="banner-gem"></span>Visit Our Wedding Website<span class="banner-gem"></span>
-  </a>
-</div>
 
 <nav>
   <a href="https://tinyurl.com/YulandElyzaAug82026" target="_blank">Home</a>
