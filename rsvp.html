@@ -37,7 +37,7 @@ nav a:hover { color:var(--blue-dark); } nav a.active { color:var(--blue-dark); }
 
 /* PAGE HEADER (replaces full-screen hero) */
 .page-header {
-  padding: 2rem 2rem 2rem;
+  padding: 1rem 2rem;
   text-align: center;
   background: var(--ivory);
   position: relative;
@@ -47,17 +47,17 @@ nav a:hover { color:var(--blue-dark); } nav a.active { color:var(--blue-dark); }
 .page-header-monogram {
   font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.32em;
   text-transform:uppercase; color:var(--blue-light);
-  margin-bottom:0.5rem;
+  margin-bottom:0.2rem;
 }
 .page-header-names {
   font-family:'Great Vibes',cursive;
-  font-size:clamp(2.8rem,8vw,4.8rem);
+  font-size:clamp(2rem,6vw,3.2rem);
   line-height:1.0; color:var(--blue-dark);
-  margin-bottom:0.3rem;
+  margin-bottom:0.2rem;
 }
 .page-header-rule {
   display:flex; align-items:center; gap:0.7rem;
-  margin:0.7rem auto 0.6rem; width:min(220px,60vw);
+  margin:0.4rem auto; width:min(180px,60vw);
 }
 .page-header-rule::before,.page-header-rule::after { content:''; flex:1; height:1px; background:var(--blue-light); opacity:0.5; }
 .page-header-rule-gem { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
@@ -67,21 +67,21 @@ nav a:hover { color:var(--blue-dark); } nav a.active { color:var(--blue-dark); }
 }
 
 /* SECTIONS */
-section { padding:5.5rem 2rem; position:relative; z-index:1; }
+section { padding:2rem 2rem; position:relative; z-index:1; }
 .section-inner { max-width:700px; margin:0 auto; }
-.section-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.42em; text-transform:uppercase; color:var(--blue-light); margin-bottom:0.8rem; }
+.section-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.42em; text-transform:uppercase; color:var(--blue-light); margin-bottom:0.4rem; }
 .section-title { font-family:'Great Vibes',cursive; font-size:clamp(2.6rem,6vw,3.8rem); color:var(--blue-dark); line-height:1.1; }
-.thin-rule { display:flex; align-items:center; gap:0.7rem; margin:1.2rem 0 2rem; }
+.thin-rule { display:flex; align-items:center; gap:0.7rem; margin:0.6rem 0 1rem; }
 .thin-rule::before,.thin-rule::after { content:''; flex:0 0 28px; height:1px; background:var(--blue-light); }
 .thin-rule-dot { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
-.section-body { font-size:0.9rem; line-height:2.1; color:var(--mid); }
+.section-body { font-size:0.9rem; line-height:1.7; color:var(--mid); }
 @keyframes carouselReveal { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-#pageWrap { display:none; animation: carouselReveal 1.2s cubic-bezier(.16,1,.3,1) forwards; }
+#pageWrap { display:none; animation: carouselReveal 4s cubic-bezier(.16,1,.3,1) forwards; }
 
 /* CHAT */
 #rsvp { background:var(--ivory); }
 .chat-card { max-width:580px; margin:0 auto; border:1px solid var(--border); background:rgba(214,228,239,0.07); }
-.chat-area { padding:1.8rem 1.8rem 0; min-height:220px; display:flex; flex-direction:column; gap:14px; }
+.chat-area { padding:1rem 1.2rem 0; min-height:160px; display:flex; flex-direction:column; gap:14px; }
 .msg { display:flex; gap:10px; max-width:90%; animation:msgFadeUp 0.4s ease forwards; opacity:0; }
 .msg.ai  { align-self:flex-start; }
 .msg.user{ align-self:flex-end; flex-direction:row-reverse; }
@@ -97,7 +97,7 @@ section { padding:5.5rem 2rem; position:relative; z-index:1; }
 @keyframes gemPulse { 0%,100%{opacity:0.2;transform:rotate(45deg) scale(0.8);} 50%{opacity:1;transform:rotate(45deg) scale(1.1);} }
 
 /* INPUT */
-.input-area { padding:1.2rem 1.8rem 1.8rem; display:flex; gap:8px; align-items:center; border-top:1px solid var(--border); }
+.input-area { padding:0.8rem 1.2rem 1.2rem; display:flex; gap:8px; align-items:center; border-top:1px solid var(--border); }
 .input-area input { flex:1; font-family:'Lato',sans-serif; font-weight:300; font-size:0.84rem; height:40px; padding:8px 12px; background:var(--ivory); border:1px solid var(--border); color:var(--text); outline:none; transition:border-color 0.3s; }
 .input-area input:focus { border-color:var(--blue-light); }
 .input-area input::placeholder { color:var(--light); }
@@ -106,7 +106,7 @@ section { padding:5.5rem 2rem; position:relative; z-index:1; }
 .send-btn:disabled { opacity:0.3; cursor:default; }
 
 /* BUTTONS */
-.btn-row { padding:0.5rem 1.8rem 1.8rem; }
+.btn-row { padding:0.4rem 1.2rem 1rem; }
 .rsvp-btn { width:100%; padding:0.9rem 1rem; font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.28em; text-transform:uppercase; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--blue-dark); transition:background 0.3s,border-color 0.3s; margin-top:8px; display:block; }
 .rsvp-btn:hover { background:rgba(214,228,239,0.2); border-color:var(--blue-light); }
 .rsvp-btn.confirm-style { background:var(--blue-dark); color:var(--blue-pale); border-color:var(--blue-dark); }
@@ -156,7 +156,7 @@ textarea.decline-ta:focus { border-color:var(--blue-light); }
 
 .page { display:none; } .page.active { display:block; }
 
-#admin-page { background:var(--ivory); padding:4rem 1.5rem 5rem; position:relative; z-index:1; }
+#admin-page { background:var(--ivory); padding:2rem 1.5rem 2rem; position:relative; z-index:1; }
 .admin-inner { max-width:680px; margin:0 auto; }
 .admin-login-card { border:1px solid var(--border); padding:2.5rem 2rem; max-width:380px; margin:0 auto; background:rgba(214,228,239,0.07); }
 .admin-login-card .section-label { text-align:center; margin-bottom:1.4rem; }
@@ -190,7 +190,7 @@ textarea.decline-ta:focus { border-color:var(--blue-light); }
 .logout-link:hover { color:var(--rose); }
 
 /* FOOTER */
-footer { padding:2.5rem 2rem; text-align:center; background:var(--blue-dark); position:relative; z-index:1; margin-top:auto; }
+footer { padding:1.2rem 2rem; text-align:center; background:var(--blue-dark); position:relative; z-index:1; margin-top:auto; }
 .footer-names { font-family:'Great Vibes',cursive; font-size:3.2rem; color:var(--blue-pale); margin-bottom:0.6rem; }
 footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em; color:var(--blue-pale); opacity:0.6; }
 
@@ -213,7 +213,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 
 <div id="loadingOverlay">
   <div class="loading-title">Yul &amp; Elyza</div>
-  <div class="loading-sub">Loading RSVP page…</div>
+  <div class="loading-sub">Loading guest list…</div>
   <div class="loading-gems">
     <div class="loading-gem"></div><div class="loading-gem"></div><div class="loading-gem"></div>
   </div>
@@ -240,7 +240,7 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
       <p class="section-label">Attendance</p>
       <h2 class="section-title">Kindly Reply</h2>
       <div class="thin-rule"><div class="thin-rule-dot"></div></div>
-      <p class="section-body" style="margin-bottom:2rem;">Please register your attendance by <strong style="color:var(--blue-dark);font-weight:400;">July 1, 2026</strong>. Enter your name below and our assistant will guide you through the process.</p>
+      <p class="section-body" style="margin-bottom:1rem;">Please register your attendance by <strong style="color:var(--blue-dark);font-weight:400;">July 1, 2026</strong>. Enter your name below and our assistant will guide you through the process.</p>
       <div class="chat-card" id="rsvpCard">
         <div class="chat-area" id="chatArea"></div>
         <div class="input-area" id="inputArea">
