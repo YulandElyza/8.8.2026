@@ -740,23 +740,19 @@ async function processMsg(text) {
       return;
     }
 
-    // ② Greet with name + role
-    await addMsg('ai', `Welcome, <strong>${found.name}</strong>! ${gem()} We have you listed as <strong>${found.role}</strong>.`);
-    await showTyping(500);
-
-    // ③ Has expected guests listed → checkboxes
+    // ② Greet + next step in one message
     if (found.maxGuests > 0 && found.expectedGuests.length > 0) {
-      await addMsg('ai', `You are welcome to bring the following guest${found.expectedGuests.length>1?'s':''} with you. Please confirm who will be attending:`);
+      await addMsg('ai', `Welcome, <strong>${found.name}</strong>! ${gem()} We have you listed as <strong>${found.role}</strong>. Please confirm which guest${found.expectedGuests.length>1?'s':''} will be attending with you:`);
+      await showTyping(400);
       showGuestCheckboxes(found);
-    // ④ Allowed guests but none pre-listed → ask them to type names
     } else if (found.maxGuests > 0 && found.expectedGuests.length === 0) {
-      await addMsg('ai', `You are welcome to bring up to <strong>${found.maxGuests} guest${found.maxGuests>1?'s':''}</strong> with you. Please enter their name${found.maxGuests>1?'s':''} below${found.maxGuests>1?' (separate multiple names with a comma)':''}, or type <em>none</em> if you will be attending solo.`);
+      await addMsg('ai', `Welcome, <strong>${found.name}</strong>! ${gem()} We have you listed as <strong>${found.role}</strong>. You are welcome to bring up to <strong>${found.maxGuests} guest${found.maxGuests>1?'s':''}</strong>. Please enter their name${found.maxGuests>1?'s':''} below${found.maxGuests>1?' (separate multiple names with a comma)':''}, or type <em>none</em> if you will be attending solo.`);
       S.step = 'ask_guest_names';
       showInput();
       setEnabled(true);
     } else {
-      // Solo — no guests allowed
-      await addMsg('ai', `Please confirm your attendance below.`);
+      await addMsg('ai', `Welcome, <strong>${found.name}</strong>! ${gem()} We have you listed as <strong>${found.role}</strong>. Please confirm your attendance below.`);
+      await showTyping(400);
       showSoloButtons(found);
     }
 
