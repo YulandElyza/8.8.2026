@@ -625,14 +625,10 @@ async function handleConfirm(guest, additionalNames) {
     await showTyping(1400);
     showEndScreen('confirmed', guest, attending);
   } else {
-    // Entourage / role members — confirmation + fitting reminder
+    // Entourage / role members — simple confirmation, fitting reminder goes in end card
     clearActionArea();
     await showTyping(700);
-    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed as <strong>${guest.role}</strong>.<br><br>
-      As part of the entourage, please take note of the following important dates for your outfit:<br><br>
-      <strong>Initial Fitting &amp; Sizing</strong> — June 1, 2026<br>
-      <strong>Final Fitting</strong> — July 25, 2026<br><br>
-      Kindly coordinate with Yul &amp; Elyza for further details. We cannot wait to celebrate with you on August 8th! ${gem()}`);
+    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed as <strong>${guest.role}</strong>. We cannot wait to celebrate with you on August 8th!`);
     await showTyping(1400);
     showEndScreen('confirmed', guest, attending);
   }
@@ -660,14 +656,25 @@ function showEndScreen(status, guest, attending, comment='') {
   const div = document.createElement('div');
   div.style.cssText = 'border-top:1px solid var(--border);padding:1.6rem 1.2rem 1.4rem;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;';
 
+  const isEntourage = guest.role.toLowerCase() !== 'guest';
+
   if (status==='confirmed') {
     div.innerHTML=`
       <div class="end-gem"></div>
       <p class="end-title">We'll see you there!</p>
       <p class="end-sub">We have confirmed <strong style="color:var(--blue-dark);font-weight:400;">${guest.name}</strong>
-        <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--blue-light);"> (${guest.role})</span>
+        <span style="font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.1em;color:var(--blue-light);"> (${guest.role})</span>
         ${others.length?` and <strong style="color:var(--blue-dark);font-weight:400;">${others.join(', ')}</strong>`:''}.
         <br>We cannot wait to celebrate with you on August 8th.</p>
+      ${isEntourage ? `
+      <div style="border:1px solid var(--border);padding:1rem 1.4rem;max-width:340px;width:100%;text-align:center;">
+        <p style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--blue-light);margin-bottom:0.7rem;">Outfit Fitting Schedule</p>
+        <p style="font-family:'Cinzel',serif;font-size:0.56rem;letter-spacing:0.1em;color:var(--text);line-height:2.2;">
+          <span style="color:var(--mid);">Initial Fitting &amp; Sizing</span><br>June 1, 2026<br>
+          <span style="color:var(--mid);">Final Fitting</span><br>July 25, 2026
+        </p>
+        <p style="font-size:0.76rem;color:var(--light);margin-top:0.5rem;">Kindly coordinate with Yul &amp; Elyza for details.</p>
+      </div>` : ''}
       <p style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.18em;color:var(--mid);line-height:2;max-width:340px;">Should anything change, kindly inform <strong style="color:var(--blue-dark);font-weight:400;">Yul or Elyza</strong> directly so they can update your RSVP accordingly.</p>
       <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
       ${websiteCTA('In the meantime, explore venue, schedule & more')}
