@@ -163,7 +163,7 @@ textarea.decline-ta:focus { border-color:var(--blue-light); }
 .end-wrap { max-width:580px; margin:0 auto; text-align:center; border:1px solid var(--border); background:rgba(214,228,239,0.07); padding:3rem 2rem; display:flex; flex-direction:column; align-items:center; gap:16px; }
 .end-gem { width:10px; height:10px; border:1px solid var(--blue-light); transform:rotate(45deg); }
 .end-title { font-family:'Great Vibes',cursive; font-size:2.8rem; color:var(--blue-dark); line-height:1.2; }
-.end-sub { font-size:0.84rem; color:var(--mid); line-height:2; max-width:380px; }
+.end-sub { font-family:'Lato',sans-serif; font-weight:300; font-size:0.84rem; color:var(--mid); line-height:2; max-width:380px; }
 .divider-gem-row { display:flex; align-items:center; gap:0.7rem; width:100%; max-width:340px; }
 .divider-gem-row::before,.divider-gem-row::after { content:''; flex:1; height:1px; background:var(--border); }
 .divider-gem-inner { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); flex-shrink:0; }
@@ -667,15 +667,18 @@ function showEndScreen(status, guest, attending, comment='') {
         ${others.length?` and <strong style="color:var(--blue-dark);font-weight:400;">${others.join(', ')}</strong>`:''}.
         <br>We cannot wait to celebrate with you on August 8th.</p>
       ${isEntourage ? `
-      <div style="border:1px solid var(--border);padding:1rem 1.4rem;max-width:340px;width:100%;text-align:center;">
-        <p style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--blue-light);margin-bottom:0.7rem;">Outfit Fitting Schedule</p>
-        <p style="font-family:'Cinzel',serif;font-size:0.56rem;letter-spacing:0.1em;color:var(--text);line-height:2.2;">
-          <span style="color:var(--mid);">Initial Fitting &amp; Sizing</span><br>June 1, 2026<br>
-          <span style="color:var(--mid);">Final Fitting</span><br>July 25, 2026
+      <div style="border:1px solid var(--border);padding:1.1rem 1.5rem;max-width:340px;width:100%;text-align:center;background:rgba(214,228,239,0.08);">
+        <p style="font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--blue-light);margin-bottom:0.5rem;">Outfit Fitting Schedule</p>
+        <p style="font-family:'Lato',sans-serif;font-size:0.78rem;font-weight:300;color:var(--light);margin-bottom:0.9rem;font-style:italic;">For those who are part of the entourage</p>
+        <p style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.14em;color:var(--mid);line-height:2.4;">
+          Initial Fitting &amp; Sizing<br>
+          <span style="color:var(--blue-dark);">June 1, 2026</span><br>
+          Final Fitting<br>
+          <span style="color:var(--blue-dark);">July 25, 2026</span>
         </p>
-        <p style="font-size:0.76rem;color:var(--light);margin-top:0.5rem;">Kindly coordinate with Yul &amp; Elyza for details.</p>
+        <p style="font-family:'Lato',sans-serif;font-size:0.78rem;font-weight:300;color:var(--light);margin-top:0.7rem;">Kindly coordinate with Yul &amp; Elyza for details.</p>
       </div>` : ''}
-      <p style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.18em;color:var(--mid);line-height:2;max-width:340px;">Should anything change, kindly inform <strong style="color:var(--blue-dark);font-weight:400;">Yul or Elyza</strong> directly so they can update your RSVP accordingly.</p>
+      <p style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.18em;color:var(--mid);line-height:2.2;max-width:340px;">Should anything change, kindly inform <strong style="color:var(--blue-dark);font-weight:400;">Yul or Elyza</strong> directly so they can update your RSVP accordingly.</p>
       <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
       ${websiteCTA('In the meantime, explore venue, schedule & more')}
       <div class="end-gem"></div>`;
