@@ -485,19 +485,19 @@ function loadRSVP(n){ try{ const v=localStorage.getItem(sk(n)); return v?JSON.pa
 function saveRSVP(d){
   try{
     localStorage.setItem(sk(d.name), JSON.stringify(d));
-    // Save a proxy record for each additional attendee so they're recognised if they enter their own name
+    // Save a proxy record for each additional attendee
     (d.attending||[]).slice(1).forEach(extraName => {
       if(!extraName) return;
       const existing = loadRSVP(extraName);
       if(!existing){
         localStorage.setItem(sk(extraName), JSON.stringify({
-          name:       extraName,
-          role:       'Guest',
-          status:     'confirmed',
-          attending:  [extraName],
+          name:        extraName,
+          role:        'Guest',
+          status:      'confirmed',
+          attending:   [extraName],
           confirmedBy: d.name,
-          comment:    '',
-          at:         d.at
+          comment:     '',
+          at:          d.at
         }));
       }
     });
@@ -625,38 +625,13 @@ async function handleConfirm(guest, additionalNames) {
     await showTyping(1400);
     showEndScreen('confirmed', guest, attending);
   } else {
-    // Entourage / role members — ask about attire source
+    // Entourage / role members — simple confirmation
     clearActionArea();
     await showTyping(700);
-    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed as <strong>${guest.role}</strong>.<br><br>Regarding your attire — will you be sourcing your own clothes, or would you like to rent from <strong>GMO Collections</strong> (part of Yul &amp; Elyza's package)?`);
-    showAttireChoiceButtons(guest, attending);
+    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed as <strong>${guest.role}</strong>. We cannot wait to celebrate with you on August 8th!`);
+    await showTyping(1400);
+    showEndScreen('confirmed', guest, attending);
   }
-}
-
-function showAttireChoiceButtons(guest, attending) {
-  hideInput();
-  insertActionArea(`
-    <button class="rsvp-btn confirm-style" id="ownClothesBtn" style="margin-top:6px">✦ &nbsp; I will source my own clothes &nbsp; ✦</button>
-    <button class="rsvp-btn" id="rentGriffinsBtn" style="margin-top:8px">✦ &nbsp; I will rent from GMO Collections &nbsp; ✦</button>`);
-
-  document.getElementById('ownClothesBtn').onclick = async () => {
-    clearActionArea();
-    await showTyping(600);
-    await addMsg('ai', `Wonderful! ${gem()} Please coordinate with Yul &amp; Elyza for the style and color details. We cannot wait to celebrate with you on August 8th!`);
-    await showTyping(1400);
-    showEndScreen('confirmed', guest, attending);
-  };
-
-  document.getElementById('rentGriffinsBtn').onclick = async () => {
-    clearActionArea();
-    await showTyping(600);
-    await addMsg('ai', `Great choice! ${gem()} Here are the details for <strong>GMO Collections</strong>:<br>8WR6+WW9, Gov. M. Cuenco Ave<br>
-      Cebu City, 6000 Cebu, Philippines<br>
-      <em>Right beside Banilad Town Center</em><br><br>
-      Please coordinate your visit with Yul &amp; Elyza so they can arrange everything through the package. We look forward to seeing you on August 8th!`);
-    await showTyping(1400);
-    showEndScreen('confirmed', guest, attending);
-  };
 }
 
 function handleDecline(guest, comment) {
@@ -727,7 +702,7 @@ function showAlreadyScreen(rsvp) {
       ${others.length?`<span style="font-size:0.74rem;color:var(--mid);">With: ${others.join(', ')}</span><br>`:''}
       ${rsvp.comment?`<span style="font-size:0.74rem;font-style:italic;color:var(--mid);">"${rsvp.comment}"</span>`:''}
     </div>
-    <p class="end-sub">${isConf?`Your attendance is already confirmed${rsvp.confirmedBy?` by <strong>${rsvp.confirmedBy}</strong>`:''} — we cannot wait to see you on August 8th!`:'Your response has been noted. Thank you for letting us know.'}</p>
+    <p class="end-sub">${isConf?'Your attendance is already confirmed — we cannot wait to see you on August 8th!':'Your response has been noted. Thank you for letting us know.'}</p>
     <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
     ${websiteCTA(isConf?'Check venue details, schedule & more':'You can still follow along our journey')}
     <div class="end-gem"></div>
