@@ -625,10 +625,14 @@ async function handleConfirm(guest, additionalNames) {
     await showTyping(1400);
     showEndScreen('confirmed', guest, attending);
   } else {
-    // Entourage / role members — simple confirmation
+    // Entourage / role members — confirmation + fitting reminder
     clearActionArea();
     await showTyping(700);
-    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed as <strong>${guest.role}</strong>. We cannot wait to celebrate with you on August 8th!`);
+    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed as <strong>${guest.role}</strong>.<br><br>
+      As part of the entourage, please take note of the following important dates for your outfit:<br><br>
+      <strong>Initial Fitting &amp; Sizing</strong> — June 1, 2026<br>
+      <strong>Final Fitting</strong> — July 25, 2026<br><br>
+      Kindly coordinate with Yul &amp; Elyza for further details. We cannot wait to celebrate with you on August 8th! ${gem()}`);
     await showTyping(1400);
     showEndScreen('confirmed', guest, attending);
   }
@@ -680,6 +684,8 @@ function showEndScreen(status, guest, attending, comment='') {
 
   card.insertBefore(div, ia);
   chatArea.innerHTML = '';
+  chatArea.style.minHeight = '0';
+  chatArea.style.padding = '0';
   ia.style.display = 'none';
   setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
 }
@@ -698,8 +704,9 @@ function showAlreadyScreen(rsvp) {
     <div class="end-gem"></div>
     <div class="summary-box">
       <span class="lbl">Your Response</span>
-      <span style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.08em;color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span>
-      <span style="font-size:0.74rem;color:var(--light);"> &nbsp;·&nbsp; ${date}</span><br>
+      <span style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.08em;color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span><br>
+      <span style="font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--light);">Confirmed on</span>
+      <span style="font-size:0.74rem;color:var(--light);"> ${date}</span><br>
       <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue-light);">${rsvp.role}</span><br>
       ${others.length?`<span style="font-size:0.74rem;color:var(--mid);">With: ${others.join(', ')}</span><br>`:''}
       ${rsvp.comment?`<span style="font-size:0.74rem;font-style:italic;color:var(--mid);">"${rsvp.comment}"</span>`:''}
@@ -712,6 +719,8 @@ function showAlreadyScreen(rsvp) {
 
   card.insertBefore(div, ia);
   chatArea.innerHTML = '';
+  chatArea.style.minHeight = '0';
+  chatArea.style.padding = '0';
   ia.style.display = 'none';
   setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
 }
@@ -735,7 +744,7 @@ async function processMsg(text) {
       const others = (existing.attending||[]).slice(1);
       await addMsg('ai', `I found you, <strong>${found.name}</strong>. ${gem()} Your RSVP has already been submitted —
         <span style="color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span>
-        <span style="font-size:0.8em;color:var(--light);"> · ${date}</span>
+        <span style="font-size:0.8em;color:var(--light);"> · Confirmed on ${date}</span>
         ${others.length?`<br><span style="font-size:0.85em;color:var(--mid);">With: ${others.join(', ')}</span>`:''}
         ${existing.confirmedBy?`<br><span style="font-size:0.85em;color:var(--mid);">Confirmed by: <strong>${existing.confirmedBy}</strong></span>`:''}
         <br><em style="font-size:0.85em;">Your name is already on the guest list. No further action is needed!</em>`);
