@@ -609,29 +609,8 @@ function showDeclineInput(guest) {
 async function handleConfirm(guest, additionalNames) {
   const attending = [guest.name, ...additionalNames];
   saveRSVP({ name:guest.name, role:guest.role, status:'confirmed', attending, comment:'', at:new Date().toISOString() });
-
-  const isGuest = guest.role.toLowerCase() === 'guest';
-
-  if (isGuest) {
-    // Show dress code reminder for regular guests
-    clearActionArea();
-    await showTyping(700);
-    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed. We'd love to remind you of the dress code for the wedding:<br><br>
-      <strong>Motif:</strong> Dusty Blue &amp; Ivory<br>
-      <strong>Attire:</strong> Formal / Black Tie<br><br>
-      <em>Gentlemen</em> — suits or barong in dusty blue or ivory tones are highly encouraged.<br>
-      <em>Ladies</em> — formal gowns or cocktail dresses in dusty blue, ivory, or complementary muted tones.<br><br>
-      Please avoid wearing white, as it is reserved for the bride. We look forward to seeing you beautifully dressed! ${gem()}`);
-    await showTyping(1400);
-    showEndScreen('confirmed', guest, attending);
-  } else {
-    // Entourage / role members — simple confirmation, fitting reminder goes in end card
-    clearActionArea();
-    await showTyping(700);
-    await addMsg('ai', `Thank you, <strong>${guest.name}</strong>! ${gem()} Your attendance has been confirmed as <strong>${guest.role}</strong>. We cannot wait to celebrate with you on August 8th!`);
-    await showTyping(1400);
-    showEndScreen('confirmed', guest, attending);
-  }
+  clearActionArea();
+  showEndScreen('confirmed', guest, attending);
 }
 
 function handleDecline(guest, comment) {
@@ -693,15 +672,11 @@ function showEndScreen(status, guest, attending, comment='') {
   }
 
   card.insertBefore(div, ia);
-  div.style.display = 'none';
+  chatArea.innerHTML = '';
+  chatArea.style.minHeight = '0';
+  chatArea.style.padding = '0';
   ia.style.display = 'none';
-  setTimeout(() => {
-    chatArea.innerHTML = '';
-    chatArea.style.minHeight = '0';
-    chatArea.style.padding = '0';
-    div.style.display = 'flex';
-    setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
-  }, 4000);
+  setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
 }
 
 function showAlreadyScreen(rsvp) {
@@ -732,15 +707,11 @@ function showAlreadyScreen(rsvp) {
     <button onclick="clearRSVP('${rsvp.name}')" style="margin-top:6px;font-family:'Cinzel',serif;font-size:0.46rem;letter-spacing:0.2em;text-transform:uppercase;background:none;border:none;color:var(--light);cursor:pointer;opacity:0.5;padding:4px 8px;" title="Dev use only">↺ &nbsp; Clear RSVP (testing)</button>`;
 
   card.insertBefore(div, ia);
-  div.style.display = 'none';
+  chatArea.innerHTML = '';
+  chatArea.style.minHeight = '0';
+  chatArea.style.padding = '0';
   ia.style.display = 'none';
-  setTimeout(() => {
-    chatArea.innerHTML = '';
-    chatArea.style.minHeight = '0';
-    chatArea.style.padding = '0';
-    div.style.display = 'flex';
-    setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
-  }, 4000);
+  setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
 }
 
 // ── MAIN FLOW ─────────────────────────────────────────────────────────────────
