@@ -487,6 +487,8 @@
     placeholder.style.display = 'flex';
     setInterval(() => { if (new Date() >= UNLOCK_TIME) activateLive(); }, 60000);
   }
+  */
+
   // ── Mouse drag swipe (desktop) ────────────────────────────
   (function() {
     const track = document.getElementById('carouselTrack');
@@ -504,9 +506,8 @@
     });
     track.addEventListener('mouseleave', () => { startX = null; });
   })();
-  document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
 
-  // ── Touch swipe ───────────────────────────────────────────
+  // ── Touch swipe (mobile) ──────────────────────────────────
   (function() {
     const track = document.getElementById('carouselTrack');
     let startX = null;
@@ -533,6 +534,9 @@
       }
       startX = null; startY = null;
     }, { passive: true });
-  })();</script>
+  })();
+
+  // Prevent image saving
+  document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
 </body>
 </html>
