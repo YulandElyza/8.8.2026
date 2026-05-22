@@ -8,23 +8,17 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --ivory:#f5f0e8; --ivory-dark:#ede5d6; --blue:#4a6580; --blue-dark:#304d65;
+  --ivory:#f5f0e8; --blue:#4a6580; --blue-dark:#304d65;
   --blue-light:#7a9ab5; --blue-pale:#d6e4ef; --blush:#e8c4b8; --rose:#c9847a;
   --text:#304050; --mid:#6a7f8a; --light:#9aafba; --border:rgba(74,101,128,0.18);
-  --section-bg:#eee8da;
 }
 html { scroll-behavior:smooth; }
 body { background:var(--ivory); color:var(--text); font-family:'Lato',sans-serif; font-weight:300; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
 
-
-/* BANNER */
-
-
 /* NAV */
-nav { position:static; top:auto; left:auto; right:auto; z-index:200; display:flex; justify-content:center; flex-wrap:nowrap; gap:1.4rem; padding:1rem 1.2rem; background:rgba(245,240,232,0.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border);  }
+nav { position:static; top:auto; left:auto; right:auto; z-index:200; display:flex; justify-content:center; flex-wrap:nowrap; gap:1.4rem; padding:1rem 1.2rem; background:rgba(245,240,232,0.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
 nav a { text-decoration:none; font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--blue); transition:color 0.3s; white-space:nowrap; }
 nav a:hover { color:var(--blue-dark); } nav a.active { color:var(--blue-dark); }
-
 
 /* PAGE HEADER (replaces full-screen hero) */
 .page-header {
@@ -173,8 +167,6 @@ textarea.decline-ta:focus { border-color:var(--blue-light); }
 .website-btn { display:inline-flex; align-items:center; gap:8px; padding:0.9rem 2.2rem; font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.28em; text-transform:uppercase; text-decoration:none; border:1px solid var(--blue-dark); background:var(--blue-dark); color:var(--blue-pale); transition:background 0.3s; }
 .website-btn:hover { background:var(--blue); }
 
-
-
 .page { display:none; } .page.active { display:block; }
 
 #admin-page { background:var(--ivory); padding:2rem 1.5rem 2rem; position:relative; z-index:1; }
@@ -217,16 +209,12 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 
 /* RESPONSIVE */
 @media(max-width:600px){
-  nav { top:28px; gap:0.8rem; padding:0.8rem; }
+  nav { gap:0.8rem; padding:0.8rem; }
   nav a { font-size:0.5rem; letter-spacing:0.14em; }
-  .floral-corner.tl,.floral-corner.tr { width:150px; height:150px; }
-  .floral-corner.bl,.floral-corner.br { width:130px; height:130px; }
-  h1 { font-size:clamp(3rem,15vw,5rem); }
-  .tab-btn { padding:0.75rem 1.2rem; font-size:0.52rem; letter-spacing:0.18em; }
   .stat-grid { grid-template-columns:repeat(2,1fr); }
-  .chat-area { padding:1.2rem 1.2rem 0; }
-  .input-area { padding:1rem 1.2rem 1.4rem; }
-  .btn-row { padding:0.5rem 1.2rem 1.4rem; }
+  .chat-area { padding:0.8rem 0.8rem 0; }
+  .input-area { padding:0.6rem 0.8rem 1rem; }
+  .btn-row { padding:0.4rem 0.8rem 0.8rem; }
 }
 </style>
 </head>
@@ -234,7 +222,6 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 
 <!-- PAGE CURTAIN -->
 <div id="curtain"><span id="curtain-monogram">Yul &amp; Elyza</span></div>
-
 
 <nav>
   <a href="https://tinyurl.com/YulandElyzaAug82026">Home</a>
@@ -247,7 +234,6 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
   <div class="page-header-rule"><div class="page-header-rule-gem"></div></div>
   <p class="page-header-date">Saturday, August 8, 2026 &nbsp;·&nbsp; Cebu City, Philippines</p>
 </div>
-
 
 <div class="page active" id="page-guest">
   <section id="rsvp">
@@ -307,8 +293,7 @@ const ADMIN_USER  = "admin";
 const ADMIN_PASS  = "wedding2026"; // ← change before going live
 const SP          = "rsvp_ye4:";  // localStorage prefix
 
-// ← Update this to your latest CSV permalink whenever you edit the spreadsheet
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTXid84A8PDtt3jFT3o1CsBGMHcu-DgTBtrmXTEussHHAeCz340OJKTj-u2kGJYEw7JX3lxFzXnWNVv/pub?gid=0&single=true&output=csv";
+const CSV_URL = "https://wd-rsvp-proxy.manong-yul.workers.dev/";
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let guestDB = [];
