@@ -26,6 +26,11 @@
   }
 
   html { scroll-behavior: smooth; }
+
+  /* ── PREVENT IMAGE SAVING ── */
+  img { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; pointer-events: none; }
+  .carousel-track { pointer-events: all; }
+  .lightbox-img   { pointer-events: none; }
   body { background: var(--ivory); color: var(--text); font-family: 'Lato', sans-serif; font-weight: 300; overflow-x: hidden; }
 
   /* ── NAV ── */
@@ -482,7 +487,27 @@
     placeholder.style.display = 'flex';
     setInterval(() => { if (new Date() >= UNLOCK_TIME) activateLive(); }, 60000);
   }
-  */
-</script>
+  // Prevent image saving
+  document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+
+  // ── Touch swipe ───────────────────────────────────────────
+  (function() {
+    const track = document.getElementById('carouselTrack');
+    let startX = null;
+
+    track.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', e => {
+      if (startX === null) return;
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        diff > 0 ? goToSlide(current + 1) : goToSlide(current - 1);
+        resetTimer();
+      }
+      startX = null;
+    }, { passive: true });
+  })();</script>
 </body>
 </html>
