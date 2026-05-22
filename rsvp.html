@@ -655,6 +655,7 @@ function showEndScreen(status, guest, attending, comment='') {
         ${websiteCTA('In the meantime, explore venue, schedule & more')}
         <div class="end-gem"></div>
       </div>`;
+    setTimeout(() => si.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
   } else {
     si.innerHTML=`
       <p class="section-label">Attendance</p><h2 class="section-title">Kindly Reply</h2>
@@ -667,6 +668,7 @@ function showEndScreen(status, guest, attending, comment='') {
         ${websiteCTA('You can still follow along our journey')}
         <div class="end-gem"></div>
       </div>`;
+    setTimeout(() => si.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
   }
 }
 
@@ -696,6 +698,7 @@ function showAlreadyScreen(rsvp) {
       ${websiteCTA(isConf?'Check venue details, schedule & more':'You can still follow along our journey')}
       <div class="end-gem"></div>
     </div>`;
+  setTimeout(() => si.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
 }
 
 // ── MAIN FLOW ─────────────────────────────────────────────────────────────────
