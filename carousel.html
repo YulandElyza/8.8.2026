@@ -181,17 +181,33 @@
     transition: opacity 1s ease;
   }
   .carousel-slide.active { opacity: 1; }
+
+  /* Blurred background layer */
+  .carousel-slide-bg {
+    position: absolute;
+    inset: -10%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(18px) brightness(0.75) saturate(1.1);
+    transform: scale(1.1);
+    transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .carousel-track:hover .carousel-slide.active .carousel-slide-bg {
+    transform: scale(1.15);
+  }
+
+  /* Foreground image — full, uncropped */
   .carousel-slide img {
+    position: absolute;
+    inset: 0;
     width: 100%; height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
-    transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.9s ease;
-    filter: brightness(1.0) saturate(1.02);
-    transform-origin: center center;
+    z-index: 1;
+    transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94);
   }
   .carousel-track:hover .carousel-slide.active img {
-    transform: scale(1.04);
-    filter: brightness(1.02) saturate(1.06);
+    transform: scale(1.02);
   }
 
   /* Caption overlay */
@@ -378,6 +394,7 @@
       const slide = document.createElement('div');
       slide.className = 'carousel-slide' + (i === 0 ? ' active' : '');
       slide.innerHTML = `
+        <div class="carousel-slide-bg" style="background-image:url('${img.url}')"></div>
         <img src="${img.url}" alt="Wedding photo" loading="${i === 0 ? 'eager' : 'lazy'}" />
         ${img.message ? `
         <div class="carousel-caption">
