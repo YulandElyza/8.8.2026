@@ -163,7 +163,7 @@ textarea.decline-ta:focus { border-color:var(--blue-light); }
 .divider-gem-inner { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); flex-shrink:0; }
 .summary-box { border:1px solid var(--border); padding:1.1rem 1.5rem; font-size:0.78rem; color:var(--mid); text-align:left; width:100%; max-width:400px; line-height:2; background:rgba(214,228,239,0.1); }
 .summary-box .lbl { font-family:'Cinzel',serif; font-size:0.48rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--blue-light); margin-bottom:6px; display:block; }
-.website-cta-label { font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--light); }
+.website-cta-label { font-family:'Lato',sans-serif; font-weight:300; font-size:0.78rem; color:var(--mid); letter-spacing:0.04em; }
 .website-btn { display:inline-flex; align-items:center; gap:8px; padding:0.9rem 2.2rem; font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.28em; text-transform:uppercase; text-decoration:none; border:1px solid var(--blue-dark); background:var(--blue-dark); color:var(--blue-pale); transition:background 0.3s; }
 .website-btn:hover { background:var(--blue); }
 
@@ -612,7 +612,7 @@ function showEndScreen(status, guest, attending, comment='') {
         <div class="end-gem"></div>
         <p class="end-title">We'll see you there!</p>
         <p class="end-sub">We have confirmed <strong style="color:var(--blue-dark);font-weight:400;">${guest.name}</strong>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--blue-light);"> (${guest.role})</span>
+          <span style="font-size:0.82rem;color:var(--blue-light);font-style:italic;"> · ${guest.role}</span>
           ${others.length?` and <strong style="color:var(--blue-dark);font-weight:400;">${others.join(', ')}</strong>`:''}.
           <br>We cannot wait to celebrate with you on August 8th.</p>
         <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
@@ -651,7 +651,7 @@ function showAlreadyScreen(rsvp) {
         <span class="lbl">Your Response</span>
         <span style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.08em;color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span>
         <span style="font-size:0.74rem;color:var(--light);"> &nbsp;·&nbsp; ${date}</span><br>
-        <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue-light);">${rsvp.role}</span><br>
+        <span style="font-size:0.82rem;color:var(--blue-light);font-style:italic;">${rsvp.role}</span><br>
         ${others.length?`<span style="font-size:0.74rem;color:var(--mid);">With: ${others.join(', ')}</span><br>`:''}
         ${rsvp.comment?`<span style="font-size:0.74rem;font-style:italic;color:var(--mid);">"${rsvp.comment}"</span>`:''}
       </div>
