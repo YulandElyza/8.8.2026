@@ -717,22 +717,24 @@ function showAlreadyScreen(rsvp) {
 // ── MAIN FLOW ─────────────────────────────────────────────────────────────────
 async function processMsg(text) {
   setEnabled(false);
-  await addMsg('user', text);
-  await showTyping();
 
   const found = findGuest(text);
 
+  // ① Already RSVP'd — go straight to end screen, no chat messages
   if (found) {
-    S.guest = found;
-
-    // ① Already RSVP'd — just tell them, no action needed
     const existing = loadRSVP(found.name);
     if (existing) {
-      await addMsg('ai', `I found you, <strong>${found.name}</strong>. ${gem()} Your RSVP has already been submitted — your name is already on the guest list. No further action is needed!`);
-      await showTyping(700);
       showAlreadyScreen(existing);
       return;
     }
+  }
+
+  // Show user message and typing for all other flows
+  await addMsg('user', text);
+  await showTyping();
+
+  if (found) {
+    S.guest = found;
 
     // ② Greet with name + role
     await addMsg('ai', `Welcome, <strong>${found.name}</strong>! ${gem()} We have you listed as <strong>${found.role}</strong>.`);
