@@ -61,7 +61,7 @@ nav a:hover { color:var(--blue-dark); } nav a.active { color:var(--blue-dark); }
 section { padding:2rem 2rem; position:relative; z-index:1; }
 .section-inner { max-width:700px; margin:0 auto; }
 .section-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.42em; text-transform:uppercase; color:var(--blue-light); margin-bottom:0.4rem; }
-.section-title { font-family:'Great Vibes',cursive; font-size:clamp(1.5rem,4vw,2.2rem); color:var(--blue-dark); line-height:1.1; }
+.section-title { font-family:'Great Vibes',cursive; font-size:clamp(2rem,6vw,3.2rem); color:var(--blue-dark); line-height:1.1; }
 .thin-rule { display:flex; align-items:center; gap:0.7rem; margin:0.6rem 0 1rem; }
 .thin-rule::before,.thin-rule::after { content:''; flex:0 0 28px; height:1px; background:var(--blue-light); }
 .thin-rule-dot { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); }
@@ -163,7 +163,7 @@ textarea.decline-ta:focus { border-color:var(--blue-light); }
 .end-wrap { max-width:580px; margin:0 auto; text-align:center; border:1px solid var(--border); background:rgba(214,228,239,0.07); padding:3rem 2rem; display:flex; flex-direction:column; align-items:center; gap:16px; }
 .end-gem { width:10px; height:10px; border:1px solid var(--blue-light); transform:rotate(45deg); }
 .end-title { font-family:'Great Vibes',cursive; font-size:2.8rem; color:var(--blue-dark); line-height:1.2; }
-.end-sub { font-family:'Lato',sans-serif; font-weight:300; font-size:0.84rem; color:var(--mid); line-height:2; max-width:380px; }
+.end-sub { font-size:0.84rem; color:var(--mid); line-height:2; max-width:380px; }
 .divider-gem-row { display:flex; align-items:center; gap:0.7rem; width:100%; max-width:340px; }
 .divider-gem-row::before,.divider-gem-row::after { content:''; flex:1; height:1px; background:var(--border); }
 .divider-gem-inner { width:5px; height:5px; border:1px solid var(--blue-light); transform:rotate(45deg); flex-shrink:0; }
@@ -308,7 +308,7 @@ const ADMIN_PASS  = "wedding2026"; // ← change before going live
 const SP          = "rsvp_ye4:";  // localStorage prefix
 
 // ← Update this to your latest CSV permalink whenever you edit the spreadsheet
-const CSV_URL = "https://raw.githubusercontent.com/YulandElyza/8.8.2026/main/rsvplist.csv";
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTXid84A8PDtt3jFT3o1CsBGMHcu-DgTBtrmXTEussHHAeCz340OJKTj-u2kGJYEw7JX3lxFzXnWNVv/pub?gid=0&single=true&output=csv";
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let guestDB = [];
@@ -414,28 +414,21 @@ Mommy Crisina Friend E	Guest	0
 Mommy Crisina Friend E Partner	Guest	0		`;
 
 async function loadCSV() {
-  const proxies = [
-    () => fetch(CSV_URL),
-    () => fetch('https://corsproxy.io/?' + encodeURIComponent(CSV_URL)),
-    () => fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(CSV_URL)),
-  ];
-  for (const attempt of proxies) {
-    try {
-      const res = await attempt();
-      if (!res.ok) continue;
-      const text = await res.text();
-      const parsed = buildDB(parseCSV(text));
-      if (parsed.length > 0) {
-        guestDB = parsed;
-        console.log('Loaded', guestDB.length, 'guests from CSV.');
-        return;
-      }
-    } catch(e) {
-      console.warn('CSV fetch attempt failed:', e.message);
+  try {
+    const res = await fetch(CSV_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    const parsed = buildDB(parseCSV(text));
+    if (parsed.length > 0) {
+      guestDB = parsed;
+      console.log('Loaded', guestDB.length, 'guests from Google Sheets.');
+      return;
     }
+    throw new Error('Empty result');
+  } catch(e) {
+    console.warn('Google Sheets fetch failed — using inline fallback:', e.message);
+    guestDB = buildDB(parseCSV(FALLBACK_CSV));
   }
-  console.warn('All CSV fetch attempts failed — using inline fallback guest list.');
-  guestDB = buildDB(parseCSV(FALLBACK_CSV));
 }
 
 // ── CONTAINS MATCH ────────────────────────────────────────────────────────────
@@ -482,27 +475,7 @@ function findGuest(input) {
 // ── LOCALSTORAGE ─────────────────────────────────────────────────────────────
 function sk(n){ return SP + n.toLowerCase().replace(/\s+/g,'_'); }
 function loadRSVP(n){ try{ const v=localStorage.getItem(sk(n)); return v?JSON.parse(v):null; }catch(e){return null;} }
-function saveRSVP(d){
-  try{
-    localStorage.setItem(sk(d.name), JSON.stringify(d));
-    // Save a proxy record for each additional attendee
-    (d.attending||[]).slice(1).forEach(extraName => {
-      if(!extraName) return;
-      const existing = loadRSVP(extraName);
-      if(!existing){
-        localStorage.setItem(sk(extraName), JSON.stringify({
-          name:        extraName,
-          role:        'Guest',
-          status:      'confirmed',
-          attending:   [extraName],
-          confirmedBy: d.name,
-          comment:     '',
-          at:          d.at
-        }));
-      }
-    });
-  }catch(e){console.warn(e);}
-}
+function saveRSVP(d){ try{ localStorage.setItem(sk(d.name),JSON.stringify(d)); }catch(e){console.warn(e);} }
 
 // ── CHAT HELPERS ─────────────────────────────────────────────────────────────
 const chatArea   = document.getElementById('chatArea');
@@ -606,10 +579,9 @@ function showDeclineInput(guest) {
 }
 
 // ── CONFIRM / DECLINE ─────────────────────────────────────────────────────────
-async function handleConfirm(guest, additionalNames) {
+function handleConfirm(guest, additionalNames) {
   const attending = [guest.name, ...additionalNames];
   saveRSVP({ name:guest.name, role:guest.role, status:'confirmed', attending, comment:'', at:new Date().toISOString() });
-  clearActionArea();
   showEndScreen('confirmed', guest, attending);
 }
 
@@ -629,54 +601,35 @@ function websiteCTA(msg){
 function showEndScreen(status, guest, attending, comment='') {
   const others = attending.slice(1);
   const fn = guest.name.split(' ')[0];
-  const card = document.getElementById('rsvpCard');
-  const ia = document.getElementById('inputArea');
-
-  const div = document.createElement('div');
-  div.style.cssText = 'border-top:1px solid var(--border);padding:1.6rem 1.2rem 1.4rem;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;';
-
-  const isEntourage = guest.role.toLowerCase() !== 'guest';
-
+  const si = document.getElementById('rsvp').querySelector('.section-inner');
   if (status==='confirmed') {
-    div.innerHTML=`
-      <div class="end-gem"></div>
-      <p class="end-title">We'll see you there!</p>
-      <p class="end-sub">We have confirmed <strong style="color:var(--blue-dark);font-weight:400;">${guest.name}</strong>
-        <span style="font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.1em;color:var(--blue-light);"> (${guest.role})</span>
-        ${others.length?` and <strong style="color:var(--blue-dark);font-weight:400;">${others.join(', ')}</strong>`:''}.
-        <br>We cannot wait to celebrate with you on August 8th.</p>
-      ${isEntourage ? `
-      <div style="border:1px solid var(--border);padding:1.1rem 1.5rem;max-width:340px;width:100%;text-align:center;background:rgba(214,228,239,0.08);">
-        <p style="font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--blue-light);margin-bottom:0.5rem;">Outfit Fitting Schedule</p>
-        <p style="font-family:'Lato',sans-serif;font-size:0.78rem;font-weight:300;color:var(--light);margin-bottom:0.9rem;font-style:italic;">For those who are part of the entourage</p>
-        <p style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.14em;color:var(--mid);line-height:2.4;">
-          Initial Fitting &amp; Sizing<br>
-          <span style="color:var(--blue-dark);">June 1, 2026</span><br>
-          Final Fitting<br>
-          <span style="color:var(--blue-dark);">July 25, 2026</span>
-        </p>
-        <p style="font-family:'Lato',sans-serif;font-size:0.78rem;font-weight:300;color:var(--light);margin-top:0.7rem;">Kindly coordinate with Yul &amp; Elyza for details.</p>
-      </div>` : ''}
-      <p style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.18em;color:var(--mid);line-height:2.2;max-width:340px;">Should anything change, kindly inform <strong style="color:var(--blue-dark);font-weight:400;">Yul or Elyza</strong> directly so they can update your RSVP accordingly.</p>
-      <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
-      ${websiteCTA('In the meantime, explore venue, schedule & more')}
-      <div class="end-gem"></div>`;
+    si.innerHTML=`
+      <p class="section-label">Attendance</p><h2 class="section-title">Kindly Reply</h2>
+      <div class="thin-rule"><div class="thin-rule-dot"></div></div>
+      <div class="end-wrap">
+        <div class="end-gem"></div>
+        <p class="end-title">We'll see you there!</p>
+        <p class="end-sub">We have confirmed <strong style="color:var(--blue-dark);font-weight:400;">${guest.name}</strong>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--blue-light);"> (${guest.role})</span>
+          ${others.length?` and <strong style="color:var(--blue-dark);font-weight:400;">${others.join(', ')}</strong>`:''}.
+          <br>We cannot wait to celebrate with you on August 8th.</p>
+        <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
+        ${websiteCTA('In the meantime, explore venue, schedule & more')}
+        <div class="end-gem"></div>
+      </div>`;
   } else {
-    div.innerHTML=`
-      <div class="end-gem"></div>
-      <p class="end-title">We'll miss you, ${fn}.</p>
-      <p class="end-sub">Thank you for letting us know. We hope to celebrate with you another time — you are always in our hearts.</p>
-      <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
-      ${websiteCTA('You can still follow along our journey')}
-      <div class="end-gem"></div>`;
+    si.innerHTML=`
+      <p class="section-label">Attendance</p><h2 class="section-title">Kindly Reply</h2>
+      <div class="thin-rule"><div class="thin-rule-dot"></div></div>
+      <div class="end-wrap">
+        <div class="end-gem"></div>
+        <p class="end-title">We'll miss you, ${fn}.</p>
+        <p class="end-sub">Thank you for letting us know. We hope to celebrate with you another time — you are always in our hearts.</p>
+        <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
+        ${websiteCTA('You can still follow along our journey')}
+        <div class="end-gem"></div>
+      </div>`;
   }
-
-  card.insertBefore(div, ia);
-  chatArea.innerHTML = '';
-  chatArea.style.minHeight = '0';
-  chatArea.style.padding = '0';
-  ia.style.display = 'none';
-  setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
 }
 
 function showAlreadyScreen(rsvp) {
@@ -684,34 +637,27 @@ function showAlreadyScreen(rsvp) {
   const isConf = rsvp.status==='confirmed';
   const date = new Date(rsvp.at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   const others = (rsvp.attending||[]).slice(1);
-  const card = document.getElementById('rsvpCard');
-  const ia   = document.getElementById('inputArea');
-
-  const div = document.createElement('div');
-  div.style.cssText = 'border-top:1px solid var(--border);padding:1.6rem 1.2rem 1.4rem;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;';
-  div.innerHTML=`
-    <div class="end-gem"></div>
-    <div class="summary-box">
-      <span class="lbl">Your Response</span>
-      <span style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.08em;color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span><br>
-      <span style="font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--light);">Confirmed on</span>
-      <span style="font-size:0.74rem;color:var(--light);"> ${date}</span><br>
-      <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue-light);">${rsvp.role}</span><br>
-      ${others.length?`<span style="font-size:0.74rem;color:var(--mid);">With: ${others.join(', ')}</span><br>`:''}
-      ${rsvp.comment?`<span style="font-size:0.74rem;font-style:italic;color:var(--mid);">"${rsvp.comment}"</span>`:''}
-    </div>
-    <p class="end-sub">${isConf?'Your attendance is already confirmed — we cannot wait to see you on August 8th!':'Your response has been noted. Thank you for letting us know.'}</p>
-    <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
-    ${websiteCTA(isConf?'Check venue details, schedule & more':'You can still follow along our journey')}
-    <div class="end-gem"></div>
-    <button onclick="clearRSVP('${rsvp.name}')" style="margin-top:6px;font-family:'Cinzel',serif;font-size:0.46rem;letter-spacing:0.2em;text-transform:uppercase;background:none;border:none;color:var(--light);cursor:pointer;opacity:0.5;padding:4px 8px;" title="Dev use only">↺ &nbsp; Clear RSVP (testing)</button>`;
-
-  card.insertBefore(div, ia);
-  chatArea.innerHTML = '';
-  chatArea.style.minHeight = '0';
-  chatArea.style.padding = '0';
-  ia.style.display = 'none';
-  setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
+  const si = document.getElementById('rsvp').querySelector('.section-inner');
+  si.innerHTML=`
+    <p class="section-label">Attendance</p><h2 class="section-title">Kindly Reply</h2>
+    <div class="thin-rule"><div class="thin-rule-dot"></div></div>
+    <div class="end-wrap">
+      <div class="end-gem"></div>
+      <p style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--blue-light);">Already Responded</p>
+      <p class="end-title">${isConf?`You're all set, ${fn}!`:`We'll miss you, ${fn}.`}</p>
+      <div class="summary-box">
+        <span class="lbl">Your Response</span>
+        <span style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.08em;color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span>
+        <span style="font-size:0.74rem;color:var(--light);"> &nbsp;·&nbsp; ${date}</span><br>
+        <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue-light);">${rsvp.role}</span><br>
+        ${others.length?`<span style="font-size:0.74rem;color:var(--mid);">With: ${others.join(', ')}</span><br>`:''}
+        ${rsvp.comment?`<span style="font-size:0.74rem;font-style:italic;color:var(--mid);">"${rsvp.comment}"</span>`:''}
+      </div>
+      <p class="end-sub">${isConf?'Your attendance is already confirmed — we cannot wait to see you on August 8th!':'Your response has been noted. Thank you for letting us know.'}</p>
+      <div class="divider-gem-row"><div class="divider-gem-inner"></div></div>
+      ${websiteCTA(isConf?'Check venue details, schedule & more':'You can still follow along our journey')}
+      <div class="end-gem"></div>
+    </div>`;
 }
 
 // ── MAIN FLOW ─────────────────────────────────────────────────────────────────
@@ -728,33 +674,29 @@ async function processMsg(text) {
     // ① Already RSVP'd — just tell them, no action needed
     const existing = loadRSVP(found.name);
     if (existing) {
-      const isConf = existing.status === 'confirmed';
-      const date = new Date(existing.at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-      const others = (existing.attending||[]).slice(1);
-      await addMsg('ai', `I found you, <strong>${found.name}</strong>. ${gem()} Your RSVP has already been submitted —
-        <span style="color:${isConf?'#3a6a4a':'var(--rose)'};">${isConf?'✦ Attending':'✦ Declined'}</span>
-        <span style="font-size:0.8em;color:var(--light);"> · Confirmed on ${date}</span>
-        ${others.length?`<br><span style="font-size:0.85em;color:var(--mid);">With: ${others.join(', ')}</span>`:''}
-        ${existing.confirmedBy?`<br><span style="font-size:0.85em;color:var(--mid);">Confirmed by: <strong>${existing.confirmedBy}</strong></span>`:''}
-        <br><em style="font-size:0.85em;">Your name is already on the guest list. No further action is needed!</em>`);
+      await addMsg('ai', `I found you, <strong>${found.name}</strong>. ${gem()} Your RSVP has already been submitted — your name is already on the guest list. No further action is needed!`);
       await showTyping(700);
       showAlreadyScreen(existing);
       return;
     }
 
-    // ② Greet + next step in one message
+    // ② Greet with name + role
+    await addMsg('ai', `Welcome, <strong>${found.name}</strong>! ${gem()} We have you listed as <strong>${found.role}</strong>.`);
+    await showTyping(500);
+
+    // ③ Has expected guests listed → checkboxes
     if (found.maxGuests > 0 && found.expectedGuests.length > 0) {
-      await addMsg('ai', `Welcome, <strong>${found.name}</strong>! ${gem()} We have you listed as <strong>${found.role}</strong>. Please confirm which guest${found.expectedGuests.length>1?'s':''} will be attending with you:`);
-      await showTyping(400);
+      await addMsg('ai', `You are welcome to bring the following guest${found.expectedGuests.length>1?'s':''} with you. Please confirm who will be attending:`);
       showGuestCheckboxes(found);
+    // ④ Allowed guests but none pre-listed → ask them to type names
     } else if (found.maxGuests > 0 && found.expectedGuests.length === 0) {
-      await addMsg('ai', `Welcome, <strong>${found.name}</strong>! ${gem()} We have you listed as <strong>${found.role}</strong>. You are welcome to bring up to <strong>${found.maxGuests} guest${found.maxGuests>1?'s':''}</strong>. Please enter their name${found.maxGuests>1?'s':''} below${found.maxGuests>1?' (separate multiple names with a comma)':''}, or type <em>none</em> if you will be attending solo.`);
+      await addMsg('ai', `You are welcome to bring up to <strong>${found.maxGuests} guest${found.maxGuests>1?'s':''}</strong> with you. Please enter their name${found.maxGuests>1?'s':''} below${found.maxGuests>1?' (separate multiple names with a comma)':''}, or type <em>none</em> if you will be attending solo.`);
       S.step = 'ask_guest_names';
       showInput();
       setEnabled(true);
     } else {
-      await addMsg('ai', `Welcome, <strong>${found.name}</strong>! ${gem()} We have you listed as <strong>${found.role}</strong>. Please confirm your attendance below.`);
-      await showTyping(400);
+      // Solo — no guests allowed
+      await addMsg('ai', `Please confirm your attendance below.`);
       showSoloButtons(found);
     }
 
@@ -907,20 +849,8 @@ function renderRows(rows){
         ${r.status==='confirmed'?`<span>${Math.max((r.attending||[]).length,1)} seat${Math.max((r.attending||[]).length,1)>1?'s':''}</span>`:''}
       </div>
       ${r.comment?`<div class="guest-comment">"${r.comment}"</div>`:''}
-      ${r.status!=='pending'?`<button onclick="clearRSVP('${r.name}')" style="margin-top:6px;font-family:'Cinzel',serif;font-size:0.44rem;letter-spacing:0.18em;text-transform:uppercase;background:none;border:1px solid var(--border);color:var(--light);cursor:pointer;padding:4px 12px;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--rose)';this.style.color='var(--rose)';" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--light)';">↺ &nbsp; Clear RSVP</button>`:''}
     </div>`;
   }).join('');
-}
-
-function clearRSVP(name) {
-  try { localStorage.removeItem(sk(name)); } catch(e) { console.warn(e); }
-  // If on guest page, reload chat; if on admin page, re-render
-  const adminDash = document.getElementById('adminDash');
-  if (adminDash && adminDash.style.display === 'block') {
-    renderAdmin();
-  } else {
-    location.reload();
-  }
 }
 
 function setFilter(f){ adminFilter=f; renderAdmin(); }
