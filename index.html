@@ -911,8 +911,6 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
       dots[current].classList.add('active');
     }
 
-    window.goToSlide = goToSlide;
-
     function next() { goToSlide(current + 1); }
     function startTimer() { timer = setInterval(next, 3000); }
     function resetTimer()  { clearInterval(timer); startTimer(); }
@@ -921,83 +919,60 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
     track.addEventListener('mouseenter', () => clearInterval(timer));
     track.addEventListener('mouseleave', () => { if (!lb.classList.contains('open')) startTimer(); });
 
-    // Dots reset the timer
+    // Dots
     dots.forEach((dot, i) => {
       dot.addEventListener('click', () => { goToSlide(i); resetTimer(); });
     });
 
-    // Open lightbox on tap/click
+    // Close lightbox
+    function closeLightbox() { lb.classList.remove('open'); startTimer(); }
+    lb.addEventListener('click', closeLightbox);
+    lbClose.addEventListener('click', closeLightbox);
+    lbImg.addEventListener('click', e => e.stopPropagation());
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    // ── Click vs drag (desktop) ───────────────────────────────
+    let dragStartX = null;
+    let dragged    = false;
+
+    track.addEventListener('mousedown',  e => { dragStartX = e.clientX; dragged = false; });
+    track.addEventListener('mousemove',  e => { if (dragStartX !== null && Math.abs(e.clientX - dragStartX) > 6) dragged = true; });
+    track.addEventListener('mouseup',    e => {
+      if (dragStartX === null) return;
+      const dx = dragStartX - e.clientX;
+      if (Math.abs(dx) > 40) { dx > 0 ? goToSlide(current + 1) : goToSlide(current - 1); resetTimer(); }
+      dragStartX = null;
+    });
+    track.addEventListener('mouseleave', () => { dragStartX = null; dragged = false; });
     track.addEventListener('click', () => {
-      const src = slides[current].querySelector('img').src;
-      lbImg.src = src;
+      if (dragged) { dragged = false; return; }
+      lbImg.src = slides[current].querySelector('img').src;
       lb.classList.add('open');
       clearInterval(timer);
     });
 
-    // Close lightbox
-    function closeLightbox() {
-      lb.classList.remove('open');
-      startTimer();
-    }
-    lb.addEventListener('click', closeLightbox);
-    lbClose.addEventListener('click', closeLightbox);
-    lbImg.addEventListener('click', e => e.stopPropagation()); // clicking image itself doesn't close
-
-    // Close on Escape
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    // ── Touch swipe (mobile) ──────────────────────────────────
+    let touchStartX = null, touchStartY = null;
+    track.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    track.addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      const dx = touchStartX - e.changedTouches[0].clientX;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        dx > 0 ? goToSlide(current + 1) : goToSlide(current - 1);
+        resetTimer();
+      }
+      touchStartX = null; touchStartY = null;
+    }, { passive: true });
 
     startTimer();
   })();
 
   // Prevent image saving
   document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
-
-  // ── Touch swipe ───────────────────────────────────────────
-  (function() {
-    const track = document.querySelector('.carousel-track');
-    let startX = null;
-    let startY = null;
-
-    document.addEventListener('touchstart', e => {
-      const rect = track.getBoundingClientRect();
-      const t = e.touches[0];
-      if (t.clientX >= rect.left && t.clientX <= rect.right &&
-          t.clientY >= rect.top  && t.clientY <= rect.bottom) {
-        startX = t.clientX;
-        startY = t.clientY;
-      }
-    }, { passive: true });
-
-    document.addEventListener('touchend', e => {
-      if (startX === null) return;
-      const t = e.changedTouches[0];
-      const dx = startX - t.clientX;
-      const dy = startY - t.clientY;
-      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-        dx > 0 ? goToSlide(current + 1) : goToSlide(current - 1);
-        resetTimer();
-      }
-      startX = null; startY = null;
-    }, { passive: true });
-  })();
-
-  // ── Mouse drag swipe (desktop) ────────────────────────────
-  (function() {
-    const track = document.querySelector('.carousel-track');
-    let startX = null;
-
-    track.addEventListener('mousedown', e => { startX = e.clientX; });
-    track.addEventListener('mouseup',   e => {
-      if (startX === null) return;
-      const dx = startX - e.clientX;
-      if (Math.abs(dx) > 40) {
-        dx > 0 ? goToSlide(current + 1) : goToSlide(current - 1);
-        resetTimer();
-      }
-      startX = null;
-    });
-    track.addEventListener('mouseleave', () => { startX = null; });
-  })();
 </script>
 </body>
 </html>

@@ -396,15 +396,42 @@
       dots.push(dot);
     });
 
-    // Open lightbox on click
-    track.addEventListener('click', () => {
-      const img = slides[current].querySelector('img');
-      if (img) openLightbox(img.src);
+    // ── Click vs drag detection ───────────────────────────────
+    let dragStartX = null;
+    let dragStartY = null;
+    let isDragging = false;
+
+    track.addEventListener('mousedown',  e => { dragStartX = e.clientX; dragStartY = e.clientY; isDragging = false; });
+    track.addEventListener('mousemove',  e => { if (dragStartX !== null && Math.abs(e.clientX - dragStartX) > 6) isDragging = true; });
+    track.addEventListener('mouseup',    e => {
+      if (dragStartX === null) return;
+      const dx = dragStartX - e.clientX;
+      if (Math.abs(dx) > 40) { dx > 0 ? goToSlide(current + 1) : goToSlide(current - 1); resetTimer(); }
+      dragStartX = null; dragStartY = null;
     });
+    track.addEventListener('mouseleave', () => { dragStartX = null; isDragging = false; });
+    track.addEventListener('click',      e => { if (isDragging) { isDragging = false; return; } openLightbox(slides[current].querySelector('img').src); });
 
     // Pause on hover
     track.addEventListener('mouseenter', () => clearInterval(timer));
     track.addEventListener('mouseleave', () => { if (!lightbox.classList.contains('open')) startTimer(); });
+
+    // Touch swipe
+    let touchStartX = null, touchStartY = null;
+    track.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    track.addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      const dx = touchStartX - e.changedTouches[0].clientX;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        dx > 0 ? goToSlide(current + 1) : goToSlide(current - 1);
+        resetTimer();
+      }
+      touchStartX = null; touchStartY = null;
+    }, { passive: true });
 
     wrapper.style.display = 'block';
     startTimer();
@@ -489,54 +516,8 @@
   }
   */
 
-  // ── Mouse drag swipe (desktop) ────────────────────────────
-  (function() {
-    const track = document.getElementById('carouselTrack');
-    let startX = null;
-
-    track.addEventListener('mousedown', e => { startX = e.clientX; });
-    track.addEventListener('mouseup',   e => {
-      if (startX === null) return;
-      const dx = startX - e.clientX;
-      if (Math.abs(dx) > 40) {
-        dx > 0 ? goToSlide(current + 1) : goToSlide(current - 1);
-        resetTimer();
-      }
-      startX = null;
-    });
-    track.addEventListener('mouseleave', () => { startX = null; });
-  })();
-
-  // ── Touch swipe (mobile) ──────────────────────────────────
-  (function() {
-    const track = document.getElementById('carouselTrack');
-    let startX = null;
-    let startY = null;
-
-    document.addEventListener('touchstart', e => {
-      const rect = track.getBoundingClientRect();
-      const t = e.touches[0];
-      if (t.clientX >= rect.left && t.clientX <= rect.right &&
-          t.clientY >= rect.top  && t.clientY <= rect.bottom) {
-        startX = t.clientX;
-        startY = t.clientY;
-      }
-    }, { passive: true });
-
-    document.addEventListener('touchend', e => {
-      if (startX === null) return;
-      const t = e.changedTouches[0];
-      const dx = startX - t.clientX;
-      const dy = startY - t.clientY;
-      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-        dx > 0 ? goToSlide(current + 1) : goToSlide(current - 1);
-        resetTimer();
-      }
-      startX = null; startY = null;
-    }, { passive: true });
-  })();
-
   // Prevent image saving
   document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+</script>
 </body>
 </html>
