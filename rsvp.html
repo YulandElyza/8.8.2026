@@ -197,6 +197,8 @@ textarea.decline-ta:focus { border-color:var(--blue-light); }
 .badge-pending{color:#9a7030;border-color:rgba(154,112,48,0.35);background:rgba(154,112,48,0.07);}
 .guest-meta { margin-top:6px; display:flex; flex-wrap:wrap; gap:12px; font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.08em; color:var(--light); }
 .guest-comment { font-size:0.78rem; color:var(--mid); margin-top:7px; padding:7px 12px; background:rgba(214,228,239,0.15); border-left:2px solid var(--blue-light); font-style:italic; line-height:1.85; }
+.reset-btn { font-family:'Cinzel',serif; font-size:0.46rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; background:none; border:none; color:var(--light); margin-top:6px; display:inline-block; transition:color 0.2s; padding:0; }
+.reset-btn:hover { color:var(--rose); }
 .empty-state { text-align:center; padding:3.5rem; color:var(--light); font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.28em; text-transform:uppercase; }
 .admin-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1.6rem; }
 .logout-link { font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; background:none; border:none; color:var(--blue-light); transition:color 0.2s; }
@@ -823,6 +825,7 @@ function renderRows(rows){
     const bl=r.status==='confirmed'?'Confirmed':r.status==='declined'?'Declined':'Pending';
     const date=r.at?new Date(r.at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
     const others=(r.attending||[]).slice(1);
+    const safeName=r.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
     return `<div class="guest-row">
       <div class="guest-row-top">
         <div><div class="guest-name">${r.name}</div><div class="guest-role-lbl">${r.role}</div></div>
@@ -834,11 +837,18 @@ function renderRows(rows){
         ${r.status==='confirmed'?`<span>${Math.max((r.attending||[]).length,1)} seat${Math.max((r.attending||[]).length,1)>1?'s':''}</span>`:''}
       </div>
       ${r.comment?`<div class="guest-comment">"${r.comment}"</div>`:''}
+      ${r.status!=='pending'?`<button class="reset-btn" onclick="resetRSVP('${safeName}')">✦ Reset RSVP</button>`:''}
     </div>`;
   }).join('');
 }
 
 function setFilter(f){ adminFilter=f; renderAdmin(); }
+
+function resetRSVP(name) {
+  if (!confirm(`Reset RSVP for ${name}? This cannot be undone.`)) return;
+  localStorage.removeItem(sk(name));
+  renderAdmin();
+}
 
 // ── TABS ──────────────────────────────────────────────────────────────────────
 function switchTab(t){
