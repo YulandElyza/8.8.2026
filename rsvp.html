@@ -154,7 +154,8 @@ textarea.decline-ta:focus { border-color:var(--blue-light); }
 .checkbox-note { font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--blue-light); margin-bottom:8px; }
 
 /* END SCREENS */
-.end-wrap { max-width:580px; margin:0 auto; text-align:center; border:1px solid var(--border); background:rgba(214,228,239,0.07); padding:3rem 2rem; display:flex; flex-direction:column; align-items:center; gap:16px; }
+.end-wrap { max-width:580px; margin:0 auto; text-align:center; border:1px solid var(--border); background:rgba(214,228,239,0.07); padding:3rem 2rem; display:flex; flex-direction:column; align-items:center; gap:16px; animation:endReveal 1.2s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes endReveal { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
 .end-gem { width:10px; height:10px; border:1px solid var(--blue-light); transform:rotate(45deg); }
 .end-title { font-family:'Great Vibes',cursive; font-size:2.8rem; color:var(--blue-dark); line-height:1.2; }
 .end-sub { font-size:0.84rem; color:var(--mid); line-height:2; max-width:380px; }
@@ -655,7 +656,11 @@ function showEndScreen(status, guest, attending, comment='') {
         ${websiteCTA('In the meantime, explore venue, schedule & more')}
         <div class="end-gem"></div>
       </div>`;
-    setTimeout(() => si.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
+    setTimeout(() => {
+    const endTitle = si.querySelector('.end-title') || si.querySelector('.end-wrap') || si;
+    const y = endTitle.getBoundingClientRect().top + window.scrollY - 40;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }, 80);
   } else {
     si.innerHTML=`
       <p class="section-label">Attendance</p><h2 class="section-title">Kindly Reply</h2>
@@ -668,7 +673,11 @@ function showEndScreen(status, guest, attending, comment='') {
         ${websiteCTA('You can still follow along our journey')}
         <div class="end-gem"></div>
       </div>`;
-    setTimeout(() => si.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
+    setTimeout(() => {
+    const endTitle = si.querySelector('.end-title') || si.querySelector('.end-wrap') || si;
+    const y = endTitle.getBoundingClientRect().top + window.scrollY - 40;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }, 80);
   }
 }
 
@@ -698,7 +707,11 @@ function showAlreadyScreen(rsvp) {
       ${websiteCTA(isConf?'Check venue details, schedule & more':'You can still follow along our journey')}
       <div class="end-gem"></div>
     </div>`;
-  setTimeout(() => si.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
+  setTimeout(() => {
+    const endTitle = si.querySelector('.end-title') || si.querySelector('.end-wrap') || si;
+    const y = endTitle.getBoundingClientRect().top + window.scrollY - 40;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }, 80);
 }
 
 // ── MAIN FLOW ─────────────────────────────────────────────────────────────────
