@@ -568,7 +568,22 @@ function showDeclineInput(guest) {
 // ── CONFIRM / DECLINE ─────────────────────────────────────────────────────────
 function handleConfirm(guest, additionalNames) {
   const attending = [guest.name, ...additionalNames];
-  saveRSVP({ name:guest.name, role:guest.role, status:'confirmed', attending, comment:'', at:new Date().toISOString() });
+  const now = new Date().toISOString();
+
+  // Save RSVP for the primary guest
+  saveRSVP({ name:guest.name, role:guest.role, status:'confirmed', attending, comment:'', at:now });
+
+  // Also update each additional guest's own RSVP record if they exist in the DB
+  additionalNames.forEach(name => {
+    const dbEntry = guestDB.find(g => g.name.toLowerCase() === name.toLowerCase());
+    if (dbEntry) {
+      const existing = loadRSVP(dbEntry.name);
+      if (!existing) {
+        saveRSVP({ name:dbEntry.name, role:dbEntry.role, status:'confirmed', attending:[dbEntry.name], comment:'Confirmed via ' + guest.name, at:now });
+      }
+    }
+  });
+
   showEndScreen('confirmed', guest, attending);
 }
 
