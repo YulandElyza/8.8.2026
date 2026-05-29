@@ -790,5 +790,18 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 </script>
+
+<script>
+  // Hide the RSVP nav link on and after July 1, 2026 (midnight PHT, UTC+8)
+  (function(){
+    const rsvpDeadline = new Date('2026-07-01T00:00:00+08:00');
+    if(new Date() >= rsvpDeadline){
+      var navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(function(a){
+        if(a.getAttribute('href') === 'index.html#rsvp') a.style.display = 'none';
+      });
+    }
+  })();
+</script>
 </body>
 </html>
