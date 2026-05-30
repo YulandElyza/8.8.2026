@@ -792,13 +792,24 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
 </script>
 
 <script>
-  // Hide the RSVP nav link on and after July 1, 2026 (midnight PHT, UTC+8)
+  // ── Gallery banner: hidden until Aug 8 2026 (PHT) ──
   (function(){
-    const rsvpDeadline = new Date('2026-07-01T00:00:00+08:00');
-    if(new Date() >= rsvpDeadline){
-      var navLinks = document.querySelectorAll('nav a');
-      navLinks.forEach(function(a){
-        if(a.getAttribute('href') === 'index.html#rsvp') a.style.display = 'none';
+    var banner = document.querySelector('.gallery-banner');
+    var nav    = document.querySelector('nav');
+    if (!banner) return;
+    var weddingDay = new Date('2026-08-08T00:00:00+08:00');
+    if (new Date() < weddingDay) {
+      banner.style.setProperty('display', 'none', 'important');
+      if (nav) nav.style.top = '0';
+    }
+  })();
+
+  // ── RSVP nav link: hidden on and after July 1 2026 (PHT) ──
+  (function(){
+    var deadline = new Date('2026-07-01T00:00:00+08:00');
+    if (new Date() >= deadline) {
+      document.querySelectorAll('nav a').forEach(function(a){
+        if (a.getAttribute('href') === 'index.html#rsvp') a.style.display = 'none';
       });
     }
   })();

@@ -974,5 +974,21 @@ footer p { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.24em;
   // Prevent image saving
   document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
 </script>
+
+<script>
+  // ── Gallery banner: hidden until Aug 8 2026 (PHT) ──
+  (function(){
+    var banner = document.querySelector('.gallery-banner');
+    var nav    = document.querySelector('nav');
+    if (!banner) return;
+    var weddingDay = new Date('2026-08-08T00:00:00+08:00');
+    if (new Date() < weddingDay) {
+      // Hide banner without leaving a gap
+      banner.style.setProperty('display', 'none', 'important');
+      // Slide nav up so it sits flush at top
+      if (nav) nav.style.top = '0';
+    }
+  })();
+</script>
 </body>
 </html>
