@@ -466,10 +466,38 @@ function findGuest(input) {
   return null;
 }
 
-// ── LOCALSTORAGE ─────────────────────────────────────────────────────────────
-function sk(n){ return SP + n.toLowerCase().replace(/\s+/g,'_'); }
-function loadRSVP(n){ try{ const v=localStorage.getItem(sk(n)); return v?JSON.parse(v):null; }catch(e){return null;} }
-function saveRSVP(d){ try{ localStorage.setItem(sk(d.name),JSON.stringify(d)); }catch(e){console.warn(e);} }
+// ── RSVP STORAGE (Cloudflare KV via Worker) ───────────────────────────────────
+let rsvpCache = {}; // populated at boot from GET /rsvps
+
+function ck(n){ return 'rsvp:' + n.toLowerCase().replace(/\s+/g,'_'); }
+
+function loadRSVP(n){ return rsvpCache[ck(n)] || null; }
+
+async function saveRSVP(d){
+  // Optimistically update the local cache so the UI responds instantly
+  rsvpCache[ck(d.name)] = d;
+  try {
+    const res = await fetch(CSV_URL + 'rsvp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(d)
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+  } catch(e) {
+    console.warn('saveRSVP failed:', e.message);
+  }
+}
+
+async function loadAllRSVPs(){
+  try {
+    const res = await fetch(CSV_URL + 'rsvps');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    rsvpCache = await res.json();
+  } catch(e) {
+    console.warn('loadAllRSVPs failed — starting with empty cache:', e.message);
+    rsvpCache = {};
+  }
+}
 
 // ── CHAT HELPERS ─────────────────────────────────────────────────────────────
 const chatArea   = document.getElementById('chatArea');
@@ -573,30 +601,28 @@ function showDeclineInput(guest) {
 }
 
 // ── CONFIRM / DECLINE ─────────────────────────────────────────────────────────
-function handleConfirm(guest, additionalNames) {
+async function handleConfirm(guest, additionalNames) {
   const attending = [guest.name, ...additionalNames];
   const now = new Date().toISOString();
 
-  // Save RSVP for the primary guest
-  saveRSVP({ name:guest.name, role:guest.role, status:'confirmed', attending, comment:'', at:now });
+  await saveRSVP({ name:guest.name, role:guest.role, status:"confirmed", attending, comment:"", at:now });
 
-  // Also update each additional guest's own RSVP record if they exist in the DB
-  additionalNames.forEach(name => {
+  await Promise.all(additionalNames.map(async name => {
     const dbEntry = guestDB.find(g => g.name.toLowerCase() === name.toLowerCase());
     if (dbEntry) {
       const existing = loadRSVP(dbEntry.name);
       if (!existing) {
-        saveRSVP({ name:dbEntry.name, role:dbEntry.role, status:'confirmed', attending:[dbEntry.name], comment:'Confirmed via ' + guest.name, at:now });
+        await saveRSVP({ name:dbEntry.name, role:dbEntry.role, status:"confirmed", attending:[dbEntry.name], comment:"Confirmed via " + guest.name, at:now });
       }
     }
-  });
+  }));
 
-  showEndScreen('confirmed', guest, attending);
+  showEndScreen("confirmed", guest, attending);
 }
 
-function handleDecline(guest, comment) {
-  saveRSVP({ name:guest.name, role:guest.role, status:'declined', attending:[], comment, at:new Date().toISOString() });
-  showEndScreen('declined', guest, [], comment);
+async function handleDecline(guest, comment) {
+  await saveRSVP({ name:guest.name, role:guest.role, status:"declined", attending:[], comment, at:new Date().toISOString() });
+  showEndScreen("declined", guest, [], comment);
 }
 
 // ── END SCREENS ───────────────────────────────────────────────────────────────
@@ -854,8 +880,9 @@ function doLogout(){
 }
 document.getElementById('adminPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
-function renderAdmin(){
+async function renderAdmin(){
   const seen=new Set();
+  await loadAllRSVPs();
   const rows = guestDB.filter(g=>{ const k=g.name.toLowerCase(); if(seen.has(k))return false; seen.add(k); return true; })
     .map(g=>{
       const rsvp=loadRSVP(g.name);
@@ -913,9 +940,17 @@ function renderRows(rows){
 
 function setFilter(f){ adminFilter=f; renderAdmin(); }
 
-function resetRSVP(name) {
+async function resetRSVP(name) {
   if (!confirm(`Reset RSVP for ${name}? This cannot be undone.`)) return;
-  localStorage.removeItem(sk(name));
+  const key = "rsvp:" + name.toLowerCase().replace(/\s+/g,"_");
+  delete rsvpCache[key];
+  try {
+    await fetch(CSV_URL + "rsvp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, _delete: true })
+    });
+  } catch(e) { console.warn("resetRSVP fetch failed:", e.message); }
   renderAdmin();
 }
 
@@ -934,7 +969,7 @@ document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 (async function boot(){
-  await loadCSV();
+  await Promise.all([loadCSV(), loadAllRSVPs()]);
   initChat();
 })();
 </script>
