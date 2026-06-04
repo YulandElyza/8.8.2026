@@ -46,6 +46,29 @@
   nav a:hover { color: var(--blue-dark); }
   @keyframes fadeIn { to { opacity: 1; } }
 
+  /* ── PAGE CURTAIN ── */
+  #page-curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--ivory-dark);
+    transform-origin: top center;
+    animation: curtainLift 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.15s forwards;
+    pointer-events: none;
+  }
+  #page-curtain::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(to right, transparent, var(--blue-light), var(--blush), var(--blue-light), transparent);
+    opacity: 0.6;
+  }
+  @keyframes curtainLift {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+  }
+
   /* ── GALLERY SECTION ── */
   #gallery {
     padding: 5rem 2rem 4rem;
@@ -287,6 +310,9 @@
 </head>
 <body>
 
+<!-- PAGE CURTAIN -->
+<div id="page-curtain" aria-hidden="true"></div>
+
 <nav>
   <a href="index.html">Home</a>
   <a href="upload.html">Upload</a>
@@ -332,6 +358,12 @@
 </div>
 
 <script>
+  // ── Page curtain cleanup ───────────────────────────────────
+  const curtain = document.getElementById('page-curtain');
+  if (curtain) {
+    curtain.addEventListener('animationend', () => curtain.remove());
+  }
+
   // ── Lightbox ──────────────────────────────────────────────
   const lightbox      = document.getElementById('lightbox');
   const lightboxImg   = document.getElementById('lightboxImg');
